@@ -3,6 +3,10 @@
 // The variables you want to modify
 // $font-size-root: 20px;
 $body-font-family: 'Open Sans', sans-serif;
+$btn-font-weight: 700;
 .v-btn {
+  text-transform: capitalize;
+}
+.v-tab {
   text-transform: capitalize;
 }
