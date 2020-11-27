@@ -9,10 +9,16 @@
           width="100%"
           class="rounded-lg pa-6 pa-md-10"
         >
-          <v-btn text color="primary" class="px-0">
-            <v-icon left> mdi-arrow-left </v-icon>
+          <nuxt-link
+            :to="{
+              name: 'index',
+              params: { signInModals: true, tab: 'sign-in' },
+            }"
+            class="primary--text text-decoration-none"
+          >
+            <v-icon left class="primary--text"> mdi-arrow-left </v-icon>
             Kembali ke Masuk
-          </v-btn>
+          </nuxt-link>
           <div class="text-center mt-13">
             <v-img
               lazy-src="/email-verif-icon.png"

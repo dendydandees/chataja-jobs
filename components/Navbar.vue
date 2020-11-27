@@ -207,20 +207,19 @@
                   block
                   x-large
                   color="primary"
-                  class="mt-4 mb-6"
+                  :class="[isProcessing ? 'is-loading' : '', 'mt-4 mb-6']"
                   type="input"
-                  :class="isProcessing ? 'is-loading' : ''"
                   :loading="isProcessing"
                   :disabled="isProcessing"
                   >Daftar</v-btn
                 >
                 <p class="text-center body-1">
                   Dengan mendaftar, saya setuju dengan
-                  <a to="" target="_blank" class="text-decoration-none"
+                  <a href="" target="_blank" class="text-decoration-none"
                     >Syarat & Ketentuan</a
                   >
                   dan
-                  <a to="" target="_blank" class="text-decoration-none"
+                  <a href="" target="_blank" class="text-decoration-none"
                     >Kebijakan Privasi</a
                   >
                   ChatAja.
@@ -243,20 +242,22 @@
       <v-card class="pa-6 pa-md-10">
         <v-row align="center">
           <v-col cols="12" sm="6" class="text-left">
-            <v-btn
-              text
-              color="primary"
-              class="px-0"
+            <a
+              href="#"
+              class="primary--text text-decoration-none"
               @click.stop="backToSignIn()"
             >
-              <v-icon left> mdi-arrow-left </v-icon>
+              <v-icon left class="primary--text"> mdi-arrow-left </v-icon>
               Kembali ke Masuk
-            </v-btn>
+            </a>
           </v-col>
           <v-col cols="12" sm="6" class="text-sm-right">
             <p class="ma-0">
               Baru di ChatAja Jobs ?
-              <a class="text-decoration-none" @click.stop="backToRegister()"
+              <a
+                href="#"
+                class="text-decoration-none"
+                @click.stop="backToRegister()"
                 >Register</a
               >
             </p>
@@ -310,6 +311,12 @@ export default {
       this.drawer = false
     },
   },
+  mounted() {
+    if (this.$route.params.signInModals && this.$route.params.tab) {
+      this.signDialog = this.$route.params.signInModals
+      this.tab = this.$route.params.tab
+    }
+  },
   methods: {
     signUpClick() {
       this.signDialog = !this.signDialog
@@ -343,6 +350,7 @@ export default {
         console.log(error)
       } finally {
         this.isProcessing = false
+        this.tab = ''
       }
     },
   },
