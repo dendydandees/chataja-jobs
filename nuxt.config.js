@@ -1,4 +1,7 @@
 export default {
+  publicRuntimeConfig: {
+    baseURL: 'https://www.kalibrr.id/api',
+  },
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: 'ChatAja Jobs - Cari kerja lebih mudah dengan ChatAja Jobs',
@@ -45,7 +48,18 @@ export default {
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {},
+  axios: {
+    proxy: true,
+  },
+
+  proxy: {
+    '/api': {
+      target: 'https://www.kalibrr.id/api',
+      pathRewrite: {
+        '^/api': '/',
+      },
+    },
+  },
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
   vuetify: {
