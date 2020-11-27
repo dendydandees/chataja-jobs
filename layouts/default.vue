@@ -3,35 +3,33 @@
     <!-- navigation bar -->
     <Navbar />
     <!-- end navigation bar -->
+
     <v-main>
-      <v-container>
-        <!-- content -->
-        <nuxt />
-        <!-- end content -->
-      </v-container>
+      <!-- content -->
+      <nuxt />
+      <!-- end content -->
     </v-main>
+
     <!-- footer -->
-    <v-footer padless>
-      <v-col class="text-center" cols="12">
-        {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
-      </v-col>
-    </v-footer>
+    <Footer />
     <!-- end footer -->
   </v-app>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 
 export default {
   components: {
     Navbar,
+    Footer,
   },
 }
 </script>
 
 <style>
 main {
-  background: #e5e5e5;
+  background: #e5e5e5 !important;
 }
 </style>

@@ -4,12 +4,14 @@
     <v-app-bar app hide-on-scroll height="80" color="white">
       <v-container>
         <div class="d-flex justify-between align-center">
-          <v-toolbar-title>
-            <img src="/cajobs-logo.png" alt="ChatAja Jobs" height="100%" />
-          </v-toolbar-title>
+          <nuxt-link to="/">
+            <v-toolbar-title>
+              <img src="/cajobs-logo.png" alt="ChatAja Jobs" height="100%" />
+            </v-toolbar-title>
+          </nuxt-link>
           <v-spacer></v-spacer>
           <v-app-bar-nav-icon
-            v-if="$vuetify.breakpoint.smAndDown"
+            v-if="$vuetify.breakpoint.smAndDown && $route.name === 'index'"
             class="float-right"
             @click.stop="drawer = !drawer"
           >
@@ -19,7 +21,7 @@
               height="100%"
             />
           </v-app-bar-nav-icon>
-          <div v-if="$vuetify.breakpoint.mdAndUp">
+          <div v-if="$vuetify.breakpoint.mdAndUp && $route.name === 'index'">
             <v-btn
               text
               color="primary"
@@ -36,7 +38,7 @@
               @click.stop="signInClick()"
               >Masuk</v-btn
             >
-            <v-btn color="error" class="mx-2" large>
+            <v-btn color="error" class="ml-2" large>
               <v-icon left> mdi-office-building-outline </v-icon>
               Perusahaan
             </v-btn>
@@ -48,7 +50,7 @@
 
     <!-- side bar -->
     <v-navigation-drawer
-      v-if="$vuetify.breakpoint.smAndDown"
+      v-if="$vuetify.breakpoint.smAndDown && $route.name === 'index'"
       v-model="drawer"
       app
       right
@@ -84,7 +86,11 @@
     <!-- end side bar -->
 
     <!-- sign modal -->
-    <v-dialog v-model="dialog" max-width="700">
+    <v-dialog
+      v-if="$route.name === 'index'"
+      v-model="signDialog"
+      max-width="700"
+    >
       <v-card class="pa-6 pa-md-10">
         <v-tabs v-model="tab">
           <v-tab target="sign-in" href="#sign-in">Masuk</v-tab>
@@ -122,17 +128,27 @@
                     ></v-text-field>
                   </v-col>
                 </v-row>
-                <v-btn block x-large color="primary" class="my-4">Masuk</v-btn>
-                <v-btn block x-large color="primary" text>Lupa Password</v-btn>
+                <v-btn block x-large color="primary" class="my-4" type="input"
+                  >Masuk</v-btn
+                >
+                <v-btn
+                  block
+                  x-large
+                  color="primary"
+                  text
+                  @click.stop="forgotPasswordClick()"
+                  >Lupa Password</v-btn
+                >
               </v-form>
             </v-card>
           </v-tab-item>
           <!-- end sign in modal content -->
+
           <!-- sign up modal content -->
           <v-tab-item id="sign-up" value="sign-up">
             <v-card flat>
               <h2 class="text-h3 font-weight-bold my-8">Daftar</h2>
-              <v-form>
+              <v-form ref="form" @submit.prevent="signUpHandler">
                 <v-row no-gutters>
                   <v-col cols="12">
                     <label for="fullname" class="font-weight-bold"
@@ -187,8 +203,16 @@
                     ></v-text-field>
                   </v-col>
                 </v-row>
-                <v-btn block x-large color="primary" class="mt-4 mb-6"
-                  >Register</v-btn
+                <v-btn
+                  block
+                  x-large
+                  color="primary"
+                  class="mt-4 mb-6"
+                  type="input"
+                  :class="isProcessing ? 'is-loading' : ''"
+                  :loading="isProcessing"
+                  :disabled="isProcessing"
+                  >Daftar</v-btn
                 >
                 <p class="text-center body-1">
                   Dengan mendaftar, saya setuju dengan
@@ -209,6 +233,62 @@
       </v-card>
     </v-dialog>
     <!-- end sign modal -->
+
+    <!-- forgot password modal -->
+    <v-dialog
+      v-if="$route.name === 'index'"
+      v-model="forgotPasswordDialog"
+      max-width="700"
+    >
+      <v-card class="pa-6 pa-md-10">
+        <v-row align="center">
+          <v-col cols="12" sm="6" class="text-left">
+            <v-btn
+              text
+              color="primary"
+              class="px-0"
+              @click.stop="backToSignIn()"
+            >
+              <v-icon left> mdi-arrow-left </v-icon>
+              Kembali ke Masuk
+            </v-btn>
+          </v-col>
+          <v-col cols="12" sm="6" class="text-sm-right">
+            <p class="ma-0">
+              Baru di ChatAja Jobs ?
+              <a class="text-decoration-none" @click.stop="backToRegister()"
+                >Register</a
+              >
+            </p>
+          </v-col>
+        </v-row>
+        <h2 class="text-h3 font-weight-bold mt-8 mb-5">Daftar</h2>
+        <p class="mb-8">
+          Masukkan alamat email yang Anda gunakan saat bergabung dan kami akan
+          mengirimkan instruksi untuk mengatur ulang kata sandi Anda.
+        </p>
+        <v-form>
+          <v-row no-gutters>
+            <v-col cols="12">
+              <label for="email_verification" class="font-weight-bold"
+                >Email</label
+              >
+              <v-text-field
+                id="email_verification"
+                single-line
+                outlined
+                class="mt-2"
+                type="email"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-btn block x-large color="primary" class="mt-4 mb-6" type="input"
+            >Kirim Instruksi</v-btn
+          >
+        </v-form>
+      </v-card>
+    </v-dialog>
+    <!-- end forgot password modal -->
   </section>
 </template>
 
@@ -217,25 +297,53 @@ export default {
   data: () => ({
     drawer: false,
     group: null,
-    dialog: false,
+    signDialog: false,
+    forgotPasswordDialog: false,
     tab: '',
+    isProcessing: false,
   }),
   watch: {
     group() {
       this.drawer = false
     },
-    dialog() {
+    signDialog() {
       this.drawer = false
     },
   },
   methods: {
     signUpClick() {
-      this.dialog = !this.dialog
+      this.signDialog = !this.signDialog
       this.tab = 'sign-up'
     },
     signInClick() {
-      this.dialog = !this.dialog
+      this.signDialog = !this.signDialog
       this.tab = 'sign-in'
+    },
+    forgotPasswordClick() {
+      this.tab = ''
+      this.signDialog = !this.signDialog
+      this.forgotPasswordDialog = !this.forgotPasswordDialog
+    },
+    backToRegister() {
+      this.forgotPasswordDialog = !this.forgotPasswordDialog
+      this.signDialog = !this.signDialog
+      this.tab = 'sign-up'
+    },
+    backToSignIn() {
+      this.forgotPasswordDialog = !this.forgotPasswordDialog
+      this.signDialog = !this.signDialog
+      this.tab = 'sign-in'
+    },
+    async signUpHandler() {
+      try {
+        this.isProcessing = true
+        await this.$router.push('/email-verification')
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log(error)
+      } finally {
+        this.isProcessing = false
+      }
     },
   },
 }
