@@ -262,8 +262,8 @@
             </p>
           </v-col>
         </v-row>
-        <h2 class="text-h3 font-weight-bold mt-8 mb-5">Daftar</h2>
-        <p class="mb-8">
+        <h2 class="text-h3 font-weight-bold mt-8 mb-5">Reset Password</h2>
+        <p class="mb-8 body-1">
           Masukkan alamat email yang Anda gunakan saat bergabung dan kami akan
           mengirimkan instruksi untuk mengatur ulang kata sandi Anda.
         </p>
