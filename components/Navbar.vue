@@ -11,7 +11,9 @@
           </nuxt-link>
           <v-spacer></v-spacer>
           <v-app-bar-nav-icon
-            v-if="$vuetify.breakpoint.smAndDown && $route.name === 'index'"
+            v-if="
+              $vuetify.breakpoint.smAndDown && $route.name !== 'notification'
+            "
             class="float-right"
             @click.stop="drawer = !drawer"
           >
@@ -21,7 +23,9 @@
               height="100%"
             />
           </v-app-bar-nav-icon>
-          <div v-if="$vuetify.breakpoint.mdAndUp && $route.name === 'index'">
+          <div
+            v-if="$vuetify.breakpoint.mdAndUp && $route.name !== 'notification'"
+          >
             <v-btn
               text
               color="primary"
@@ -50,7 +54,7 @@
 
     <!-- side bar -->
     <v-navigation-drawer
-      v-if="$vuetify.breakpoint.smAndDown && $route.name === 'index'"
+      v-if="$vuetify.breakpoint.smAndDown && $route.name !== 'notification'"
       v-model="drawer"
       app
       right
@@ -87,7 +91,7 @@
 
     <!-- sign modal -->
     <v-dialog
-      v-if="$route.name === 'index'"
+      v-if="$route.name !== 'notification'"
       v-model="signDialog"
       max-width="700"
     >
@@ -235,7 +239,7 @@
 
     <!-- forgot password modal -->
     <v-dialog
-      v-if="$route.name === 'index'"
+      v-if="$route.name !== 'notification'"
       v-model="forgotPasswordDialog"
       max-width="700"
     >

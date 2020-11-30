@@ -1,20 +1,27 @@
 export const state = () => ({
-  jobs: [],
+  latestJobs: [],
 })
 
 export const mutations = {
-  SET_JOBS(state, jobs) {
-    state.jobs = jobs
+  SET_LATEST_JOBS(state, latestJobs) {
+    state.latestJobs = latestJobs
   },
 }
 
 export const actions = {
-  async getJobs({ commit, dispatch }) {
+  async getLatestJobs({ commit, dispatch }) {
     try {
       const result = await fetch(`/api/job_board/search?limit=4`).then((res) =>
         res.json()
       )
-      commit('SET_JOBS', result)
-    } catch (error) {}
+      if (result) {
+        commit('SET_LATEST_JOBS', result.jobs)
+        console.log(result.jobs[1])
+      } else {
+        commit('SET_LATEST_JOBS', [])
+      }
+    } catch (error) {
+      throw new Error(error)
+    }
   },
 }

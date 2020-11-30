@@ -2,6 +2,7 @@ export default {
   publicRuntimeConfig: {
     baseURL: 'https://www.kalibrr.id/api',
   },
+  mode: 'spa',
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: 'ChatAja Jobs - Cari kerja lebih mudah dengan ChatAja Jobs',
@@ -16,6 +17,7 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/cajobs-logo.svg' },
+      { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
       {
         rel: 'stylesheet',
         href:
@@ -39,6 +41,8 @@ export default {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    // moment.js
+    '@nuxtjs/moment',
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
