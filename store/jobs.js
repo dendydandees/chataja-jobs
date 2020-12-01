@@ -1,24 +1,81 @@
 export const state = () => ({
   latestJobs: [],
+  functionJobs: [],
+  detailJob: [],
 })
 
 export const mutations = {
   SET_LATEST_JOBS(state, latestJobs) {
     state.latestJobs = latestJobs
   },
+  SET_FUNCTION_JOBS(state, functionjob) {
+    state.functionJobs = functionjob
+  },
+  SET_DETAIL_JOB(state, detailJob) {
+    state.detailJob = detailJob
+  },
 }
 
 export const actions = {
   async getLatestJobs({ commit, dispatch }) {
     try {
-      const result = await fetch(`/api/job_board/search?limit=4`).then((res) =>
-        res.json()
-      )
+      const result = await fetch(`/api/job_board/search?limit=4`)
+        .then((res) => res.json())
+        .then((data) => {
+          return data.jobs.sort((first, second) => {
+            return first.activation_date > second.activation_date
+              ? -1
+              : first.activation_date < second.activation_date
+              ? 1
+              : 0
+          })
+        })
+
       if (result) {
-        commit('SET_LATEST_JOBS', result.jobs)
-        console.log(result.jobs[1])
+        commit('SET_LATEST_JOBS', result)
       } else {
         commit('SET_LATEST_JOBS', [])
+      }
+    } catch (error) {
+      throw new Error(error)
+    }
+  },
+  async getFunctionJobs({ commit, dispatch }) {
+    try {
+      const result = await fetch(`/api/job_board/search`)
+        .then((res) => res.json())
+        .then((data) => {
+          const jobs = data.jobs.map((job) => {
+            return job.function
+          })
+          const set = new Set(jobs)
+          const values = set.values()
+
+          return Array.from(values)
+        })
+
+      if (result) {
+        commit('SET_FUNCTION_JOBS', result)
+      } else {
+        commit('SET_FUNCTION_JOBS', [])
+      }
+    } catch (error) {
+      throw new Error(error)
+    }
+  },
+  async getDetailJob({ commit, dispatch }, id) {
+    try {
+      const result = await fetch(`/api/jobs/${id}`)
+        .then((res) => res.json())
+        .then((data) => {
+          return data
+        })
+
+      if (result) {
+        console.log(result)
+        commit('SET_DETAIL_JOB', result)
+      } else {
+        commit('SET_DETAIL_JOB', [])
       }
     } catch (error) {
       throw new Error(error)

@@ -32,4 +32,18 @@ export default {
 main {
   background: #e5e5e5 !important;
 }
+.line-clamp {
+  display: -webkit-box;
+  height: 3.6em;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.line-clamp-5 {
+  display: -webkit-box;
+  height: 6em;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 </style>

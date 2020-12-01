@@ -2,7 +2,7 @@ export default {
   publicRuntimeConfig: {
     baseURL: 'https://www.kalibrr.id/api',
   },
-  mode: 'spa',
+  ssr: true,
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: 'ChatAja Jobs - Cari kerja lebih mudah dengan ChatAja Jobs',

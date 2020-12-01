@@ -12,8 +12,8 @@
     </v-row>
     <v-row>
       <v-col
-        v-for="jobs in latestJobs"
-        :key="jobs.id"
+        v-for="job in latestJobs"
+        :key="job.id"
         cols="12"
         sm="6"
         md="3"
@@ -22,11 +22,9 @@
         <v-card elevation="1" rounded="lg" class="pa-4" height="100%">
           <v-row no-gutters class="mb-4">
             <v-col>
-              <v-card-title
-                class="pa-0 pr-4 font-weight-bold subtitle-1 line-clamp"
-              >
-                {{ jobs.name }}
-              </v-card-title>
+              <h4 class="pa-0 font-weight-bold subtitle-1 line-clamp">
+                {{ job.name }}
+              </h4>
             </v-col>
             <v-col cols="auto">
               <v-btn icon>
@@ -35,9 +33,9 @@
             </v-col>
           </v-row>
           <v-img
-            v-if="jobs.company_info.logo"
-            :src="jobs.company_info.logo"
-            :lazy-src="jobs.company_info.logo"
+            v-if="job.company_info.logo"
+            :src="job.company_info.logo"
+            :lazy-src="job.company_info.logo"
             width="75"
             height="75"
             contain
@@ -51,27 +49,30 @@
             height="75"
           >
           </v-img>
-          <v-card-text class="px-0">
+          <v-card-text class="px-0" style="height: 180px">
             <p class="font-weight-regular text--primary">
-              {{ jobs.company_name }}
+              {{ job.company_name }}
             </p>
             <p class="mb-2 font-weight-bold">
-              {{ jobs.google_location.address_components.city }},
-              {{ jobs.google_location.address_components.region }}
+              {{ job.google_location.address_components.city }},
+              {{ job.google_location.address_components.region }}
             </p>
             <p class="mb-2 font-weight-bold">
-              {{ jobs.tenure }}
+              {{ job.tenure }}
             </p>
           </v-card-text>
           <hr class="grey lighten-5" />
           <v-card-actions class="px-0 pb-0 pt-4">
             <v-row no-gutters align="center">
               <v-col>
-                <span>{{ $moment(jobs.activation_date).fromNow() }}</span>
+                <span v-if="job.activation_date">{{
+                  $moment(job.activation_date).fromNow()
+                }}</span>
+                <span v-else></span>
               </v-col>
               <v-col class="text-right">
                 <nuxt-link
-                  :to="`/jobs/${jobs.id}`"
+                  :to="`/jobs/${job.id}`"
                   class="text-decoration-none font-weight-bold"
                   >Lihat Detail</nuxt-link
                 >
@@ -98,12 +99,4 @@ export default {
 }
 </script>
 
-<style scoped>
-.line-clamp {
-  display: -webkit-box;
-  height: 3.6em;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-</style>
+<style></style>
