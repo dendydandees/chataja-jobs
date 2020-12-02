@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="mb-15">
     <v-row align="center">
       <v-col>
         <h2>Pekerjaan Terbaru</h2>
@@ -10,30 +10,23 @@
         >
       </v-col>
     </v-row>
-    <v-row>
-      <v-col
-        v-for="job in latestJobs"
-        :key="job.id"
-        cols="12"
-        sm="6"
-        md="3"
-        class="pa-2"
-      >
+    <v-row dense>
+      <v-col v-for="job in latestJobs" :key="job.id" cols="12" sm="6" md="3">
         <v-card elevation="1" rounded="lg" class="pa-4" height="100%">
           <v-row no-gutters class="mb-4">
-            <v-col>
-              <h4 class="pa-0 font-weight-bold subtitle-1 line-clamp">
+            <v-col cols="10">
+              <h4 class="font-weight-bold title line-clamp">
                 {{ job.name }}
               </h4>
             </v-col>
-            <v-col cols="auto">
+            <v-col cols="2" class="text-right">
               <v-btn icon>
                 <v-icon>mdi-bookmark-outline</v-icon>
               </v-btn>
             </v-col>
           </v-row>
           <v-img
-            v-if="job.company_info.logo"
+            v-if="job.company_info.logo !== null"
             :src="job.company_info.logo"
             :lazy-src="job.company_info.logo"
             width="75"
@@ -50,7 +43,7 @@
           >
           </v-img>
           <v-card-text class="px-0" style="height: 180px">
-            <p class="font-weight-regular text--primary">
+            <p class="font-weight-regular text--primary subtitle-1">
               {{ job.company_name }}
             </p>
             <p class="mb-2 font-weight-bold">
@@ -65,7 +58,7 @@
           <v-card-actions class="px-0 pb-0 pt-4">
             <v-row no-gutters align="center">
               <v-col>
-                <span v-if="job.activation_date">{{
+                <span v-if="job.activation_date !== null">{{
                   $moment(job.activation_date).fromNow()
                 }}</span>
                 <span v-else></span>

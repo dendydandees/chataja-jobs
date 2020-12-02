@@ -37,7 +37,7 @@ export const actions = {
         commit('SET_LATEST_JOBS', [])
       }
     } catch (error) {
-      throw new Error(error)
+      error({ statusCode: 404, message: 'Jobs not found' })
     }
   },
   async getFunctionJobs({ commit, dispatch }) {
@@ -48,10 +48,8 @@ export const actions = {
           const jobs = data.jobs.map((job) => {
             return job.function
           })
-          const set = new Set(jobs)
-          const values = set.values()
-
-          return Array.from(values)
+          const set = [...new Set(jobs)]
+          return set
         })
 
       if (result) {
@@ -60,7 +58,7 @@ export const actions = {
         commit('SET_FUNCTION_JOBS', [])
       }
     } catch (error) {
-      throw new Error(error)
+      error({ statusCode: 404, message: 'Jobs not found' })
     }
   },
   async getDetailJob({ commit, dispatch }, id) {
@@ -72,13 +70,12 @@ export const actions = {
         })
 
       if (result) {
-        console.log(result)
         commit('SET_DETAIL_JOB', result)
       } else {
         commit('SET_DETAIL_JOB', [])
       }
     } catch (error) {
-      throw new Error(error)
+      error({ statusCode: 404, message: 'Jobs not found' })
     }
   },
 }
