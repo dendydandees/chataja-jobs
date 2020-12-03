@@ -1,1 +1,7 @@
-["Full Time", "Part Time", "Freelance", "Contractual"]
+[
+  { "text": "Semua", "value": "" },
+  { "text": "Full Time", "value": "full time" },
+  { "text": "Part Time", "value": "part time" },
+  { "text": "Freelance", "value": "freelance" },
+  { "text": "Contractual", "value": "contractual" }
+]

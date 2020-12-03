@@ -1,6 +1,6 @@
 <template>
   <v-container class="mb-15">
-    <v-row align="center">
+    <v-row v-if="wording" align="center">
       <v-col>
         <h2>Pekerjaan Terbaru</h2>
       </v-col>
@@ -86,6 +86,12 @@ export default {
       required: true,
       default: () => {
         return []
+      },
+    },
+    wording: {
+      type: Boolean,
+      default: () => {
+        return false
       },
     },
   },

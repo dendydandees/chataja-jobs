@@ -2,6 +2,7 @@ export const state = () => ({
   latestJobs: [],
   functionJobs: [],
   detailJob: [],
+  searchJobs: [],
 })
 
 export const mutations = {
@@ -13,6 +14,9 @@ export const mutations = {
   },
   SET_DETAIL_JOB(state, detailJob) {
     state.detailJob = detailJob
+  },
+  SET_SEARCH_JOBS(state, searchJobs) {
+    state.searchJobs = searchJobs
   },
 }
 
@@ -76,6 +80,21 @@ export const actions = {
       }
     } catch (error) {
       error({ statusCode: 404, message: 'Jobs not found' })
+    }
+  },
+  async searchJobsAction({ commit }, data) {
+    const result = await fetch(
+      `/api/job_board/search?text=${data.text}&location=${data.location}&limit=12&offset=0`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        return data
+      })
+
+    if (result) {
+      commit('SET_SEARCH_JOBS', result)
+    } else {
+      commit('SET_SEARCH_JOBS', [])
     }
   },
 }

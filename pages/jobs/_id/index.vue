@@ -174,7 +174,7 @@
       </v-container>
 
       <!-- latest jobs -->
-      <CardJobs :latest-jobs="latestJobs" />
+      <CardJobs :latest-jobs="latestJobs" :wording="true" />
       <!-- end latest jobs -->
     </section>
   </section>

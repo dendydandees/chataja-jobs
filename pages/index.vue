@@ -9,7 +9,7 @@
 
       <!-- search form -->
       <v-container>
-        <form ref="form" action="" method="GET">
+        <v-form ref="form" lazy-validation @submit.prevent="searchJobs()">
           <v-row no-gutters class="white px-4 py-2 rounded-lg elevation-1">
             <v-col cols="12">
               <v-text-field
@@ -18,7 +18,6 @@
                 single-line
                 label="Cari lowongan berdasarkan nama, perusahaan atau lokasi"
                 title="Cari lowongan berdasarkan nama, perusahaan atau lokasi"
-                required
                 type="text"
                 background-color="white"
                 hide-details="true"
@@ -40,42 +39,51 @@
                 </template>
               </v-text-field>
             </v-col>
-            <v-col cols="12" class="mt-2">
+            <v-col cols="12" class="mt-3">
               <v-row no-gutters>
                 <v-col cols="12" sm="4">
                   <v-select
                     v-model="search.location"
                     :items="regions"
+                    item-text="text"
+                    item-value="value"
                     label="Lokasi"
                     hide-details="true"
                     prepend-icon="mdi-map-marker"
                     single-line
                     solo
                     flat
+                    @change="searchJobs()"
                   ></v-select>
                 </v-col>
                 <v-col cols="12" sm="4">
                   <v-select
                     v-model="search.jobTypes"
                     :items="jobTypes"
+                    item-text="text"
+                    item-value="value"
                     label="Tipe Pekerjaan"
                     hide-details="true"
                     prepend-icon="mdi-briefcase-variant"
                     single-line
                     solo
                     flat
+                    @change="searchJobs()"
                   ></v-select>
                 </v-col>
                 <v-col cols="12" sm="4">
                   <v-select
                     v-model="search.educationTypes"
                     :items="educationTypes"
+                    item-text="text"
+                    item-value="value"
                     label="Tingkat Pendidikan"
                     hide-details="true"
                     prepend-icon="mdi-school"
                     single-line
                     solo
                     flat
+                    @change="searchJobs()"
                   ></v-select>
                 </v-col>
               </v-row>
@@ -90,7 +98,7 @@
               >Cari</v-btn
             >
           </v-row>
-        </form>
+        </v-form>
       </v-container>
       <!-- end search form -->
 
@@ -116,7 +124,7 @@
       <!-- popular jobs -->
 
       <!-- latest jobs -->
-      <CardJobs :latest-jobs="latestJobs" />
+      <CardJobs :latest-jobs="latestJobs" :wording="true" />
       <!-- end latest jobs -->
 
       <!-- banner post jobs -->
@@ -169,6 +177,8 @@ export default {
       location: '',
       jobTypes: '',
       educationTypes: '',
+      limit: 12,
+      offset: 0,
     },
   }),
   computed: {
@@ -185,14 +195,26 @@ export default {
       return jobTypes
     },
     educationTypes() {
-      return educationTypes.map((item) => item.text)
+      return educationTypes
     },
   },
   methods: {
     ...mapActions({
       getLatestJobs: 'jobs/getLatestJobs',
       getFunctionJobs: 'jobs/getFunctionJobs',
+      searchJobsAction: 'jobs/searchJobsAction',
     }),
+    async searchJobs() {
+      try {
+        await this.searchJobsAction(this.search)
+        await this.$router.push({
+          path: '/jobs/list',
+          query: { search: this.search },
+        })
+      } catch (error) {
+        error({ statusCode: 404, message: 'Jobs not found' })
+      }
+    },
   },
 }
 </script>
