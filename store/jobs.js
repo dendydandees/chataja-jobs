@@ -3,6 +3,14 @@ export const state = () => ({
   functionJobs: [],
   detailJob: [],
   searchJobs: [],
+  search: {
+    text: '',
+    location: '',
+    jobTypes: '',
+    educationTypes: '',
+    limit: 12,
+    offset: 0,
+  },
 })
 
 export const mutations = {
@@ -17,6 +25,18 @@ export const mutations = {
   },
   SET_SEARCH_JOBS(state, searchJobs) {
     state.searchJobs = searchJobs
+  },
+  SET_SEARCH_TEXT(state, text) {
+    state.search.text = text
+  },
+  SET_SEARCH_LOCATION(state, location) {
+    state.search.location = location
+  },
+  SET_SEARCH_JOB_TYPES(state, jobTypes) {
+    state.search.jobTypes = jobTypes
+  },
+  SET_SEARCH_EDUCATION_TYPES(state, educationTypes) {
+    state.search.educationTypes = educationTypes
   },
 }
 
