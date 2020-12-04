@@ -1,0 +1,159 @@
+<template>
+  <section>
+    <v-container>
+      <v-row dense>
+        <v-col cols="12">
+          <v-sheet
+            color="white"
+            elevation="1"
+            height="100%"
+            width="100%"
+            rounded="true"
+          >
+            <h1>kolom 1</h1>
+          </v-sheet>
+        </v-col>
+        <v-col cols="12">
+          <v-sheet
+            color="white"
+            elevation="1"
+            height="100%"
+            width="100%"
+            rounded="true"
+          >
+            <p>kolom 2</p>
+          </v-sheet>
+        </v-col>
+      </v-row>
+    </v-container>
+    <!-- opened jobs -->
+    <v-row no-gutters>
+      <v-col cols="12" class="py-10 blue-custom-bg">
+        <v-container>
+          <v-row align="center" no-gutters class="mb-5">
+            <v-col>
+              <h2>Pekerjaan Tersedia</h2>
+            </v-col>
+          </v-row>
+          <v-slide-group
+            multiple
+            show-arrows="desktop"
+            next-icon="mdi-chevron-right-circle-outline"
+            prev-icon="mdi-chevron-left-circle-outline"
+          >
+            <v-slide-item
+              v-for="job in company"
+              :key="job.id"
+              v-slot="{ active, toggle }"
+            >
+              <v-card
+                elevation="1"
+                rounded="lg"
+                class="pa-4 mr-4"
+                height="100%"
+                width="300px"
+                :input-value="active"
+                @click="toggle"
+              >
+                <v-row no-gutters class="mb-4">
+                  <v-col cols="10">
+                    <h4 class="font-weight-bold title line-clamp">
+                      {{ job.name }}
+                    </h4>
+                  </v-col>
+                  <v-col cols="2" class="text-right">
+                    <v-tooltip top>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn icon v-bind="attrs" v-on="on">
+                          <v-icon>mdi-bookmark-outline</v-icon>
+                        </v-btn>
+                      </template>
+                      <span>Simpan Pekerjaan</span>
+                    </v-tooltip>
+                  </v-col>
+                </v-row>
+                <v-img
+                  v-if="job.company_info.logo !== null"
+                  :src="job.company_info.logo"
+                  :lazy-src="job.company_info.logo"
+                  width="75"
+                  height="75"
+                  contain
+                >
+                </v-img>
+                <v-img
+                  v-else
+                  src="/placeholder-profile.svg"
+                  lazy-src="/placeholder-profile.svg"
+                  width="75"
+                  height="75"
+                >
+                </v-img>
+                <v-card-text class="px-0" style="height: 180px">
+                  <p class="font-weight-regular text--primary subtitle-1">
+                    {{ job.company_name }}
+                  </p>
+                  <p class="mb-2 font-weight-bold">
+                    {{ job.google_location.address_components.city }},
+                    {{ job.google_location.address_components.region }}
+                  </p>
+                  <p class="mb-2 font-weight-bold">
+                    {{ job.tenure }}
+                  </p>
+                </v-card-text>
+                <hr class="grey lighten-5" />
+                <v-card-actions class="px-0 pb-0 pt-4">
+                  <v-row no-gutters align="center">
+                    <v-col>
+                      <span v-if="job.activation_date !== null">{{
+                        $moment(job.activation_date).fromNow()
+                      }}</span>
+                      <span v-else></span>
+                    </v-col>
+                    <v-col class="text-right">
+                      <nuxt-link
+                        :to="`/jobs/${job.id}`"
+                        class="text-decoration-none font-weight-bold"
+                        >Lihat Detail</nuxt-link
+                      >
+                    </v-col>
+                  </v-row>
+                </v-card-actions>
+              </v-card>
+            </v-slide-item>
+          </v-slide-group>
+        </v-container>
+      </v-col>
+    </v-row>
+    <!-- end opened jobs -->
+  </section>
+</template>
+
+<script>
+import { mapActions } from 'vuex'
+
+export default {
+  async fetch() {
+    await this.getCompanyDetail(this.code)
+  },
+  computed: {
+    code() {
+      return this.$route.params.code
+    },
+    company() {
+      return this.$store.state.jobs.companyDetails.jobs
+    },
+  },
+  methods: {
+    ...mapActions({
+      getCompanyDetail: 'jobs/getCompanyDetail',
+    }),
+  },
+}
+</script>
+
+<style scoped>
+.blue-custom-bg {
+  background-color: #f2f6fd;
+}
+</style>

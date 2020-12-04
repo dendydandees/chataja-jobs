@@ -170,7 +170,12 @@
                 <p class="line-clamp-5 mb-5 body-1">
                   {{ details.company_info.description }}
                 </p>
-                <v-btn color="primary" to="#">Lihat Perusahaan</v-btn>
+                <v-btn
+                  color="primary"
+                  :to="`/jobs/company/${details.company.code}`"
+                >
+                  Lihat Perusahaan
+                </v-btn>
               </v-card-text>
             </v-card>
           </v-col>

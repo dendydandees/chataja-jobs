@@ -11,8 +11,14 @@
     <!-- count -->
     <v-container class="py-0 mt-10">
       <span>
-        <strong>{{ count }}</strong> hasil untuk
-        <strong class="text-capitalize">{{ search.text }}</strong>
+        <strong>{{ count }}</strong>
+        <span>Hasil pencarian</span>
+        <span v-if="search.text !== '' || search.location !== ''">
+          untuk
+          <strong class="text-capitalize">{{
+            search.text !== '' ? search.text : search.location
+          }}</strong>
+        </span>
       </span>
     </v-container>
     <!-- end count -->
@@ -119,7 +125,9 @@ export default {
       }
     },
     async updateItemsPerPage(number) {
-      this.limit = number
+      this.page = 1
+      this.setOffset(0)
+      this.setLimit(number)
       await this.searchJobs()
     },
     showPagination() {

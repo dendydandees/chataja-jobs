@@ -11,6 +11,7 @@ export const state = () => ({
     limit: 12,
     offset: 0,
   },
+  companyDetails: [],
 })
 
 export const getters = {
@@ -59,6 +60,9 @@ export const mutations = {
   },
   SET_SEARCH_OFFSET(state, offset) {
     state.search.offset = offset
+  },
+  SET_COMPANY_DETAILS(state, company) {
+    state.companyDetails = company
   },
 }
 
@@ -125,18 +129,39 @@ export const actions = {
     }
   },
   async searchJobsAction({ commit }, data) {
-    const result = await fetch(
-      `/api/job_board/search?text=${data.text}&location=${data.location}&limit=${data.limit}&offset=${data.offset}`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        return data
-      })
+    try {
+      const result = await fetch(
+        `/api/job_board/search?text=${data.text}&location=${data.location}&limit=${data.limit}&offset=${data.offset}`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          return data
+        })
 
-    if (result) {
-      commit('SET_SEARCH_JOBS', result)
-    } else {
-      commit('SET_SEARCH_JOBS', [])
+      if (result) {
+        commit('SET_SEARCH_JOBS', result)
+      } else {
+        commit('SET_SEARCH_JOBS', [])
+      }
+    } catch (error) {
+      error({ statusCode: 404, message: 'Jobs not found' })
+    }
+  },
+  async getCompanyDetail({ commit }, code) {
+    try {
+      const result = await fetch(`/api/companies/${code}/jobs`)
+        .then((res) => res.json())
+        .then((data) => {
+          return data
+        })
+
+      if (result) {
+        commit('SET_COMPANY_DETAILS', result)
+      } else {
+        commit('SET_COMPANY_DETAILS', [])
+      }
+    } catch (error) {
+      error({ statusCode: 404, message: 'Jobs not found' })
     }
   },
 }
