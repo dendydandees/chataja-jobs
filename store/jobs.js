@@ -13,6 +13,22 @@ export const state = () => ({
   },
 })
 
+export const getters = {
+  listSearchJobs: (state) => {
+    return state.searchJobs.jobs
+  },
+  listJobsCount: (state) => {
+    return state.searchJobs.count
+  },
+  searchData: (state) => {
+    return state.search
+  },
+  totalPage: (state, getters) => {
+    const total = getters.listJobsCount / getters.searchData.limit
+    return Math.ceil(total)
+  },
+}
+
 export const mutations = {
   SET_LATEST_JOBS(state, latestJobs) {
     state.latestJobs = latestJobs
@@ -37,6 +53,12 @@ export const mutations = {
   },
   SET_SEARCH_EDUCATION_TYPES(state, educationTypes) {
     state.search.educationTypes = educationTypes
+  },
+  SET_SEARCH_LIMIT(state, limit) {
+    state.search.limit = limit
+  },
+  SET_SEARCH_OFFSET(state, offset) {
+    state.search.offset = offset
   },
 }
 
@@ -104,7 +126,7 @@ export const actions = {
   },
   async searchJobsAction({ commit }, data) {
     const result = await fetch(
-      `/api/job_board/search?text=${data.text}&location=${data.location}&limit=12&offset=0`
+      `/api/job_board/search?text=${data.text}&location=${data.location}&limit=${data.limit}&offset=${data.offset}`
     )
       .then((res) => res.json())
       .then((data) => {

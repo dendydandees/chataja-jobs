@@ -36,9 +36,14 @@
                     </h1>
                   </v-col>
                   <v-col cols="2" class="text-right">
-                    <v-btn icon large>
-                      <v-icon>mdi-bookmark-outline</v-icon>
-                    </v-btn>
+                    <v-tooltip top>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn icon v-bind="attrs" large v-on="on">
+                          <v-icon>mdi-bookmark-outline</v-icon>
+                        </v-btn>
+                      </template>
+                      <span>Simpan Pekerjaan</span>
+                    </v-tooltip>
                   </v-col>
                 </v-row>
                 <v-row no-gutters>

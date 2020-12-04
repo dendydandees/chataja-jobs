@@ -1,5 +1,5 @@
 <template>
-  <v-container class="mb-15">
+  <v-container class="mb-10">
     <v-row v-if="wording" align="center">
       <v-col>
         <h2>Pekerjaan Terbaru</h2>
@@ -10,7 +10,7 @@
         >
       </v-col>
     </v-row>
-    <v-row dense>
+    <v-row>
       <v-col v-for="job in latestJobs" :key="job.id" cols="12" sm="6" md="3">
         <v-card elevation="1" rounded="lg" class="pa-4" height="100%">
           <v-row no-gutters class="mb-4">
@@ -20,9 +20,14 @@
               </h4>
             </v-col>
             <v-col cols="2" class="text-right">
-              <v-btn icon>
-                <v-icon>mdi-bookmark-outline</v-icon>
-              </v-btn>
+              <v-tooltip top>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn icon v-bind="attrs" v-on="on">
+                    <v-icon>mdi-bookmark-outline</v-icon>
+                  </v-btn>
+                </template>
+                <span>Simpan Pekerjaan</span>
+              </v-tooltip>
             </v-col>
           </v-row>
           <v-img
