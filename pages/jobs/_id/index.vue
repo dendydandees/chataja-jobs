@@ -5,7 +5,7 @@
     <p v-else-if="$fetchState.error">An error occurred :(</p>
     <section v-else>
       <v-container>
-        <v-row>
+        <v-row dense>
           <!-- details job -->
           <v-col cols="12" md="9">
             <v-card elevation="1" rounded="lg">
@@ -150,7 +150,7 @@
                   width="75"
                   height="75"
                   contain
-                  class="mx-auto"
+                  class="mx-auto rounded img-border"
                 >
                 </v-img>
                 <v-img
@@ -159,7 +159,7 @@
                   lazy-src="/placeholder-profile.svg"
                   width="75"
                   height="75"
-                  class="mx-auto"
+                  class="mx-auto rounded img-border"
                 >
                 </v-img>
                 <h2 class="mt-5 mb-4 title font-weight-bold">

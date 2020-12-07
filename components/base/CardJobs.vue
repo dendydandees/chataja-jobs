@@ -37,6 +37,7 @@
             width="75"
             height="75"
             contain
+            class="rounded img-border"
           >
           </v-img>
           <v-img
@@ -45,6 +46,7 @@
             lazy-src="/placeholder-profile.svg"
             width="75"
             height="75"
+            class="rounded img-border"
           >
           </v-img>
           <v-card-text class="px-0" style="height: 180px">

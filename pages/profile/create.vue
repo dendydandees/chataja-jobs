@@ -11,7 +11,7 @@
             <span>Step 1 : Informasi Pribadi</span>
           </v-col>
           <v-col class="text-right">
-            <v-btn text to="/">Lewati</v-btn>
+            <v-btn text to="/" elevation="2">Lewati</v-btn>
           </v-col>
         </v-row>
       </v-container>
@@ -21,7 +21,7 @@
     <!-- form 1 -->
     <v-row no-gutters class="my-6" justify="center">
       <v-col cols="12" sm="10" md="8">
-        <v-sheet color="white" elevation="1" rounded class="pa-10">
+        <v-sheet color="white" elevation="1" rounded class="pa-6 pa-md-10">
           <h2 class="title font-weight-bold mb-2">Informasi Dasar</h2>
           <v-row>
             <v-col cols="12" sm="auto">
@@ -30,12 +30,13 @@
                 lazy-src="/placeholder-profile.svg"
                 width="100"
                 height="100"
-                class="mx-auto mx-sm-0"
+                class="mx-auto mx-sm-0 rounded-circle img-border"
               >
               </v-img>
             </v-col>
             <v-col>
               <v-file-input
+                id="profile_photos"
                 label="Unggah Foto"
                 outlined
                 dense
@@ -48,6 +49,7 @@
                 :style="
                   $vuetify.breakpoint.smAndUp ? `width: 40%` : `width: 100%`
                 "
+                accept="image/png, image/jpeg, image/jpg, image/bmp"
                 class="mb-2"
               >
               </v-file-input>
@@ -135,12 +137,85 @@
     <!-- form 2 -->
     <v-row no-gutters class="my-6" justify="center">
       <v-col cols="12" sm="10" md="8">
-        <v-sheet color="white" elevation="1" rounded class="pa-10">
+        <v-sheet color="white" elevation="1" rounded class="pa-6 pa-md-10">
           <h2 class="title font-weight-bold mb-2">Kontak</h2>
+          <v-row no-gutters class="mt-4">
+            <v-col>
+              <label for="telp_number" class="font-weight-bold"
+                >Nomor telepon</label
+              >
+              <v-text-field
+                id="telp_number"
+                single-line
+                outlined
+                type="number"
+                color="black"
+                background-color="white"
+                class="mt-2"
+              >
+              </v-text-field>
+            </v-col>
+          </v-row>
+          <v-row no-gutters class="mt-4">
+            <v-col>
+              <label for="email" class="font-weight-bold">Email</label>
+              <v-text-field
+                id="email"
+                single-line
+                outlined
+                type="email"
+                color="black"
+                background-color="white"
+                class="mt-2"
+              >
+              </v-text-field>
+            </v-col>
+          </v-row>
+          <v-row no-gutters class="mt-4">
+            <v-col>
+              <label for="location" class="font-weight-bold">Lokasi</label>
+              <v-text-field
+                id="location"
+                single-line
+                outlined
+                type="text"
+                color="black"
+                background-color="white"
+                class="mt-2"
+              >
+              </v-text-field>
+            </v-col>
+          </v-row>
+          <v-row no-gutters class="mt-4">
+            <v-col>
+              <label for="address" class="font-weight-bold">Alamat</label>
+              <v-textarea
+                name="address"
+                outlined
+                clearable
+                clear-icon="mdi-close-circle"
+                auto-grow
+                value=""
+                class="mt-2"
+                color="black"
+                background-color="white"
+              ></v-textarea>
+            </v-col>
+          </v-row>
         </v-sheet>
       </v-col>
     </v-row>
     <!-- end form 2 -->
+
+    <!-- form 3 -->
+    <v-row no-gutters class="my-6" justify="center">
+      <v-col cols="12" sm="10" md="8">
+        <v-sheet color="white" elevation="1" rounded class="pa-6 pa-md-10">
+          <h2 class="title font-weight-bold mb-2">Tingkat Pendidikan</h2>
+        </v-sheet>
+      </v-col>
+    </v-row>
+    <!-- end form 3 -->
   </section>
 </template>
 
@@ -164,7 +239,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .v-input__slot {
   border: 1px solid #2f80ed !important;
   color: #2f80ed !important;

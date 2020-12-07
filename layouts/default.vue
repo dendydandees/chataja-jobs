@@ -19,6 +19,7 @@
 <script>
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import '@/assets/style.css'
 
 export default {
   components: {
