@@ -8,64 +8,68 @@
     </v-row>
     <!-- end search form -->
 
-    <!-- count -->
-    <v-container class="py-0 mt-10">
-      <span>
-        <strong>{{ count }}</strong>
-        <span>Hasil pencarian</span>
-        <span v-if="search.text !== '' || search.location !== ''">
-          untuk
-          <strong class="text-capitalize">{{
-            search.text !== '' ? search.text : search.location
-          }}</strong>
+    <LoadingBar v-if="$fetchState.pending" />
+    <p v-else-if="$fetchState.error">An error occurred :(</p>
+    <section v-else>
+      <!-- count -->
+      <v-container class="py-0 mt-10">
+        <span>
+          <strong>{{ count }}</strong>
+          <span>Hasil pencarian</span>
+          <span v-if="search.text !== '' || search.location !== ''">
+            untuk
+            <strong class="text-capitalize">{{
+              search.text !== '' ? search.text : search.location
+            }}</strong>
+          </span>
         </span>
-      </span>
-    </v-container>
-    <!-- end count -->
+      </v-container>
+      <!-- end count -->
 
-    <!-- card jobs -->
-    <CardJobs :latest-jobs="jobs" />
-    <!-- end card jobs -->
+      <!-- card jobs -->
+      <CardJobs :latest-jobs="jobs" />
+      <!-- end card jobs -->
 
-    <!-- pagination -->
-    <v-container v-if="showPagination()">
-      <v-row align="center" class="mb-10">
-        <v-col cols="12" sm="6">
-          <span class="mr-2">Lihat per halaman</span>
-          <v-menu offset-y transition="slide-y-transition" bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                v-bind="attrs"
-                :ripple="{ class: `error--text` }"
-                v-on="on"
-                >{{ limit }}</v-btn
-              >
-            </template>
-            <v-list>
-              <v-list-item
-                v-for="(item, index) in items"
-                :key="index"
-                v-model="limit"
-                :ripple="{ class: `error--text` }"
-                @click="updateItemsPerPage(item)"
-              >
-                <v-list-item-title>{{ item }}</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-        </v-col>
-        <v-col class="text-center text-sm-right" cols="12" sm="6">
-          <v-pagination
-            v-model="page"
-            class="d-inline-flex"
-            :length="totalPage"
-            :total-visible="6"
-            @input="offsetPage()"
-          ></v-pagination>
-        </v-col>
-      </v-row>
-    </v-container>
-    <!-- end pagination -->
+      <!-- pagination -->
+      <v-container v-if="showPagination()">
+        <v-row align="center" class="mb-10">
+          <v-col cols="12" sm="6">
+            <span class="mr-2 font-weight-bold">Lihat per halaman</span>
+            <v-menu offset-y transition="slide-y-transition" bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  v-bind="attrs"
+                  :ripple="{ class: `error--text` }"
+                  v-on="on"
+                  >{{ limit }}</v-btn
+                >
+              </template>
+              <v-list>
+                <v-list-item
+                  v-for="(item, index) in items"
+                  :key="index"
+                  v-model="limit"
+                  :ripple="{ class: `error--text` }"
+                  @click="updateItemsPerPage(item)"
+                >
+                  <v-list-item-title>{{ item }}</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </v-col>
+          <v-col class="text-center text-sm-right" cols="12" sm="6">
+            <v-pagination
+              v-model="page"
+              class="d-inline-flex"
+              :length="totalPage"
+              :total-visible="6"
+              @input="offsetPage()"
+            ></v-pagination>
+          </v-col>
+        </v-row>
+      </v-container>
+      <!-- end pagination -->
+    </section>
   </section>
 </template>
 
@@ -78,6 +82,9 @@ export default {
   components: {
     CardJobs,
     SearchForm,
+  },
+  async fetch() {
+    await this.searchJobsAction(this.$store.state.jobs.search)
   },
   data: () => ({
     page: 1,
@@ -116,19 +123,11 @@ export default {
     ...mapActions({
       searchJobsAction: 'jobs/searchJobsAction',
     }),
-    async searchJobs() {
-      try {
-        await this.searchJobsAction(this.$store.state.jobs.search)
-        await this.$router.push('/jobs/list')
-      } catch (error) {
-        error({ statusCode: 404, message: 'Jobs not found' })
-      }
-    },
     async updateItemsPerPage(number) {
       this.page = 1
       this.setOffset(0)
       this.setLimit(number)
-      await this.searchJobs()
+      await this.searchJobsAction(this.$store.state.jobs.search)
     },
     showPagination() {
       if (this.count < 12 || this.count === 0 || !this.jobs) {
@@ -144,7 +143,7 @@ export default {
         this.offsetData = this.page * this.limit - this.limit
       }
       this.setOffset(this.offsetData)
-      await this.searchJobs()
+      await this.searchJobsAction(this.$store.state.jobs.search)
     },
   },
 }

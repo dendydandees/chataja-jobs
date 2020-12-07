@@ -23,7 +23,7 @@
               :key="index"
               link
               color="white"
-              class="font-weight-bold mr-2 mb-4 elevation-1"
+              class="font-weight-bold mr-2 mb-4 elevation-1 subtitle-1"
               :ripple="{ class: 'blue--text' }"
               >{{ job }}</v-chip
             >
@@ -62,13 +62,14 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 import Carousel from '@/components/base/Carousel'
 import CardJobs from '@/components/base/CardJobs'
 import LoadingBar from '@/components/base/LoadingBar'
 import SearchForm from '@/components/base/SearchForm'
 
 export default {
+  name: 'List',
   components: {
     Carousel,
     CardJobs,
@@ -87,7 +88,13 @@ export default {
       return this.$store.state.jobs.functionJobs
     },
   },
+  created() {
+    this.setDefaultSearch()
+  },
   methods: {
+    ...mapMutations({
+      setDefaultSearch: 'jobs/SET_DEFAULT_SEARCH',
+    }),
     ...mapActions({
       getLatestJobs: 'jobs/getLatestJobs',
       getFunctionJobs: 'jobs/getFunctionJobs',

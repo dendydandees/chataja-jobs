@@ -3,6 +3,7 @@ export const state = () => ({
   functionJobs: [],
   detailJob: [],
   searchJobs: [],
+  countSearchJobs: '',
   search: {
     text: '',
     location: '',
@@ -16,10 +17,10 @@ export const state = () => ({
 
 export const getters = {
   listSearchJobs: (state) => {
-    return state.searchJobs.jobs
+    return state.searchJobs
   },
   listJobsCount: (state) => {
-    return state.searchJobs.count
+    return state.countSearchJobs
   },
   searchData: (state) => {
     return state.search
@@ -42,6 +43,17 @@ export const mutations = {
   },
   SET_SEARCH_JOBS(state, searchJobs) {
     state.searchJobs = searchJobs
+  },
+  SET_SEARCH_JOBS_COUNT(state, countSearchJobs) {
+    state.countSearchJobs = countSearchJobs
+  },
+  SET_DEFAULT_SEARCH(state) {
+    state.search.text = ''
+    state.search.location = ''
+    state.search.jobTypes = ''
+    state.search.educationTypes = ''
+    state.search.limit = 12
+    state.search.offset = 0
   },
   SET_SEARCH_TEXT(state, text) {
     state.search.text = text
@@ -67,6 +79,7 @@ export const mutations = {
 }
 
 export const actions = {
+  // function for get latest jobs
   async getLatestJobs({ commit, dispatch }) {
     try {
       const result = await fetch(`/api/job_board/search?limit=4`)
@@ -90,6 +103,7 @@ export const actions = {
       error({ statusCode: 404, message: 'Jobs not found' })
     }
   },
+  // function for get type function of jobs
   async getFunctionJobs({ commit, dispatch }) {
     try {
       const result = await fetch(`/api/job_board/search`)
@@ -111,6 +125,7 @@ export const actions = {
       error({ statusCode: 404, message: 'Jobs not found' })
     }
   },
+  // function for get details of jobs
   async getDetailJob({ commit, dispatch }, id) {
     try {
       const result = await fetch(`/api/jobs/${id}`)
@@ -128,25 +143,36 @@ export const actions = {
       error({ statusCode: 404, message: 'Jobs not found' })
     }
   },
+  // function for get a search jobs
   async searchJobsAction({ commit }, data) {
     try {
-      const result = await fetch(
+      await fetch(
         `/api/job_board/search?text=${data.text}&location=${data.location}&limit=${data.limit}&offset=${data.offset}`
       )
         .then((res) => res.json())
         .then((data) => {
+          const count = data.count
+          const jobs = data.jobs.sort((first, second) => {
+            return first.activation_date > second.activation_date
+              ? -1
+              : first.activation_date < second.activation_date
+              ? 1
+              : 0
+          })
+          if (data) {
+            commit('SET_SEARCH_JOBS', jobs)
+            commit('SET_SEARCH_JOBS_COUNT', count)
+          } else {
+            commit('SET_SEARCH_JOBS', [])
+            commit('SET_SEARCH_JOBS_COUNT', '')
+          }
           return data
         })
-
-      if (result) {
-        commit('SET_SEARCH_JOBS', result)
-      } else {
-        commit('SET_SEARCH_JOBS', [])
-      }
     } catch (error) {
       error({ statusCode: 404, message: 'Jobs not found' })
     }
   },
+  // function for get a detail company
   async getCompanyDetail({ commit }, code) {
     try {
       const result = await fetch(`/api/companies/${code}/jobs`)

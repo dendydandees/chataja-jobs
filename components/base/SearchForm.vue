@@ -166,12 +166,16 @@ export default {
       setLocation: 'jobs/SET_SEARCH_LOCATION',
       setJob: 'jobs/SET_SEARCH_JOB_TYPES',
       setEducation: 'jobs/SET_SEARCH_EDUCATION_TYPES',
+      setLimit: 'jobs/SET_SEARCH_LIMIT',
+      setOffset: 'jobs/SET_SEARCH_OFFSET',
     }),
     ...mapActions({
       searchJobsAction: 'jobs/searchJobsAction',
     }),
     async searchJobs() {
       try {
+        this.setLimit(12)
+        this.setOffset(0)
         await this.searchJobsAction(this.$store.state.jobs.search)
         await this.$router.push('/jobs/list')
       } catch (error) {

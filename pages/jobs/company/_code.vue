@@ -3,26 +3,103 @@
     <v-container>
       <v-row dense>
         <v-col cols="12">
-          <v-sheet
-            color="white"
-            elevation="1"
-            height="100%"
-            width="100%"
-            rounded="true"
-          >
-            <h1>kolom 1</h1>
-          </v-sheet>
+          <v-card elevation="1" rounded="lg">
+            <v-card-text class="pa-4 pa-md-8">
+              <v-row>
+                <v-col cols="12" sm="auto">
+                  <v-img
+                    v-if="company[0].company_info.logo !== undefined"
+                    :src="company[0].company_info.logo"
+                    :lazy-src="company[0].company_info.logo"
+                    width="100"
+                    height="100"
+                    contain
+                    class="mx-auto mx-sm-0"
+                  >
+                  </v-img>
+                  <v-img
+                    v-else
+                    src="/placeholder-profile.svg"
+                    lazy-src="/placeholder-profile.svg"
+                    width="100"
+                    height="100"
+                    class="mx-auto mx-sm-0"
+                  >
+                  </v-img>
+                </v-col>
+                <v-col class="text-center text-sm-left">
+                  <h2 class="headline font-weight-bold mb-2">
+                    {{ company[0].company_name }}
+                  </h2>
+                  <p class="subtitle-1 ma-0">
+                    {{
+                      `${company[0].google_location.address_components.city}, ${company[0].google_location.address_components.region}, ${company[0].google_location.address_components.country}`
+                    }}
+                  </p>
+                </v-col>
+                <v-col
+                  cols="12"
+                  sm="auto"
+                  align-self="center"
+                  class="text-center text-sm-left"
+                >
+                  <v-btn
+                    color="primary"
+                    outlined
+                    :href="`${company[0].company_info.url}`"
+                    target="blank"
+                  >
+                    <v-icon left> mdi-web </v-icon>
+                    Kunjungi Website
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
         </v-col>
         <v-col cols="12">
-          <v-sheet
-            color="white"
-            elevation="1"
-            height="100%"
-            width="100%"
-            rounded="true"
-          >
-            <p>kolom 2</p>
-          </v-sheet>
+          <v-card elevation="1" rounded="lg">
+            <v-card-text class="pa-4 pa-md-10">
+              <h3 class="font-weight-bold headline">Tentang Kami</h3>
+              <hr class="grey lighten-5 my-4" />
+              <v-row no-gutters class="mb-10">
+                <v-col cols="12">
+                  <h6 class="subtitle-2 mb-2 font-weight-bold">Deskripsi</h6>
+                  <div class="body-2" v-html="company[0].description"></div>
+                </v-col>
+              </v-row>
+              <v-row no-gutters class="mb-4">
+                <v-col cols="12">
+                  <h6 class="subtitle-2 mb-2 font-weight-bold">Lokasi</h6>
+                  <p class="body-2">
+                    {{
+                      `${company[0].google_location.address_components.city}, ${company[0].google_location.address_components.region}, ${company[0].google_location.address_components.country}`
+                    }}
+                  </p>
+                </v-col>
+              </v-row>
+              <v-row no-gutters class="mb-4">
+                <v-col cols="12">
+                  <h6 class="subtitle-2 mb-2 font-weight-bold">Alamat</h6>
+                  <p class="body-2">
+                    {{ company[0].google_location.raw_string }}
+                  </p>
+                </v-col>
+              </v-row>
+              <v-row no-gutters class="mb-4">
+                <v-col cols="12">
+                  <h6 class="subtitle-2 mb-2 font-weight-bold">Website</h6>
+                  <a
+                    class="body-2"
+                    :href="`${company[0].company_info.url}`"
+                    target="blank"
+                  >
+                    {{ company[0].company_info.url }}
+                  </a>
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
         </v-col>
       </v-row>
     </v-container>

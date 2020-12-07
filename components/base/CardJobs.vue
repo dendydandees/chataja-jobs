@@ -63,7 +63,7 @@
           <v-card-actions class="px-0 pb-0 pt-4">
             <v-row no-gutters align="center">
               <v-col>
-                <span v-if="job.activation_date !== null">{{
+                <span v-if="job.activation_date !== null" class="subtitle-2">{{
                   $moment(job.activation_date).fromNow()
                 }}</span>
                 <span v-else></span>
