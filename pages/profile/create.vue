@@ -238,12 +238,190 @@
               <h2 class="title font-weight-bold mb-2">Tingkat Pendidikan</h2>
             </v-col>
             <v-col class="text-right">
-              <v-btn text color="primary">
+              <v-btn
+                text
+                color="primary"
+                @click="toggleEducation = !toggleEducation"
+              >
                 <v-icon left>mdi-plus-thick</v-icon>
                 Tambahkan Pendidikan
               </v-btn>
             </v-col>
           </v-row>
+          <v-expand-transition>
+            <v-row v-if="toggleEducation" class="mt-4 img-border">
+              <v-col class="pa-4">
+                <!-- field education name -->
+                <v-row no-gutters>
+                  <v-col>
+                    <label for="educationName" class="font-weight-bold"
+                      >Nama Instansi</label
+                    >
+                    <v-text-field
+                      id="educationName"
+                      v-model="createProfile.educationName"
+                      single-line
+                      outlined
+                      type="text"
+                      class="mt-2"
+                    >
+                    </v-text-field>
+                  </v-col>
+                </v-row>
+                <!-- end field education name -->
+
+                <v-row no-gutters>
+                  <!-- field degree -->
+                  <v-col class="pr-2">
+                    <label for="educationDegree" class="font-weight-bold"
+                      >Tingkatan Pendidikan</label
+                    >
+                    <v-text-field
+                      id="educationDegree"
+                      v-model="createProfile.educationDegree"
+                      single-line
+                      outlined
+                      type="text"
+                      class="mt-2"
+                    >
+                    </v-text-field>
+                  </v-col>
+                  <!-- end field degree -->
+
+                  <!-- field of study -->
+                  <v-col class="pl-2">
+                    <label for="educationStudy" class="font-weight-bold"
+                      >Bidang Studi</label
+                    >
+                    <v-text-field
+                      id="educationStudy"
+                      v-model="createProfile.educationStudy"
+                      single-line
+                      outlined
+                      type="text"
+                      class="mt-2"
+                    >
+                    </v-text-field>
+                  </v-col>
+                  <!-- end field of study -->
+                </v-row>
+
+                <v-row no-gutters>
+                  <!-- field education start -->
+                  <v-col class="pr-2">
+                    <label for="educationStart" class="font-weight-bold"
+                      >Tahun Mulai</label
+                    >
+                    <v-menu
+                      ref="menuEducationStart"
+                      v-model="menuEducationStart"
+                      :close-on-content-click="false"
+                      :return-value.sync="createProfile.educationStart"
+                      transition="scale-transition"
+                      offset-y
+                      max-width="290px"
+                      min-width="290px"
+                    >
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                          id="educationStart"
+                          v-model="createProfile.educationStart"
+                          single-line
+                          outlined
+                          readonly
+                          v-bind="attrs"
+                          v-on="on"
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker
+                        v-model="createProfile.educationStart"
+                        type="month"
+                        no-title
+                        scrollable
+                      >
+                        <v-spacer></v-spacer>
+                        <v-btn
+                          text
+                          color="primary"
+                          @click="menuEducationStart = false"
+                        >
+                          Cancel
+                        </v-btn>
+                        <v-btn
+                          text
+                          color="primary"
+                          @click="
+                            $refs.menuEducationStart.save(
+                              createProfile.educationStart
+                            )
+                          "
+                        >
+                          OK
+                        </v-btn>
+                      </v-date-picker>
+                    </v-menu>
+                  </v-col>
+                  <!-- end field education start -->
+
+                  <!-- field education end -->
+                  <v-col class="pl-2">
+                    <label for="work_end" class="font-weight-bold"
+                      >Tahun Berakhir</label
+                    >
+                    <v-menu
+                      ref="menuEducationEnd"
+                      v-model="menuEducationEnd"
+                      :close-on-content-click="false"
+                      :return-value.sync="createProfile.educationEnd"
+                      transition="scale-transition"
+                      offset-y
+                      max-width="290px"
+                      min-width="290px"
+                    >
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                          id="educationEnd"
+                          v-model="createProfile.educationEnd"
+                          single-line
+                          outlined
+                          readonly
+                          v-bind="attrs"
+                          v-on="on"
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker
+                        v-model="createProfile.educationEnd"
+                        type="month"
+                        no-title
+                        scrollable
+                      >
+                        <v-spacer></v-spacer>
+                        <v-btn
+                          text
+                          color="primary"
+                          @click="menuEducationEnd = false"
+                        >
+                          Cancel
+                        </v-btn>
+                        <v-btn
+                          text
+                          color="primary"
+                          @click="
+                            $refs.menuEducationEnd.save(
+                              createProfile.educationEnd
+                            )
+                          "
+                        >
+                          OK
+                        </v-btn>
+                      </v-date-picker>
+                    </v-menu>
+                  </v-col>
+                  <!-- end field education end -->
+                </v-row>
+              </v-col>
+            </v-row>
+          </v-expand-transition>
         </v-sheet>
       </v-col>
     </v-row>
@@ -257,7 +435,7 @@
           <!-- toggle work exp -->
           <v-row no-gutters>
             <v-col>
-              <v-radio-group id="work_exp" v-model="toggleWorkExp" column>
+              <v-radio-group id="workExp" v-model="toggleWorkExp" column>
                 <v-radio
                   label="Saya mempunyai pengalaman kerja"
                   :value="true"
@@ -276,12 +454,12 @@
                 <!-- field work name -->
                 <v-row no-gutters>
                   <v-col>
-                    <label for="work_name" class="font-weight-bold"
+                    <label for="workName" class="font-weight-bold"
                       >Nama Pekerjaan</label
                     >
                     <v-text-field
-                      id="work_name"
-                      v-model="createProfile.work_name"
+                      id="workName"
+                      v-model="createProfile.workName"
                       single-line
                       outlined
                       type="text"
@@ -295,12 +473,12 @@
                 <!-- field work company -->
                 <v-row no-gutters>
                   <v-col>
-                    <label for="work_company" class="font-weight-bold"
+                    <label for="workCompany" class="font-weight-bold"
                       >Nama Perusahaan</label
                     >
                     <v-text-field
-                      id="work_company"
-                      v-model="createProfile.work_company"
+                      id="workCompany"
+                      v-model="createProfile.workCompany"
                       single-line
                       outlined
                       type="text"
@@ -314,12 +492,12 @@
                 <!-- field work location -->
                 <v-row no-gutters>
                   <v-col>
-                    <label for="work_location" class="font-weight-bold"
+                    <label for="workLocation" class="font-weight-bold"
                       >Lokasi</label
                     >
                     <v-text-field
-                      id="work_location"
-                      v-model="createProfile.work_location"
+                      id="workLocation"
+                      v-model="createProfile.workLocation"
                       single-line
                       outlined
                       type="text"
@@ -329,17 +507,18 @@
                   </v-col>
                 </v-row>
                 <!-- end field work location -->
+
                 <v-row no-gutters>
                   <!-- field work start -->
                   <v-col class="pr-2">
-                    <label for="work_start" class="font-weight-bold"
+                    <label for="workStart" class="font-weight-bold"
                       >Tahun Mulai</label
                     >
                     <v-menu
                       ref="menuWorkStart"
                       v-model="menuWorkStart"
                       :close-on-content-click="false"
-                      :return-value.sync="createProfile.work_start"
+                      :return-value.sync="createProfile.workStart"
                       transition="scale-transition"
                       offset-y
                       max-width="290px"
@@ -347,8 +526,8 @@
                     >
                       <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                          id="work_start"
-                          v-model="createProfile.work_start"
+                          id="workStart"
+                          v-model="createProfile.workStart"
                           single-line
                           outlined
                           readonly
@@ -357,7 +536,7 @@
                         ></v-text-field>
                       </template>
                       <v-date-picker
-                        v-model="createProfile.work_start"
+                        v-model="createProfile.workStart"
                         type="month"
                         no-title
                         scrollable
@@ -374,7 +553,7 @@
                           text
                           color="primary"
                           @click="
-                            $refs.menuWorkStart.save(createProfile.work_start)
+                            $refs.menuWorkStart.save(createProfile.workStart)
                           "
                         >
                           OK
@@ -393,7 +572,7 @@
                       ref="menuWorkEnd"
                       v-model="menuWorkEnd"
                       :close-on-content-click="false"
-                      :return-value.sync="createProfile.work_end"
+                      :return-value.sync="createProfile.workEnd"
                       transition="scale-transition"
                       offset-y
                       max-width="290px"
@@ -401,8 +580,8 @@
                     >
                       <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                          id="work_end"
-                          v-model="createProfile.work_end"
+                          id="workEnd"
+                          v-model="createProfile.workEnd"
                           single-line
                           outlined
                           readonly
@@ -411,7 +590,7 @@
                         ></v-text-field>
                       </template>
                       <v-date-picker
-                        v-model="createProfile.work_end"
+                        v-model="createProfile.workEnd"
                         type="month"
                         no-title
                         scrollable
@@ -427,9 +606,7 @@
                         <v-btn
                           text
                           color="primary"
-                          @click="
-                            $refs.menuWorkEnd.save(createProfile.work_end)
-                          "
+                          @click="$refs.menuWorkEnd.save(createProfile.workEnd)"
                         >
                           OK
                         </v-btn>
@@ -442,12 +619,12 @@
                 <!-- field work desc -->
                 <v-row no-gutters>
                   <v-col>
-                    <label for="work_desc" class="font-weight-bold"
+                    <label for="workDesc" class="font-weight-bold"
                       >Deskripsi</label
                     >
                     <v-textarea
-                      id="work_desc"
-                      v-model="createProfile.desc"
+                      id="workDesc"
+                      v-model="createProfile.workDesc"
                       outlined
                       clearable
                       clear-icon="mdi-close-circle"
@@ -474,8 +651,11 @@ export default {
     imageUrl: '/placeholder-profile.svg',
     imageUploaded: '',
     menuBirthday: false,
+    menuEducationStart: false,
+    menuEducationEnd: false,
     menuWorkStart: false,
     menuWorkEnd: false,
+    toggleEducation: false,
     toggleWorkExp: '',
     createProfile: {
       file: '',
@@ -486,12 +666,17 @@ export default {
       email: '',
       location: '',
       address: '',
-      work_name: '',
-      work_company: '',
-      work_location: '',
-      work_start: '',
-      work_end: '',
-      desc: '',
+      educationName: '',
+      educationDegree: '',
+      educationStudy: '',
+      educationStart: '',
+      educationEnd: '',
+      workName: '',
+      workCompany: '',
+      workLocation: '',
+      workStart: '',
+      workEnd: '',
+      workDesc: '',
     },
   }),
   watch: {
