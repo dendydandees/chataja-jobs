@@ -642,6 +642,45 @@
       </v-col>
     </v-row>
     <!-- end form 4 -->
+
+    <!-- step form -->
+    <v-sheet color="white" elevation="1">
+      <v-container>
+        <v-row align="center">
+          <v-col cols="2">
+            <v-btn text color="primary" to="/">
+              <v-icon left> mdi-arrow-left </v-icon>
+              Kembali
+            </v-btn>
+          </v-col>
+          <v-col class="text-center py-0">
+            <v-stepper alt-labels>
+              <v-stepper-header>
+                <v-stepper-step step="1">
+                  <span class="text-center"> Informasi Pribadi </span>
+                </v-stepper-step>
+
+                <v-divider></v-divider>
+
+                <v-stepper-step step="2">
+                  <span class="text-center"> Unggah CV </span>
+                </v-stepper-step>
+
+                <v-divider></v-divider>
+
+                <v-stepper-step step="3">
+                  <span class="text-center"> Selesai </span>
+                </v-stepper-step>
+              </v-stepper-header>
+            </v-stepper>
+          </v-col>
+          <v-col class="text-right" cols="2">
+            <v-btn color="primary" to="/">Selanjutnya</v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-sheet>
+    <!-- end step form -->
   </section>
 </template>
 
