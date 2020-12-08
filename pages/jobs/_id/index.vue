@@ -79,7 +79,7 @@
                   </v-col>
                 </v-row>
                 <hr class="grey lighten-5 my-4" />
-                <v-row no-gutters class="mb-10">
+                <v-row no-gutters class="mb-8">
                   <v-col cols="12">
                     <h6 class="subtitle-1 mb-2 font-weight-bold">
                       Deksripsi Pekerjaan
@@ -87,7 +87,7 @@
                     <div class="body-2" v-html="details.description"></div>
                   </v-col>
                 </v-row>
-                <v-row no-gutters class="mb-10">
+                <v-row no-gutters class="mb-8">
                   <v-col cols="12">
                     <h6 class="subtitle-1 mb-2 font-weight-bold">
                       Persyaratan Pekerjaan

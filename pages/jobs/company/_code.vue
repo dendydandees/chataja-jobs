@@ -65,7 +65,7 @@
               <v-card-text class="pa-4 pa-md-10">
                 <h3 class="font-weight-bold headline">Tentang Kami</h3>
                 <hr class="grey lighten-5 my-4" />
-                <v-row no-gutters class="mb-10">
+                <v-row no-gutters class="mb-4">
                   <v-col cols="12">
                     <h6 class="subtitle-2 mb-2 font-weight-bold">Deskripsi</h6>
                     <div class="body-2" v-html="company.description"></div>
