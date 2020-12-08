@@ -47,16 +47,4 @@ main {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-::-webkit-scrollbar {
-  width: 16px;
-}
-::-webkit-scrollbar-track {
-  background: #fff;
-}
-::-webkit-scrollbar-thumb {
-  background: #eb5757;
-}
-::-webkit-scrollbar-thumb:hover {
-  filter: brightness(125%);
-}
 </style>
