@@ -162,12 +162,12 @@
               <!-- field telphone number -->
               <v-row no-gutters class="mt-4">
                 <v-col>
-                  <label for="telp_number" class="font-weight-bold"
+                  <label for="telpNumber" class="font-weight-bold"
                     >Nomor telepon</label
                   >
                   <v-text-field
-                    id="telp_number"
-                    v-model="createProfile.telp_number"
+                    id="telpNumber"
+                    v-model="createProfile.telpNumber"
                     single-line
                     outlined
                     type="number"
@@ -672,8 +672,28 @@
       <v-stepper-content step="3">
         <v-row no-gutters class="my-6" justify="center">
           <v-col cols="12" sm="10" md="8">
-            <v-sheet color="white" elevation="1" rounded class="pa-6 pa-md-10">
-              <h2 class="title font-weight-bold text-center">Selesai!</h2>
+            <v-sheet
+              color="white"
+              elevation="1"
+              rounded
+              class="pa-6 pa-md-10 text-center"
+            >
+              <h2 class="title font-weight-bold">Selesai!</h2>
+              <v-img
+                src="/done-create-profile.png"
+                lazy-src="/done-create-profile.png"
+                width="100"
+                height="100"
+                class="mx-auto mx-sm-0 rounded-circle my-10"
+              >
+              </v-img>
+              <h5 class="font-weight-bold subtitle-1">
+                Anda sudah selesai melengkapi profil Anda
+              </h5>
+              <p>
+                Sekarang Anda dapat mencari lowongan pekerjaan di ChatAja Jobs
+              </p>
+              <v-btn color="primary" to="/"> Cari Pekerjaan </v-btn>
             </v-sheet>
           </v-col>
         </v-row>
@@ -737,7 +757,7 @@ export default {
       file: '',
       fullname: '',
       birthday: null,
-      telp_number: '',
+      telpNumber: '',
       gender: '',
       email: '',
       location: '',
@@ -790,8 +810,10 @@ export default {
     nextStepper() {
       if (this.stepper === 1) {
         this.stepper = 2
+        console.log('ini step 2')
       } else if (this.stepper === 2) {
         this.stepper = 3
+        console.log('ini step 3')
       } else {
         this.$router.push('/')
         this.stepper = 1
@@ -801,8 +823,10 @@ export default {
       if (this.stepper === 1) {
         this.$router.push('/')
       } else if (this.stepper === 2) {
+        console.log('balik ke step 1')
         this.stepper = 1
       } else {
+        console.log('balik ke step 2')
         this.stepper = 2
       }
     },
