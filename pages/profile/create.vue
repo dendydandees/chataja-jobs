@@ -5,13 +5,13 @@
       <v-sheet color="white" elevation="1">
         <v-container>
           <v-row align="center">
-            <v-col>
+            <v-col cols="12" sm="4">
               <h1 class="headline font-weight-bold">Atur Profile Anda</h1>
             </v-col>
-            <v-col class="text-center">
+            <v-col cols="12" sm="4" class="text-sm-center">
               <span>Step {{ stepper }} : {{ stepperText }}</span>
             </v-col>
-            <v-col class="text-right">
+            <v-col cols="12" sm="4" class="text-sm-right">
               <v-btn v-if="stepper !== 3" text to="/" elevation="2"
                 >Lewati</v-btn
               >
@@ -23,7 +23,7 @@
 
       <!-- step form 1 -->
       <v-stepper-content step="1">
-        <section v-if="stepper === 1">
+        <section v-if="stepper === 1" class="my-10">
           <!-- form 1 -->
           <v-row no-gutters class="my-6" justify="center">
             <v-col cols="12" sm="10" md="8">
@@ -682,7 +682,7 @@
 
       <!-- step form 2 -->
       <v-stepper-content step="2">
-        <section v-if="stepper === 2">
+        <section v-if="stepper === 2" class="my-10">
           <v-row no-gutters class="my-6" justify="center">
             <v-col cols="12" sm="10" md="8">
               <v-sheet
@@ -695,7 +695,7 @@
                   Unggah CV
                 </h2>
                 <v-row no-gutters justify="center">
-                  <v-col cols="8">
+                  <v-col cols="12" sm="10" md="8">
                     <dropzone
                       id="dropzone"
                       ref="myDropzone"
@@ -749,7 +749,7 @@
 
       <!-- step form 3 -->
       <v-stepper-content step="3">
-        <section v-if="stepper === 3">
+        <section v-if="stepper === 3" class="my-10">
           <v-row no-gutters class="my-6" justify="center">
             <v-col cols="12" sm="10" md="8">
               <v-sheet
@@ -785,13 +785,13 @@
       <v-sheet color="white" elevation="1">
         <v-container>
           <v-row align="center">
-            <v-col cols="2">
+            <v-col cols="12" sm="3">
               <v-btn text color="primary" @click="backStepper">
                 <v-icon left> mdi-arrow-left </v-icon>
                 Kembali
               </v-btn>
             </v-col>
-            <v-col class="text-center py-0">
+            <v-col cols="12" sm="6" class="text-center py-0">
               <v-stepper-header>
                 <v-stepper-step step="1" :complete="stepper > 1">
                   <span class="text-center"> Informasi Pribadi </span>
@@ -810,7 +810,7 @@
                 </v-stepper-step>
               </v-stepper-header>
             </v-col>
-            <v-col class="text-right" cols="2">
+            <v-col cols="12" sm="3" class="text-sm-right">
               <v-btn color="primary" @click="nextStepper">Selanjutnya</v-btn>
             </v-col>
           </v-row>
@@ -857,7 +857,7 @@ export default {
     },
     dropzoneOptions: {
       url: 'https://httpbin.org/post',
-      maxFilesize: 2,
+      maxFilesize: 10,
       maxFiles: 1,
       acceptedFiles: '.jpg, .jpeg, .png, .pdf',
       thumbnailWidth: 200,
@@ -884,6 +884,9 @@ export default {
     },
   },
   methods: {
+    scrollToTop() {
+      window.scrollTo(0, 0)
+    },
     saveBirthday(birthday) {
       this.$refs.menuBirthday.save(birthday)
     },
@@ -901,12 +904,12 @@ export default {
     },
     nextStepper() {
       if (this.stepper === 1) {
+        this.scrollToTop()
         this.stepper = 2
-        console.log('ini step 2')
       } else if (this.stepper === 2) {
         this.$refs.myDropzone.removeAllFiles()
+        this.scrollToTop()
         this.stepper = 3
-        console.log('ini step 3')
       } else {
         this.$refs.myDropzone.removeAllFiles()
         this.$router.push('/')
@@ -919,10 +922,10 @@ export default {
         this.$router.push('/')
       } else if (this.stepper === 2) {
         this.$refs.myDropzone.removeAllFiles()
-        console.log('balik ke step 1')
+        this.scrollToTop()
         this.stepper = 1
       } else {
-        console.log('balik ke step 2')
+        this.scrollToTop()
         this.stepper = 2
       }
     },
