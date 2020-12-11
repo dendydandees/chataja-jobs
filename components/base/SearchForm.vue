@@ -8,8 +8,8 @@
             id="search"
             v-model="text"
             single-line
-            label="Cari lowongan berdasarkan nama, perusahaan atau lokasi"
-            title="Cari lowongan berdasarkan nama, perusahaan atau lokasi"
+            label="Cari lowongan berdasarkan nama, perusahaan atau lokasi pekerjaan"
+            title="Cari lowongan berdasarkan nama, perusahaan atau lokasi pekerjaan"
             type="text"
             background-color="white"
             hide-details="true"
@@ -177,7 +177,7 @@ export default {
         this.setLimit(12)
         this.setOffset(0)
         await this.searchJobsAction(this.$store.state.jobs.search)
-        await this.$router.push('/jobs/list')
+        await this.$router.push('/jobs/job_board')
       } catch (error) {
         error({ statusCode: 404, message: 'Jobs not found' })
       }

@@ -12,7 +12,8 @@
           <v-spacer></v-spacer>
           <v-app-bar-nav-icon
             v-if="
-              $vuetify.breakpoint.smAndDown && $route.name !== 'notification'
+              $vuetify.breakpoint.smAndDown &&
+              $route.name !== 'email-verification'
             "
             class="float-right"
             @click.stop="drawer = !drawer"
@@ -24,7 +25,10 @@
             />
           </v-app-bar-nav-icon>
           <div
-            v-if="$vuetify.breakpoint.mdAndUp && $route.name !== 'notification'"
+            v-if="
+              $vuetify.breakpoint.mdAndUp &&
+              $route.name !== 'email-verification'
+            "
           >
             <v-btn
               text
@@ -54,7 +58,9 @@
 
     <!-- side bar -->
     <v-navigation-drawer
-      v-if="$vuetify.breakpoint.smAndDown && $route.name !== 'notification'"
+      v-if="
+        $vuetify.breakpoint.smAndDown && $route.name !== 'email-verification'
+      "
       v-model="drawer"
       app
       right
@@ -91,7 +97,7 @@
 
     <!-- sign modal -->
     <v-dialog
-      v-if="$route.name !== 'notification'"
+      v-if="$route.name !== 'email-verification'"
       v-model="signDialog"
       max-width="700"
     >
@@ -239,7 +245,7 @@
 
     <!-- forgot password modal -->
     <v-dialog
-      v-if="$route.name !== 'notification'"
+      v-if="$route.name !== 'email-verification'"
       v-model="forgotPasswordDialog"
       max-width="700"
     >
@@ -323,12 +329,16 @@ export default {
   },
   methods: {
     signUpClick() {
-      this.signDialog = !this.signDialog
       this.tab = 'sign-up'
+      setTimeout(() => {
+        this.signDialog = !this.signDialog
+      }, 250)
     },
     signInClick() {
-      this.signDialog = !this.signDialog
       this.tab = 'sign-in'
+      setTimeout(() => {
+        this.signDialog = !this.signDialog
+      }, 250)
     },
     forgotPasswordClick() {
       this.tab = ''
@@ -336,14 +346,18 @@ export default {
       this.forgotPasswordDialog = !this.forgotPasswordDialog
     },
     backToRegister() {
-      this.forgotPasswordDialog = !this.forgotPasswordDialog
-      this.signDialog = !this.signDialog
       this.tab = 'sign-up'
+      setTimeout(() => {
+        this.forgotPasswordDialog = !this.forgotPasswordDialog
+        this.signDialog = !this.signDialog
+      }, 250)
     },
     backToSignIn() {
-      this.forgotPasswordDialog = !this.forgotPasswordDialog
-      this.signDialog = !this.signDialog
       this.tab = 'sign-in'
+      setTimeout(() => {
+        this.forgotPasswordDialog = !this.forgotPasswordDialog
+        this.signDialog = !this.signDialog
+      }, 250)
     },
     async signUpHandler() {
       try {
@@ -361,8 +375,4 @@ export default {
 }
 </script>
 
-<style>
-.v-toolbar__content {
-  padding: 0px !important;
-}
-</style>
+<style></style>

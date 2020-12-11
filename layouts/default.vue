@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import Navbar from '@/components/Navbar'
+import Navbar from '@/components/nav/Navbar'
 import Footer from '@/components/Footer'
 import '@/assets/style.css'
 

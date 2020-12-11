@@ -30,30 +30,38 @@
               </v-tooltip>
             </v-col>
           </v-row>
-          <v-img
+          <nuxt-link
             v-if="job.company_info.logo !== null"
-            :src="job.company_info.logo"
-            :lazy-src="job.company_info.logo"
-            width="75"
-            height="75"
-            contain
-            class="rounded img-border"
+            :to="`/jobs/company/${job.company.code}`"
           >
-          </v-img>
-          <v-img
-            v-else
-            src="/placeholder-profile.svg"
-            lazy-src="/placeholder-profile.svg"
-            width="75"
-            height="75"
-            class="rounded img-border"
-          >
-          </v-img>
+            <v-img
+              :src="job.company_info.logo"
+              :lazy-src="job.company_info.logo"
+              width="75"
+              height="75"
+              contain
+              class="rounded img-border"
+            >
+            </v-img>
+          </nuxt-link>
+          <nuxt-link v-else :to="`/jobs/company/${job.company.code}`">
+            <v-img
+              src="/placeholder-profile.svg"
+              lazy-src="/placeholder-profile.svg"
+              width="75"
+              height="75"
+              class="rounded img-border"
+            >
+            </v-img>
+          </nuxt-link>
           <v-card-text class="px-0" style="height: 180px">
-            <p class="font-weight-regular text--primary subtitle-1">
+            <nuxt-link
+              :to="`/jobs/company/${job.company.code}`"
+              class="font-weight-regular text--primary subtitle-1"
+            >
               {{ job.company_name }}
-            </p>
-            <p class="mb-2 font-weight-bold">
+            </nuxt-link>
+            <p class="mt-5 mb-2 font-weight-bold">
               {{ job.google_location.address_components.city }},
               {{ job.google_location.address_components.region }}
             </p>

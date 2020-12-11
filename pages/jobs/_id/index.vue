@@ -216,22 +216,19 @@ export default {
     educationTypes() {
       const level = this.details.education_level
       if (level === 100) {
-        return 'SD /SMP'
+        return 'SD / SMP'
       } else if (level === 150 || level === 200) {
         return 'SMA / SMK'
-      } else if (
-        level === 300 ||
-        level === 350 ||
-        level === 400 ||
-        level === 450
-      ) {
+      } else if (level === 300 || level === 350) {
         return 'Diploma 3'
+      } else if (level === 400 || level === 450) {
+        return 'Diploma 1 / Diploma 2'
       } else if (level === 500 || level === 550) {
-        return 'S1'
+        return 'Sarjana'
       } else if (level === 600 || level === 650) {
-        return 'S2'
+        return 'Magister'
       } else if (level === 700 || level === 750) {
-        return 'S3'
+        return 'Doktor'
       } else {
         return '-'
       }

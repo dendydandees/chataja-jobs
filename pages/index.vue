@@ -25,6 +25,7 @@
               color="white"
               class="font-weight-bold mr-2 mb-4 elevation-1 subtitle-1"
               :ripple="{ class: 'blue--text' }"
+              @click="toJobBoard(job)"
               >{{ job }}</v-chip
             >
           </v-col>
@@ -94,11 +95,16 @@ export default {
   methods: {
     ...mapMutations({
       setDefaultSearch: 'jobs/SET_DEFAULT_SEARCH',
+      setSearchText: 'jobs/SET_SEARCH_TEXT',
     }),
     ...mapActions({
       getLatestJobs: 'jobs/getLatestJobs',
       getFunctionJobs: 'jobs/getFunctionJobs',
     }),
+    toJobBoard(jobFunction) {
+      this.setSearchText(jobFunction)
+      this.$router.push('/jobs/job_board')
+    },
   },
 }
 </script>

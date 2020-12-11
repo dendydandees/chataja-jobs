@@ -1,7 +1,7 @@
 [
   { "text": "Semua", "value": "" },
-  { "text": "Full Time", "value": "full time" },
-  { "text": "Part Time", "value": "part time" },
-  { "text": "Freelance", "value": "freelance" },
-  { "text": "Contractual", "value": "contractual" }
+  { "text": "Full Time", "value": "Full time" },
+  { "text": "Part Time", "value": "Part time" },
+  { "text": "Freelance", "value": "Freelance" },
+  { "text": "Contractual", "value": "Contractual" }
 ]

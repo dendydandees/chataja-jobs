@@ -1,3 +1,16 @@
+const encodeQueryString = (params) => {
+  const keys = Object.keys(params)
+  return keys.length
+    ? '?' +
+        keys
+          .map(
+            (key) =>
+              encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
+          )
+          .join('&')
+    : ''
+}
+
 export const state = () => ({
   latestJobs: [],
   functionJobs: [],
@@ -146,9 +159,16 @@ export const actions = {
   // function for get a search jobs
   async searchJobsAction({ commit }, data) {
     try {
-      await fetch(
-        `/api/job_board/search?text=${data.text}&location=${data.location}&limit=${data.limit}&offset=${data.offset}`
-      )
+      const params = encodeQueryString({
+        text: data.text,
+        location: data.location,
+        limit: data.limit,
+        offset: data.offset,
+        tenure: data.jobTypes,
+        education_level: data.educationTypes,
+      })
+
+      await fetch(`/api/job_board/search${params}`)
         .then((res) => res.json())
         .then((data) => {
           const count = data.count
