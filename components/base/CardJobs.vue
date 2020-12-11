@@ -22,7 +22,12 @@
             <v-col cols="2" class="text-right">
               <v-tooltip top>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn icon v-bind="attrs" v-on="on">
+                  <v-btn
+                    icon
+                    v-bind="attrs"
+                    v-on="on"
+                    @click="savedToLocalStorage(job)"
+                  >
                     <v-icon>mdi-bookmark-outline</v-icon>
                   </v-btn>
                 </template>
@@ -108,6 +113,15 @@ export default {
       default: () => {
         return false
       },
+    },
+  },
+  data: () => ({
+    savedItem: [],
+  }),
+  methods: {
+    savedToLocalStorage(job) {
+      this.savedItem.push(job)
+      localStorage.setItem('savedJobs', JSON.stringify(this.savedItem))
     },
   },
 }

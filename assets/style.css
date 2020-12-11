@@ -4,6 +4,18 @@ html {
 a {
   text-decoration: none;
 }
+::-webkit-scrollbar {
+  width: 16px;
+}
+::-webkit-scrollbar-track {
+  background: #fff;
+}
+::-webkit-scrollbar-thumb {
+  background: #eb5757;
+}
+::-webkit-scrollbar-thumb:hover {
+  filter: brightness(125%);
+}
 .v-toolbar__content {
   padding: 0px !important;
 }

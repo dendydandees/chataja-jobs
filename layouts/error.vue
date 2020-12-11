@@ -2,7 +2,7 @@
   <v-row align="center" justify="center">
     <v-col cols="12" sm="10" md="8">
       <v-sheet color="white" elevation="1" rounded class="pa-6 pa-md-10">
-        <nuxt-link to="/" class="text-decoration-none">
+        <nuxt-link to="/">
           <v-icon left color="primary"> mdi-arrow-left </v-icon>
           Kembali ke Halaman Utama
         </nuxt-link>
