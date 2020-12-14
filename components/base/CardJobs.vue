@@ -15,7 +15,7 @@
         <v-card elevation="1" rounded="lg" class="pa-4" height="100%">
           <v-row no-gutters class="mb-4">
             <v-col cols="10">
-              <h4 class="font-weight-bold title line-clamp">
+              <h4 class="font-weight-bold title line-clamp" :title="job.name">
                 {{ job.name }}
               </h4>
             </v-col>
@@ -120,8 +120,12 @@ export default {
   }),
   methods: {
     savedToLocalStorage(job) {
-      this.savedItem.push(job)
-      localStorage.setItem('savedJobs', JSON.stringify(this.savedItem))
+      if (!this.savedItem.includes(job)) {
+        this.savedItem.push(job)
+        return localStorage.setItem('savedJobs', JSON.stringify(this.savedItem))
+      } else {
+        return undefined
+      }
     },
   },
 }

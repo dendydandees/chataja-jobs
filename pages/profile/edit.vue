@@ -1,8 +1,8 @@
 <template>
   <section>
     <!-- headline -->
-    <v-row class="headline-background">
-      <v-col>
+    <v-row class="headline-background" no-gutters>
+      <v-col class="py-3">
         <v-container>
           <h2 class="font-weight-bold headline">Profil</h2>
         </v-container>
@@ -12,7 +12,7 @@
 
     <v-row justify="center" class="my-6" no-gutters>
       <v-col cols="12" sm="10" md="8">
-        <v-tabs v-model="tab" background-color="#e5e5e5">
+        <v-tabs v-model="tab" background-color="#e5e5e5" show-arrows>
           <v-tab href="#personal_info"> Informasi Pribadi </v-tab>
           <v-tab href="#my_cv"> CV Saya </v-tab>
           <v-tab href="#saved_jobs"> Pekerjaan Disimpan </v-tab>
@@ -20,31 +20,29 @@
 
         <v-tabs-items v-model="tab">
           <!-- tab personal info -->
-          <v-scroll-x-transition>
-            <v-tab-item id="personal_info">
-              <v-card elevation="1" rounded="lg" class="pa-4 my-6">
-                <v-card-text>Informasi Pribadi</v-card-text>
-              </v-card>
+          <v-scroll-x-transition mode="in-out" hide-on-leave>
+            <v-tab-item v-if="tab === 'personal_info'" id="personal_info">
+              <v-sheet color="white" elevation="1" rounded class="pa-4 my-6">
+                <span>tes</span>
+              </v-sheet>
             </v-tab-item>
           </v-scroll-x-transition>
           <!-- end tab personal info -->
 
           <!-- tab my cv -->
-          <v-scroll-x-transition>
-            <v-tab-item id="my_cv">
-              <v-card elevation="1" rounded="lg" class="pa-4 my-6">
-                <v-card-text>CV Saya</v-card-text>
-              </v-card>
+          <v-scroll-x-transition mode="in-out" hide-on-leave>
+            <v-tab-item v-if="tab === 'my_cv'" id="my_cv">
+              <v-sheet color="white" elevation="1" rounded class="pa-4 my-6">
+                <span>tes</span>
+              </v-sheet>
             </v-tab-item>
           </v-scroll-x-transition>
           <!-- end tab my cv -->
 
           <!-- tab saved jobs -->
-          <v-scroll-x-transition>
-            <v-tab-item id="saved_jobs">
-              <v-card elevation="1" rounded="lg" class="pa-4 my-6">
-                <v-card-text>Pekerjaan Disimpan</v-card-text>
-              </v-card>
+          <v-scroll-x-transition mode="in-out" hide-on-leave>
+            <v-tab-item v-if="tab === 'saved_jobs'" id="saved_jobs">
+              <SavedJobs />
             </v-tab-item>
           </v-scroll-x-transition>
           <!-- end tab saved jobs -->
@@ -55,16 +53,15 @@
 </template>
 
 <script>
+import SavedJobs from '@/components/base/SavedJobs'
 export default {
+  components: {
+    SavedJobs,
+  },
   data() {
     return {
-      tab: null,
-      savedJobs: [],
+      tab: '',
     }
-  },
-  created() {
-    const data = localStorage.getItem('savedJobs')
-    this.savedJobs = JSON.parse(data)
   },
 }
 </script>

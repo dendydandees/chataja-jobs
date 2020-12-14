@@ -42,6 +42,7 @@
                       :lazy-src="!imageUploaded ? imageUrl : imageUploaded"
                       width="100"
                       height="100"
+                      contain
                       class="mx-auto mx-sm-0 rounded-circle img-border"
                       style="cursor: pointer"
                       @click="chooseFile()"
