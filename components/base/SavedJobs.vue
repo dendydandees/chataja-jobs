@@ -11,7 +11,10 @@
       >
         <v-row no-gutters>
           <v-col cols="12" sm="auto" class="mr-sm-4">
-            <nuxt-link :to="`/jobs/company/${job.company.code}`">
+            <nuxt-link
+              :to="`/jobs/company/${job.company.code}`"
+              class="d-inline-block"
+            >
               <v-img
                 :src="job.company_info.logo"
                 :lazy-src="job.company_info.logo"
@@ -30,7 +33,10 @@
             >
               {{ job.company_name }}
             </nuxt-link>
-            <nuxt-link class="text--primary font-weight-bold headline" to="">
+            <nuxt-link
+              class="text--primary font-weight-bold headline"
+              :to="`/jobs/${job.id}`"
+            >
               <h4>
                 {{ job.name }}
               </h4>
@@ -45,7 +51,7 @@
               <v-icon class="mr-1" small>mdi-clock-time-three-outline</v-icon>
               {{ $moment(job.activation_date).format('D MMM YYYY') }}
             </span>
-            <span v-else class="red--text d-block mb-2">
+            <span v-else class="error--text d-block mb-2">
               Lowongan sudah tidak tersedia
             </span>
             <span>

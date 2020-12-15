@@ -36,7 +36,7 @@
                     </h1>
                   </v-col>
                   <v-col cols="2" class="text-right">
-                    <v-tooltip top>
+                    <v-tooltip top color="primary" close-delay="250">
                       <template v-slot:activator="{ on, attrs }">
                         <v-btn icon v-bind="attrs" large v-on="on">
                           <v-icon>mdi-bookmark-outline</v-icon>

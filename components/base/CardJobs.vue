@@ -20,7 +20,7 @@
               </h4>
             </v-col>
             <v-col cols="2" class="text-right">
-              <v-tooltip top>
+              <v-tooltip top color="primary" close-delay="250">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
                     icon

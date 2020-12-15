@@ -142,9 +142,14 @@
                       </h4>
                     </v-col>
                     <v-col cols="2" class="text-right">
-                      <v-tooltip top>
+                      <v-tooltip top color="primary" close-delay="250">
                         <template v-slot:activator="{ on, attrs }">
-                          <v-btn icon v-bind="attrs" v-on="on">
+                          <v-btn
+                            icon
+                            v-bind="attrs"
+                            v-on="on"
+                            @click="savedToLocalStorage(job)"
+                          >
                             <v-icon>mdi-bookmark-outline</v-icon>
                           </v-btn>
                         </template>
@@ -217,6 +222,9 @@ export default {
   async fetch() {
     await this.getCompanyDetail(this.code)
   },
+  data: () => ({
+    savedItem: [],
+  }),
   computed: {
     code() {
       return this.$route.params.code
@@ -232,6 +240,14 @@ export default {
     ...mapActions({
       getCompanyDetail: 'jobs/getCompanyDetail',
     }),
+    savedToLocalStorage(job) {
+      if (!this.savedItem.includes(job)) {
+        this.savedItem.push(job)
+        return localStorage.setItem('savedJobs', JSON.stringify(this.savedItem))
+      } else {
+        return undefined
+      }
+    },
   },
 }
 </script>

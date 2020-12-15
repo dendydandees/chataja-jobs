@@ -33,7 +33,51 @@
           <v-scroll-x-transition mode="in-out" hide-on-leave>
             <v-tab-item v-if="tab === 'my_cv'" id="my_cv">
               <v-sheet color="white" elevation="1" rounded class="pa-4 my-6">
-                <span>tes</span>
+                <v-row no-gutters>
+                  <v-col cols="6" sm="auto" class="mr-sm-4">
+                    <div class="rounded pa-4 grey lighten-4 d-inline-block">
+                      <v-img
+                        src="/pdf-icon.png"
+                        lazy-src="/pdf-icon.png"
+                        width="60"
+                        height="60"
+                        contain
+                      ></v-img>
+                    </div>
+                  </v-col>
+                  <v-col order="last" class="mt-4 mt-sm-0">
+                    <h4 class="headline font-weight-bold">CV.PDF</h4>
+                    <p class="text--secondary font-weight-bold">17 MB</p>
+                    <a
+                      href="/cv-example.jpg"
+                      download
+                      class="font-weight-bold mr-4"
+                    >
+                      Unduh
+                    </a>
+                    <a
+                      href="/cv-example.jpg"
+                      target="blank"
+                      class="font-weight-bold"
+                      >Lihat</a
+                    >
+                  </v-col>
+                  <v-col
+                    cols="6"
+                    sm="auto"
+                    order-sm="last"
+                    class="text-right text-sm-left"
+                  >
+                    <v-tooltip top color="error" close-delay="250">
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn icon v-bind="attrs" v-on="on">
+                          <v-icon>mdi-trash-can</v-icon>
+                        </v-btn>
+                      </template>
+                      <span>Hapus</span>
+                    </v-tooltip>
+                  </v-col>
+                </v-row>
               </v-sheet>
             </v-tab-item>
           </v-scroll-x-transition>
