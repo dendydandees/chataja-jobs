@@ -18,9 +18,14 @@
               <h2 class="title font-weight-bold">Akun</h2>
             </v-col>
             <v-col v-if="!editField" class="text-right">
-              <v-btn icon @click="changeEdit">
-                <v-icon>mdi-pencil</v-icon>
-              </v-btn>
+              <v-tooltip top color="primary" close-delay="250">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn icon v-bind="attrs" v-on="on" @click="changeEdit">
+                    <v-icon>mdi-pencil</v-icon>
+                  </v-btn>
+                </template>
+                <span>Edit</span>
+              </v-tooltip>
             </v-col>
           </v-row>
           <hr class="grey lighten-5 my-4" />
@@ -36,6 +41,7 @@
                 single-line
                 :outlined="editField"
                 :solo="!editField"
+                :readonly="!editField"
                 :flat="!editField"
                 type="number"
                 class="mt-2"
@@ -58,6 +64,7 @@
                 :outlined="editField"
                 :solo="!editField"
                 :flat="!editField"
+                :readonly="!editField"
                 type="email"
                 class="mt-2"
                 :hide-details="!editField"
@@ -78,6 +85,7 @@
                 :outlined="editField"
                 :solo="!editField"
                 :flat="!editField"
+                :readonly="!editField"
                 :type="fieldPasswordType"
                 class="mt-2"
                 :append-icon="iconPassword"
@@ -89,7 +97,7 @@
           </v-row>
           <!-- end field password -->
 
-          <v-row v-if="editField" no-gutters my-6>
+          <v-row v-if="editField" no-gutters class="mt-6">
             <v-col class="text-center">
               <v-btn class="mr-4" @click="changeEdit">Batal</v-btn>
               <v-btn color="primary" class="ml-4">Simpan</v-btn>

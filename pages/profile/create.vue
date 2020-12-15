@@ -355,6 +355,7 @@
                                 single-line
                                 outlined
                                 readonly
+                                class="mt-2"
                                 v-bind="attrs"
                                 v-on="on"
                               ></v-text-field>
@@ -411,6 +412,7 @@
                                 single-line
                                 outlined
                                 readonly
+                                class="mt-2"
                                 v-bind="attrs"
                                 v-on="on"
                               ></v-text-field>
@@ -562,6 +564,7 @@
                                 single-line
                                 outlined
                                 readonly
+                                class="mt-2"
                                 v-bind="attrs"
                                 v-on="on"
                               ></v-text-field>
@@ -598,7 +601,7 @@
 
                         <!-- field work end -->
                         <v-col class="pl-2">
-                          <label for="work_end" class="font-weight-bold"
+                          <label for="workEnd" class="font-weight-bold"
                             >Tahun Berakhir</label
                           >
                           <v-menu
@@ -618,6 +621,7 @@
                                 single-line
                                 outlined
                                 readonly
+                                class="mt-2"
                                 v-bind="attrs"
                                 v-on="on"
                               ></v-text-field>
