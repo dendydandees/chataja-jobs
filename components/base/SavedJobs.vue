@@ -69,9 +69,9 @@
                 />
               </svg>
               {{
-                `${job.salary_currency !== null ? job.salary_currency : ''} ${
-                  job.base_salary !== null ? job.base_salary : ''
-                } - ${job.maximum_salary !== null ? job.base_salary : ''}`
+                job.salary_shown === false || job.salary_currency === null
+                  ? '-'
+                  : `${job.salary_currency} ${job.base_salary} - ${job.maximum_salary}`
               }}
             </span>
           </v-col>

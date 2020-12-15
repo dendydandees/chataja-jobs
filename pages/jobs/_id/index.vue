@@ -61,19 +61,10 @@
                     <h6 class="mb-2 subtitle-1">Kisaran Gaji</h6>
                     <span class="font-weight-bold green--text"
                       >{{
-                        `${
-                          details.salary_currency !== null
-                            ? details.salary_currency
-                            : ''
-                        } ${
-                          details.base_salary !== null
-                            ? details.base_salary
-                            : ''
-                        } - ${
-                          details.maximum_salary !== null
-                            ? details.base_salary
-                            : ''
-                        }`
+                        details.salary_shown === false ||
+                        details.salary_currency === null
+                          ? '-'
+                          : `${details.salary_currency} ${details.base_salary} - ${details.maximum_salary}`
                       }}
                     </span>
                   </v-col>
