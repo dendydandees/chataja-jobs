@@ -392,7 +392,7 @@
                         <!-- field education end -->
                         <v-col class="pl-2">
                           <label for="work_end" class="font-weight-bold"
-                            >Tahun Berakhir</label
+                            >Tahun Berakhir (atau perkiraan)</label
                           >
                           <v-menu
                             ref="menuEducationEnd"

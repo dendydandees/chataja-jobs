@@ -1,11 +1,11 @@
 <template>
   <section>
     <!-- fieldset basic info -->
-    <v-sheet color="white" elevation="1" rounded class="pa-4 my-6">
+    <v-sheet color="white" elevation="1" rounded class="pa-4 pa-md-10 my-6">
       <v-fade-transition mode="in-out" hide-on-leave>
         <section v-if="!editBasicInfo">
           <v-row no-gutters>
-            <v-col cols="12" sm="auto" class="mr-sm-4">
+            <v-col cols="12" sm="auto" class="mr-sm-10">
               <v-img
                 :src="!imageUploaded ? imageUrl : imageUploaded"
                 :lazy-src="!imageUploaded ? imageUrl : imageUploaded"
@@ -194,7 +194,7 @@
     <!-- end fieldset basic info -->
 
     <!-- fieldset contact -->
-    <v-sheet color="white" elevation="1" rounded class="pa-4 my-6">
+    <v-sheet color="white" elevation="1" rounded class="pa-4 pa-md-10 my-6">
       <v-row no-gutters align="center">
         <v-col>
           <h2 class="headline font-weight-bold">Kontak</h2>
@@ -211,105 +211,141 @@
         </v-col>
       </v-row>
       <hr class="grey lighten-5 my-4" />
-      <!-- field telp number -->
-      <v-row no-gutters :class="[editContact ? '' : 'my-4']">
-        <v-col>
-          <label for="telp_number" class="font-weight-bold"
-            >Nomor Telepon ChatAja</label
-          >
-          <v-text-field
-            id="telp_number"
-            v-model="accountProfile.telpNumber"
-            single-line
-            :outlined="editContact"
-            :solo="!editContact"
-            :flat="!editContact"
-            :readonly="!editContact"
-            type="number"
-            class="mt-2"
-            prefix="+"
-            :hide-details="!editContact"
-          >
-          </v-text-field>
-        </v-col>
-      </v-row>
-      <!-- end field telp number -->
 
-      <!-- field email -->
-      <v-row no-gutters :class="[editContact ? '' : 'my-4']">
-        <v-col>
-          <label for="email" class="font-weight-bold">Email</label>
-          <v-text-field
-            id="email"
-            v-model="accountProfile.email"
-            single-line
-            :outlined="editContact"
-            :solo="!editContact"
-            :flat="!editContact"
-            :readonly="!editContact"
-            type="email"
-            class="mt-2"
-            :hide-details="!editContact"
-          >
-          </v-text-field>
-        </v-col>
-      </v-row>
-      <!-- end field email -->
+      <v-fade-transition mode="in-out" hide-on-leave>
+        <section v-if="!editContact">
+          <v-row no-gutters>
+            <v-col cols="12" class="mb-4">
+              <p class="font-weight-bold subtitle-1 mb-2">Nomor Telepon</p>
+              <span>
+                {{ accountProfile.telpNumber }}
+              </span>
+            </v-col>
+            <v-col cols="12" class="mb-4">
+              <p class="font-weight-bold subtitle-1 mb-2">Email</p>
+              <span>
+                {{ accountProfile.email }}
+              </span>
+            </v-col>
+            <v-col cols="12" class="mb-4">
+              <p class="font-weight-bold subtitle-1 mb-2">Lokasi</p>
+              <span>
+                {{ accountProfile.location }}
+              </span>
+            </v-col>
+            <v-col cols="12">
+              <p class="font-weight-bold subtitle-1 mb-2">Alamat</p>
+              <span>
+                {{ accountProfile.address }}
+              </span>
+            </v-col>
+          </v-row>
+        </section>
+      </v-fade-transition>
 
-      <!-- field location -->
-      <v-row no-gutters :class="[editContact ? '' : 'my-4']">
-        <v-col>
-          <label for="location" class="font-weight-bold">Lokasi</label>
-          <v-text-field
-            id="location"
-            v-model="accountProfile.location"
-            single-line
-            :outlined="editContact"
-            :solo="!editContact"
-            :flat="!editContact"
-            :readonly="!editContact"
-            type="text"
-            class="mt-2"
-            :hide-details="!editContact"
-          >
-          </v-text-field>
-        </v-col>
-      </v-row>
-      <!-- end field location -->
+      <v-fade-transition mode="in-out" hide-on-leave>
+        <section v-if="editContact">
+          <!-- field telp number -->
+          <v-row no-gutters>
+            <v-col>
+              <label for="telp_number" class="font-weight-bold"
+                >Nomor Telepon ChatAja</label
+              >
+              <v-text-field
+                id="telp_number"
+                v-model="accountProfile.telpNumber"
+                single-line
+                :outlined="editContact"
+                :solo="!editContact"
+                :flat="!editContact"
+                :readonly="!editContact"
+                type="number"
+                class="mt-2"
+                prefix="+"
+                :hide-details="!editContact"
+              >
+              </v-text-field>
+            </v-col>
+          </v-row>
+          <!-- end field telp number -->
 
-      <!-- field address -->
-      <v-row no-gutters :class="[editContact ? '' : 'my-4']">
-        <v-col>
-          <label for="address" class="font-weight-bold">Alamat</label>
-          <v-textarea
-            id="address"
-            v-model="accountProfile.address"
-            :outlined="editContact"
-            :solo="!editContact"
-            :flat="!editContact"
-            :readonly="!editContact"
-            :clearable="editContact"
-            clear-icon="mdi-close-circle"
-            auto-grow
-            value=""
-            class="mt-2"
-            :hide-details="!editContact"
-          ></v-textarea>
-        </v-col>
-      </v-row>
-      <!-- end field address -->
+          <!-- field email -->
+          <v-row no-gutters>
+            <v-col>
+              <label for="email" class="font-weight-bold">Email</label>
+              <v-text-field
+                id="email"
+                v-model="accountProfile.email"
+                single-line
+                :outlined="editContact"
+                :solo="!editContact"
+                :flat="!editContact"
+                :readonly="!editContact"
+                type="email"
+                class="mt-2"
+                :hide-details="!editContact"
+              >
+              </v-text-field>
+            </v-col>
+          </v-row>
+          <!-- end field email -->
 
-      <v-row v-if="editContact" no-gutters class="mt-6">
-        <v-col class="text-center">
-          <v-btn class="mr-4" @click="changeEditContact">Batal</v-btn>
-          <v-btn color="primary" class="ml-4">Simpan</v-btn>
-        </v-col>
-      </v-row>
+          <!-- field location -->
+          <v-row no-gutters>
+            <v-col>
+              <label for="location" class="font-weight-bold">Lokasi</label>
+              <v-text-field
+                id="location"
+                v-model="accountProfile.location"
+                single-line
+                :outlined="editContact"
+                :solo="!editContact"
+                :flat="!editContact"
+                :readonly="!editContact"
+                type="text"
+                class="mt-2"
+                :hide-details="!editContact"
+              >
+              </v-text-field>
+            </v-col>
+          </v-row>
+          <!-- end field location -->
+
+          <!-- field address -->
+          <v-row no-gutters>
+            <v-col>
+              <label for="address" class="font-weight-bold">Alamat</label>
+              <v-textarea
+                id="address"
+                v-model="accountProfile.address"
+                :outlined="editContact"
+                :solo="!editContact"
+                :flat="!editContact"
+                :readonly="!editContact"
+                :clearable="editContact"
+                clear-icon="mdi-close-circle"
+                auto-grow
+                value=""
+                class="mt-2"
+                :hide-details="!editContact"
+              ></v-textarea>
+            </v-col>
+          </v-row>
+          <!-- end field address -->
+
+          <v-row no-gutters class="mt-6">
+            <v-col class="text-center">
+              <v-btn class="mr-4" @click="changeEditContact">Batal</v-btn>
+              <v-btn color="primary" class="ml-4">Simpan</v-btn>
+            </v-col>
+          </v-row>
+        </section>
+      </v-fade-transition>
     </v-sheet>
     <!-- end fieldset contact -->
 
     <!-- fieldset education -->
-    <v-sheet color="white" elevation="1" rounded class="pa-4 my-6">
+    <v-sheet color="white" elevation="1" rounded class="pa-4 pa-md-10 my-6">
       <v-row no-gutters align="center">
         <v-col>
           <h2 class="headline font-weight-bold">Tingkat Pendidikan</h2>
@@ -326,216 +362,253 @@
         </v-col>
       </v-row>
       <hr class="grey lighten-5 my-4" />
-      <v-btn
-        v-if="editEducation"
-        text
-        color="primary"
-        @click="toggleEducation = !toggleEducation"
-      >
-        <v-icon left>mdi-plus-thick</v-icon>
-        Tambahkan Pendidikan
-      </v-btn>
 
-      <v-row class="mx-0 mt-4 img-border rounded">
-        <v-col class="pa-4">
-          <!-- field education name -->
-          <v-row no-gutters :class="[editContact ? '' : 'my-4']">
-            <v-col>
-              <label for="educationName" class="font-weight-bold"
-                >Nama Instansi</label
-              >
-              <v-text-field
-                id="educationName"
-                v-model="accountProfile.educationName"
-                single-line
-                :outlined="editEducation"
-                :solo="!editEducation"
-                :flat="!editEducation"
-                :readonly="!editEducation"
-                type="text"
-                class="mt-2"
-                :hide-details="!editEducation"
-              >
-              </v-text-field>
+      <v-fade-transition mode="in-out" hide-on-leave>
+        <section v-if="!editEducation">
+          <v-row
+            no-gutters
+            style="border-bottom: 1px solid rgba(0, 0, 0, 0.25)"
+          >
+            <v-col cols="12" class="mb-4">
+              <p class="font-weight-bold subtitle-1 mb-2">Nama Instansi</p>
+              <span>
+                {{ accountProfile.educationName }}
+              </span>
+            </v-col>
+            <v-col cols="12" sm="6" class="mb-4">
+              <p class="font-weight-bold subtitle-1 mb-2">
+                Tingkatan Pendidikan
+              </p>
+              <span>
+                {{ accountProfile.educationDegree }}
+              </span>
+            </v-col>
+            <v-col cols="12" sm="6" class="mb-4">
+              <p class="font-weight-bold subtitle-1 mb-2">Bidang Studi</p>
+              <span>
+                {{ accountProfile.educationStudy }}
+              </span>
+            </v-col>
+            <v-col cols="12" sm="6" class="mb-4">
+              <p class="font-weight-bold subtitle-1 mb-2">Tahun Mulai</p>
+              <span>
+                {{ accountProfile.educationStart }}
+              </span>
+            </v-col>
+            <v-col cols="12" sm="6" class="mb-4">
+              <p class="font-weight-bold subtitle-1 mb-2">
+                Tahun Berakhir (atau perkiraan)
+              </p>
+              <span>
+                {{ accountProfile.educationEnd }}
+              </span>
             </v-col>
           </v-row>
-          <!-- end field education name -->
+        </section>
+      </v-fade-transition>
 
-          <v-row no-gutters :class="[editContact ? '' : 'my-4']">
-            <!-- field degree -->
-            <v-col class="pr-2">
-              <label for="educationDegree" class="font-weight-bold"
-                >Tingkatan Pendidikan</label
-              >
-              <v-text-field
-                id="educationDegree"
-                v-model="accountProfile.educationDegree"
-                single-line
-                :outlined="editEducation"
-                :solo="!editEducation"
-                :flat="!editEducation"
-                :readonly="!editEducation"
-                type="text"
-                class="mt-2"
-                :hide-details="!editEducation"
-              >
-              </v-text-field>
-            </v-col>
-            <!-- end field degree -->
+      <v-fade-transition mode="in-out" hide-on-leave>
+        <section v-if="editEducation">
+          <v-btn
+            v-if="editEducation"
+            text
+            color="primary"
+            @click="toggleEducation = !toggleEducation"
+          >
+            <v-icon left>mdi-plus-thick</v-icon>
+            Tambahkan Pendidikan
+          </v-btn>
 
-            <!-- field of study -->
-            <v-col class="pl-2">
-              <label for="educationStudy" class="font-weight-bold"
-                >Bidang Studi</label
-              >
-              <v-text-field
-                id="educationStudy"
-                v-model="accountProfile.educationStudy"
-                single-line
-                :outlined="editEducation"
-                :solo="!editEducation"
-                :flat="!editEducation"
-                :readonly="!editEducation"
-                type="text"
-                class="mt-2"
-                :hide-details="!editEducation"
-              >
-              </v-text-field>
-            </v-col>
-            <!-- end field of study -->
-          </v-row>
-
-          <v-row no-gutters :class="[editContact ? '' : 'my-4']">
-            <!-- field education start -->
-            <v-col class="pr-2">
-              <label for="educationStart" class="font-weight-bold"
-                >Tahun Mulai</label
-              >
-              <v-menu
-                ref="menuEducationStart"
-                v-model="menuEducationStart"
-                :close-on-content-click="false"
-                :return-value.sync="accountProfile.educationStart"
-                transition="scale-transition"
-                offset-y
-                max-width="290px"
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on, attrs }">
+          <v-row class="mx-0 mt-4 img-border rounded">
+            <v-col class="pa-4">
+              <!-- field education name -->
+              <v-row no-gutters>
+                <v-col>
+                  <label for="educationName" class="font-weight-bold"
+                    >Nama Instansi</label
+                  >
                   <v-text-field
-                    id="educationStart"
-                    v-model="accountProfile.educationStart"
+                    id="educationName"
+                    v-model="accountProfile.educationName"
                     single-line
-                    :outlined="editEducation"
-                    :solo="!editEducation"
-                    :flat="!editEducation"
+                    outlined
+                    type="text"
                     class="mt-2"
-                    :hide-details="!editEducation"
-                    readonly
-                    v-bind="attrs"
-                    v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-date-picker
-                  v-if="editEducation"
-                  v-model="accountProfile.educationStart"
-                  type="month"
-                  no-title
-                  scrollable
-                >
-                  <v-spacer></v-spacer>
-                  <v-btn
-                    text
-                    color="primary"
-                    @click="menuEducationStart = false"
                   >
-                    Cancel
-                  </v-btn>
-                  <v-btn
-                    text
-                    color="primary"
-                    @click="
-                      $refs.menuEducationStart.save(
-                        accountProfile.educationStart
-                      )
-                    "
-                  >
-                    OK
-                  </v-btn>
-                </v-date-picker>
-              </v-menu>
-            </v-col>
-            <!-- end field education start -->
+                  </v-text-field>
+                </v-col>
+              </v-row>
+              <!-- end field education name -->
 
-            <!-- field education end -->
-            <v-col class="pl-2">
-              <label for="work_end" class="font-weight-bold"
-                >Tahun Berakhir</label
-              >
-              <v-menu
-                ref="menuEducationEnd"
-                v-model="menuEducationEnd"
-                :close-on-content-click="false"
-                :return-value.sync="accountProfile.educationEnd"
-                transition="scale-transition"
-                offset-y
-                max-width="290px"
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on, attrs }">
+              <v-row no-gutters>
+                <!-- field degree -->
+                <v-col class="pr-2">
+                  <label for="educationDegree" class="font-weight-bold"
+                    >Tingkatan Pendidikan</label
+                  >
                   <v-text-field
-                    id="educationEnd"
-                    v-model="accountProfile.educationEnd"
+                    id="educationDegree"
+                    v-model="accountProfile.educationDegree"
                     single-line
-                    :outlined="editEducation"
-                    :solo="!editEducation"
-                    :flat="!editEducation"
+                    outlined
+                    type="text"
                     class="mt-2"
-                    :hide-details="!editEducation"
-                    readonly
-                    v-bind="attrs"
-                    v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-date-picker
-                  v-if="editEducation"
-                  v-model="accountProfile.educationEnd"
-                  type="month"
-                  no-title
-                  scrollable
-                >
-                  <v-spacer></v-spacer>
-                  <v-btn text color="primary" @click="menuEducationEnd = false">
-                    Cancel
-                  </v-btn>
-                  <v-btn
-                    text
-                    color="primary"
-                    @click="
-                      $refs.menuEducationEnd.save(accountProfile.educationEnd)
-                    "
                   >
-                    OK
-                  </v-btn>
-                </v-date-picker>
-              </v-menu>
-            </v-col>
-            <!-- end field education end -->
-          </v-row>
+                  </v-text-field>
+                </v-col>
+                <!-- end field degree -->
 
-          <v-row v-if="editEducation" no-gutters class="mt-6">
-            <v-col class="text-center">
-              <v-btn class="mr-4" @click="changeEditEducation">Batal</v-btn>
-              <v-btn color="primary" class="ml-4">Simpan</v-btn>
+                <!-- field of study -->
+                <v-col class="pl-2">
+                  <label for="educationStudy" class="font-weight-bold"
+                    >Bidang Studi</label
+                  >
+                  <v-text-field
+                    id="educationStudy"
+                    v-model="accountProfile.educationStudy"
+                    single-line
+                    outlined
+                    type="text"
+                    class="mt-2"
+                  >
+                  </v-text-field>
+                </v-col>
+                <!-- end field of study -->
+              </v-row>
+
+              <v-row no-gutters>
+                <!-- field education start -->
+                <v-col class="pr-2">
+                  <label for="educationStart" class="font-weight-bold"
+                    >Tahun Mulai</label
+                  >
+                  <v-menu
+                    ref="menuEducationStart"
+                    v-model="menuEducationStart"
+                    :close-on-content-click="false"
+                    :return-value.sync="accountProfile.educationStart"
+                    transition="scale-transition"
+                    offset-y
+                    max-width="290px"
+                    min-width="290px"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        id="educationStart"
+                        v-model="accountProfile.educationStart"
+                        single-line
+                        outlined
+                        class="mt-2"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker
+                      v-if="editEducation"
+                      v-model="accountProfile.educationStart"
+                      type="month"
+                      no-title
+                      scrollable
+                    >
+                      <v-spacer></v-spacer>
+                      <v-btn
+                        text
+                        color="primary"
+                        @click="menuEducationStart = false"
+                      >
+                        Cancel
+                      </v-btn>
+                      <v-btn
+                        text
+                        color="primary"
+                        @click="
+                          $refs.menuEducationStart.save(
+                            accountProfile.educationStart
+                          )
+                        "
+                      >
+                        OK
+                      </v-btn>
+                    </v-date-picker>
+                  </v-menu>
+                </v-col>
+                <!-- end field education start -->
+
+                <!-- field education end -->
+                <v-col class="pl-2">
+                  <label for="educationEnd" class="font-weight-bold"
+                    >Tahun Berakhir (atau perkiraan)</label
+                  >
+                  <v-menu
+                    ref="menuEducationEnd"
+                    v-model="menuEducationEnd"
+                    :close-on-content-click="false"
+                    :return-value.sync="accountProfile.educationEnd"
+                    transition="scale-transition"
+                    offset-y
+                    max-width="290px"
+                    min-width="290px"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        id="educationEnd"
+                        v-model="accountProfile.educationEnd"
+                        single-line
+                        outlined
+                        class="mt-2"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker
+                      v-if="editEducation"
+                      v-model="accountProfile.educationEnd"
+                      type="month"
+                      no-title
+                      scrollable
+                    >
+                      <v-spacer></v-spacer>
+                      <v-btn
+                        text
+                        color="primary"
+                        @click="menuEducationEnd = false"
+                      >
+                        Cancel
+                      </v-btn>
+                      <v-btn
+                        text
+                        color="primary"
+                        @click="
+                          $refs.menuEducationEnd.save(
+                            accountProfile.educationEnd
+                          )
+                        "
+                      >
+                        OK
+                      </v-btn>
+                    </v-date-picker>
+                  </v-menu>
+                </v-col>
+                <!-- end field education end -->
+              </v-row>
+
+              <v-row no-gutters class="mt-6">
+                <v-col class="text-center">
+                  <v-btn class="mr-4" @click="changeEditEducation">Batal</v-btn>
+                  <v-btn color="primary" class="ml-4">Simpan</v-btn>
+                </v-col>
+              </v-row>
             </v-col>
           </v-row>
-        </v-col>
-      </v-row>
+        </section>
+      </v-fade-transition>
     </v-sheet>
     <!-- end fieldset education -->
 
     <!-- fieldset work exp -->
-    <v-sheet color="white" elevation="1" rounded class="pa-4 my-6">
+    <v-sheet color="white" elevation="1" rounded class="pa-4 pa-md-10 my-6">
       <v-row no-gutters align="center">
         <v-col>
           <h2 class="headline font-weight-bold">Pengalaman Kerja</h2>
@@ -552,223 +625,255 @@
         </v-col>
       </v-row>
       <hr class="grey lighten-5 my-4" />
-      <v-btn
-        v-if="editWork"
-        text
-        color="primary"
-        @click="toggleWork = !toggleWork"
-      >
-        <v-icon left>mdi-plus-thick</v-icon>
-        Tambahkan Pengalaman Kerja
-      </v-btn>
 
-      <v-row class="mx-0 mt-4 img-border rounded">
-        <v-col class="pa-4">
-          <!-- field work name -->
-          <v-row no-gutters :class="[editWork ? '' : 'my-4']">
-            <v-col>
-              <label for="workName" class="font-weight-bold"
-                >Nama Instansi</label
-              >
-              <v-text-field
-                id="workName"
-                v-model="accountProfile.workName"
-                single-line
-                :outlined="editWork"
-                :solo="!editWork"
-                :flat="!editWork"
-                :readonly="!editWork"
-                type="text"
-                class="mt-2"
-                :hide-details="!editWork"
-              >
-              </v-text-field>
+      <v-fade-transition mode="in-out" hide-on-leave>
+        <section v-if="!editWork">
+          <v-row
+            no-gutters
+            style="border-bottom: 1px solid rgba(0, 0, 0, 0.25)"
+          >
+            <v-col cols="12" class="mb-4">
+              <p class="font-weight-bold subtitle-1 mb-2">Nama Pekerjaan</p>
+              <span>
+                {{ accountProfile.workName }}
+              </span>
+            </v-col>
+            <v-col cols="12" class="mb-4">
+              <p class="font-weight-bold subtitle-1 mb-2">Nama Perusahaan</p>
+              <span>
+                {{ accountProfile.workCompany }}
+              </span>
+            </v-col>
+            <v-col cols="12" class="mb-4">
+              <p class="font-weight-bold subtitle-1 mb-2">Lokasi</p>
+              <span>
+                {{ accountProfile.workLocation }}
+              </span>
+            </v-col>
+            <v-col cols="12" sm="6" class="mb-4">
+              <p class="font-weight-bold subtitle-1 mb-2">Tahun Mulai</p>
+              <span>
+                {{ accountProfile.workStart }}
+              </span>
+            </v-col>
+            <v-col cols="12" sm="6" class="mb-4">
+              <p class="font-weight-bold subtitle-1 mb-2">Tahun Berakhir</p>
+              <span>
+                {{ accountProfile.workEnd }}
+              </span>
+            </v-col>
+            <v-col cols="12" class="mb-4">
+              <p class="font-weight-bold subtitle-1 mb-2">Deskripsi</p>
+              <span>
+                {{ accountProfile.workDesc }}
+              </span>
             </v-col>
           </v-row>
-          <!-- end field work name -->
+        </section>
+      </v-fade-transition>
 
-          <!-- field work company -->
-          <v-row no-gutters :class="[editWork ? '' : 'my-4']">
-            <v-col>
-              <label for="workCompany" class="font-weight-bold"
-                >Nama Perusahaan</label
-              >
-              <v-text-field
-                id="workCompany"
-                v-model="accountProfile.workCompany"
-                single-line
-                :outlined="editWork"
-                :solo="!editWork"
-                :flat="!editWork"
-                :readonly="!editWork"
-                type="text"
-                class="mt-2"
-                :hide-details="!editWork"
-              >
-              </v-text-field>
-            </v-col>
-          </v-row>
-          <!-- end field work company -->
+      <v-fade-transition mode="in-out" hide-on-leave>
+        <section v-if="editWork">
+          <v-btn text color="primary" @click="toggleWork = !toggleWork">
+            <v-icon left>mdi-plus-thick</v-icon>
+            Tambahkan Pengalaman Kerja
+          </v-btn>
 
-          <!-- field work location -->
-          <v-row no-gutters :class="[editWork ? '' : 'my-4']">
-            <v-col>
-              <label for="workLocation" class="font-weight-bold">Lokasi</label>
-              <v-text-field
-                id="workLocation"
-                v-model="accountProfile.workLocation"
-                single-line
-                :outlined="editWork"
-                :solo="!editWork"
-                :flat="!editWork"
-                :readonly="!editWork"
-                type="text"
-                class="mt-2"
-                :hide-details="!editWork"
-              >
-              </v-text-field>
-            </v-col>
-          </v-row>
-          <!-- end field work location -->
-
-          <v-row no-gutters :class="[editWork ? '' : 'my-4']">
-            <!-- field work start -->
-            <v-col class="pr-2">
-              <label for="workStart" class="font-weight-bold"
-                >Tahun Mulai</label
-              >
-              <v-menu
-                ref="menuWorkStart"
-                v-model="menuWorkStart"
-                :close-on-content-click="false"
-                :return-value.sync="accountProfile.workStart"
-                transition="scale-transition"
-                offset-y
-                max-width="290px"
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-text-field
-                    id="workStart"
-                    v-model="accountProfile.workStart"
-                    single-line
-                    :outlined="editWork"
-                    :solo="!editWork"
-                    :flat="!editWork"
-                    class="mt-2"
-                    :hide-details="!editWork"
-                    readonly
-                    v-bind="attrs"
-                    v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-date-picker
-                  v-if="editWork"
-                  v-model="accountProfile.workStart"
-                  type="month"
-                  no-title
-                  scrollable
-                >
-                  <v-spacer></v-spacer>
-                  <v-btn text color="primary" @click="menuWorkStart = false">
-                    Cancel
-                  </v-btn>
-                  <v-btn
-                    text
-                    color="primary"
-                    @click="$refs.menuWorkStart.save(accountProfile.workStart)"
+          <v-row class="mx-0 mt-4 img-border rounded">
+            <v-col class="pa-4">
+              <!-- field work name -->
+              <v-row no-gutters :class="[editWork ? '' : 'my-4']">
+                <v-col>
+                  <label for="workName" class="font-weight-bold"
+                    >Nama Pekerjaan</label
                   >
-                    OK
-                  </v-btn>
-                </v-date-picker>
-              </v-menu>
-            </v-col>
-            <!-- end field work start -->
-
-            <!-- field work end -->
-            <v-col class="pl-2">
-              <label for="workEnd" class="font-weight-bold"
-                >Tahun Berakhir</label
-              >
-              <v-menu
-                ref="menuWorkEnd"
-                v-model="menuWorkEnd"
-                :close-on-content-click="false"
-                :return-value.sync="accountProfile.workEnd"
-                transition="scale-transition"
-                offset-y
-                max-width="290px"
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on, attrs }">
                   <v-text-field
-                    id="workEnd"
-                    v-model="accountProfile.workEnd"
+                    id="workName"
+                    v-model="accountProfile.workName"
                     single-line
-                    :outlined="editWork"
-                    :solo="!editWork"
-                    :flat="!editWork"
+                    outlined
+                    type="text"
                     class="mt-2"
-                    :hide-details="!editWork"
-                    readonly
-                    v-bind="attrs"
-                    v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-date-picker
-                  v-if="editWork"
-                  v-model="accountProfile.workEnd"
-                  type="month"
-                  no-title
-                  scrollable
-                >
-                  <v-spacer></v-spacer>
-                  <v-btn text color="primary" @click="menuWorkEnd = false">
-                    Cancel
-                  </v-btn>
-                  <v-btn
-                    text
-                    color="primary"
-                    @click="$refs.menuWorkEnd.save(accountProfile.workEnd)"
                   >
-                    OK
-                  </v-btn>
-                </v-date-picker>
-              </v-menu>
-            </v-col>
-            <!-- end field work end -->
-          </v-row>
+                  </v-text-field>
+                </v-col>
+              </v-row>
+              <!-- end field work name -->
 
-          <!-- field work desc -->
-          <v-row no-gutters :class="[editWork ? '' : 'my-4']">
-            <v-col>
-              <label for="workDesc" class="font-weight-bold">Alamat</label>
-              <v-textarea
-                id="workDesc"
-                v-model="accountProfile.workDesc"
-                :outlined="editWork"
-                :solo="!editWork"
-                :flat="!editWork"
-                :readonly="!editWork"
-                :clearable="editWork"
-                clear-icon="mdi-close-circle"
-                auto-grow
-                value=""
-                class="mt-2"
-                :hide-details="!editWork"
-              ></v-textarea>
-            </v-col>
-          </v-row>
-          <!-- end field work desc -->
+              <!-- field work company -->
+              <v-row no-gutters :class="[editWork ? '' : 'my-4']">
+                <v-col>
+                  <label for="workCompany" class="font-weight-bold"
+                    >Nama Perusahaan</label
+                  >
+                  <v-text-field
+                    id="workCompany"
+                    v-model="accountProfile.workCompany"
+                    single-line
+                    outlined
+                    type="text"
+                    class="mt-2"
+                  >
+                  </v-text-field>
+                </v-col>
+              </v-row>
+              <!-- end field work company -->
 
-          <v-row v-if="editWork" no-gutters class="mt-6">
-            <v-col class="text-center">
-              <v-btn class="mr-4" @click="changeEditWork">Batal</v-btn>
-              <v-btn color="primary" class="ml-4">Simpan</v-btn>
+              <!-- field work location -->
+              <v-row no-gutters :class="[editWork ? '' : 'my-4']">
+                <v-col>
+                  <label for="workLocation" class="font-weight-bold"
+                    >Lokasi</label
+                  >
+                  <v-text-field
+                    id="workLocation"
+                    v-model="accountProfile.workLocation"
+                    single-line
+                    outlined
+                    type="text"
+                    class="mt-2"
+                  >
+                  </v-text-field>
+                </v-col>
+              </v-row>
+              <!-- end field work location -->
+
+              <v-row no-gutters :class="[editWork ? '' : 'my-4']">
+                <!-- field work start -->
+                <v-col class="pr-2">
+                  <label for="workStart" class="font-weight-bold"
+                    >Tahun Mulai</label
+                  >
+                  <v-menu
+                    ref="menuWorkStart"
+                    v-model="menuWorkStart"
+                    :close-on-content-click="false"
+                    :return-value.sync="accountProfile.workStart"
+                    transition="scale-transition"
+                    offset-y
+                    max-width="290px"
+                    min-width="290px"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        id="workStart"
+                        v-model="accountProfile.workStart"
+                        single-line
+                        outlined
+                        class="mt-2"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker
+                      v-model="accountProfile.workStart"
+                      type="month"
+                      no-title
+                      scrollable
+                    >
+                      <v-spacer></v-spacer>
+                      <v-btn
+                        text
+                        color="primary"
+                        @click="menuWorkStart = false"
+                      >
+                        Cancel
+                      </v-btn>
+                      <v-btn
+                        text
+                        color="primary"
+                        @click="
+                          $refs.menuWorkStart.save(accountProfile.workStart)
+                        "
+                      >
+                        OK
+                      </v-btn>
+                    </v-date-picker>
+                  </v-menu>
+                </v-col>
+                <!-- end field work start -->
+
+                <!-- field work end -->
+                <v-col class="pl-2">
+                  <label for="workEnd" class="font-weight-bold"
+                    >Tahun Berakhir</label
+                  >
+                  <v-menu
+                    ref="menuWorkEnd"
+                    v-model="menuWorkEnd"
+                    :close-on-content-click="false"
+                    :return-value.sync="accountProfile.workEnd"
+                    transition="scale-transition"
+                    offset-y
+                    max-width="290px"
+                    min-width="290px"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        id="workEnd"
+                        v-model="accountProfile.workEnd"
+                        single-line
+                        outlined
+                        class="mt-2"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker
+                      v-model="accountProfile.workEnd"
+                      type="month"
+                      no-title
+                      scrollable
+                    >
+                      <v-spacer></v-spacer>
+                      <v-btn text color="primary" @click="menuWorkEnd = false">
+                        Cancel
+                      </v-btn>
+                      <v-btn
+                        text
+                        color="primary"
+                        @click="$refs.menuWorkEnd.save(accountProfile.workEnd)"
+                      >
+                        OK
+                      </v-btn>
+                    </v-date-picker>
+                  </v-menu>
+                </v-col>
+                <!-- end field work end -->
+              </v-row>
+
+              <!-- field work desc -->
+              <v-row no-gutters :class="[editWork ? '' : 'my-4']">
+                <v-col>
+                  <label for="workDesc" class="font-weight-bold"
+                    >Deskripsi</label
+                  >
+                  <v-textarea
+                    id="workDesc"
+                    v-model="accountProfile.workDesc"
+                    outlined
+                    clearable
+                    clear-icon="mdi-close-circle"
+                    auto-grow
+                    value=""
+                    class="mt-2"
+                  ></v-textarea>
+                </v-col>
+              </v-row>
+              <!-- end field work desc -->
+
+              <v-row no-gutters class="mt-6">
+                <v-col class="text-center">
+                  <v-btn class="mr-4" @click="changeEditWork">Batal</v-btn>
+                  <v-btn color="primary" class="ml-4">Simpan</v-btn>
+                </v-col>
+              </v-row>
             </v-col>
           </v-row>
-        </v-col>
-      </v-row>
+        </section>
+      </v-fade-transition>
     </v-sheet>
     <!-- end fieldset work exp -->
   </section>
@@ -808,7 +913,7 @@ export default {
       address:
         'Cursus nec, egestas diam ipsum ipsum aliquam. Vel, ut lacus, dictum lorem cursus amet. Mauris, vel placerat aenean at in. Blandit laoreet tortor tortor, sed. Lectus quis nisi ornare vel in. Risus magna et ac habitant. ',
       educationName: 'Politeknik Negeri Bandung',
-      educationDegree: 'Teknik Informatika dan Komputer',
+      educationDegree: 'Sarjana',
       educationStudy: 'Teknik Informatika',
       educationStart: '2020-07',
       educationEnd: '2020-07',
