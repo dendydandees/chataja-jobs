@@ -5,7 +5,9 @@
         <h2>Pekerjaan Terbaru</h2>
       </v-col>
       <v-col class="text-right" cols="auto">
-        <nuxt-link to="" class="text-decoration-none font-weight-bold"
+        <nuxt-link
+          to="/jobs/job_board"
+          class="text-decoration-none font-weight-bold"
           >Lihat lebih</nuxt-link
         >
       </v-col>
@@ -28,7 +30,7 @@
                     v-on="on"
                     @click="savedToLocalStorage(job)"
                   >
-                    <v-icon>mdi-bookmark-outline</v-icon>
+                    <v-icon> mdi-bookmark-outline </v-icon>
                   </v-btn>
                 </template>
                 <span>Simpan Pekerjaan</span>
@@ -119,6 +121,12 @@ export default {
   data: () => ({
     savedItem: [],
   }),
+  computed: {
+    localStorageJobs() {
+      const data = localStorage.getItem('savedJobs')
+      return JSON.parse(data)
+    },
+  },
   methods: {
     savedToLocalStorage(job) {
       if (!this.savedItem.includes(job)) {
