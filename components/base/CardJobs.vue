@@ -38,6 +38,7 @@
           <nuxt-link
             v-if="job.company_info.logo !== null"
             :to="`/jobs/company/${job.company.code}`"
+            class="d-inline-block"
           >
             <v-img
               :src="job.company_info.logo"

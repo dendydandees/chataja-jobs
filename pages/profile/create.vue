@@ -68,7 +68,6 @@
                           hide-details="true"
                           accept="image/png, image/jpeg, image/jpg, image/bmp"
                           class="mb-2"
-                          :clearable="false"
                           @change="onFilePicked($event)"
                         >
                         </v-file-input>
@@ -904,8 +903,12 @@ export default {
       reader.onload = (event) => {
         this.imageUploaded = reader.result
       }
-      this.createProfile.file = file
-      reader.readAsDataURL(file)
+      this.accountProfile.file = file
+      if (file) {
+        reader.readAsDataURL(file)
+      } else {
+        this.imageUploaded = ''
+      }
     },
     nextStepper() {
       if (this.stepper === 1) {
