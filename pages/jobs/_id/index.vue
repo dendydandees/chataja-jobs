@@ -2,7 +2,7 @@
 <template>
   <section>
     <LoadingBar v-if="$fetchState.pending" />
-    <p v-else-if="$fetchState.error">An error occurred :(</p>
+    <Error v-else-if="$fetchState.error" @refresh="$fetch" />
     <section v-else>
       <v-container>
         <v-row dense>

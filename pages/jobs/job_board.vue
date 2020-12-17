@@ -9,7 +9,7 @@
     <!-- end search form -->
 
     <LoadingBar v-if="$fetchState.pending" />
-    <p v-else-if="$fetchState.error">An error occurred :(</p>
+    <Error v-else-if="$fetchState.error" @refresh="$fetch" />
     <section v-else>
       <!-- count -->
       <v-container class="py-0 mt-10">
