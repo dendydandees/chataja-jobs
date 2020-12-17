@@ -946,7 +946,7 @@ export default {
       this.$el.querySelector('#dropzone').style.borderColor = '#979797'
     },
     onFileAdded() {
-      this.$el.querySelector('#dropzone').style.backgroundColor = '#e5e5e5'
+      this.$el.querySelector('#dropzone').style.backgroundColor = '#f5f5f5'
       this.$el.querySelector('#dropzone').style.borderColor = '#2f80ed'
       this.loading = true
       this.disabled = true
@@ -969,7 +969,7 @@ export default {
       this.disabled = true
     },
     onSuccess() {
-      this.$el.querySelector('#dropzone').style.backgroundColor = '#e5e5e5'
+      this.$el.querySelector('#dropzone').style.backgroundColor = '#f5f5f5'
       this.$el.querySelector('#dropzone').style.borderColor = '#2f80ed'
       this.loading = false
       this.disabled = false
@@ -983,7 +983,7 @@ export default {
 
 <style scoped>
 .theme--light.v-stepper {
-  background: #e5e5e5 !important;
+  background: #f5f5f5 !important;
 }
 .vue-dropzone {
   text-align: center;

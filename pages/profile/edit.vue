@@ -12,7 +12,7 @@
 
     <v-row justify="center" class="my-6" no-gutters>
       <v-col cols="12" sm="10" md="8">
-        <v-tabs v-model="tab" background-color="#e5e5e5" show-arrows>
+        <v-tabs v-model="tab" background-color="#f5f5f5" show-arrows>
           <v-tab href="#personal_info"> Informasi Pribadi </v-tab>
           <v-tab href="#my_cv"> CV Saya </v-tab>
           <v-tab href="#saved_jobs"> Pekerjaan Disimpan </v-tab>
@@ -69,6 +69,6 @@ export default {
 
 <style scoped>
 .theme--light.v-tabs-items {
-  background-color: #e5e5e5 !important;
+  background-color: #f5f5f5 !important;
 }
 </style>

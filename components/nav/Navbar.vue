@@ -1,13 +1,6 @@
 <template>
   <nav>
-    <MenuProfile
-      v-if="
-        hasAccount ||
-        $route.name === 'profile-edit' ||
-        $route.name === 'profile-create' ||
-        $route.name === 'profile-settings'
-      "
-    />
+    <MenuProfile v-if="hasAccount || $route.name.includes('profile')" />
     <MenuSign v-else />
   </nav>
 </template>

@@ -50,10 +50,7 @@
 <script>
 export default {
   data: () => ({
-    fav: true,
     menu: false,
-    message: false,
-    hints: true,
     items: [
       { title: 'Profil', link: '/profile/edit' },
       { title: 'Pengaturan', link: '/profile/settings' },

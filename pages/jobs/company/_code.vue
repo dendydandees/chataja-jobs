@@ -17,7 +17,7 @@
                       width="100"
                       height="100"
                       contain
-                      class="mx-auto mx-sm-0"
+                      class="mx-auto mx-sm-0 rounded img-border"
                     >
                     </v-img>
                     <v-img
@@ -26,7 +26,7 @@
                       lazy-src="/placeholder-profile.svg"
                       width="100"
                       height="100"
-                      class="mx-auto mx-sm-0"
+                      class="mx-auto mx-sm-0 rounded img-border"
                     >
                     </v-img>
                   </v-col>

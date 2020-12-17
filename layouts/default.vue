@@ -31,7 +31,7 @@ export default {
 
 <style>
 main {
-  background: #e5e5e5 !important;
+  background: #f5f5f5 !important;
 }
 .line-clamp {
   display: -webkit-box;

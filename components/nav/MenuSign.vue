@@ -4,12 +4,16 @@
     <v-app-bar app hide-on-scroll height="80" color="white">
       <v-container>
         <div class="d-flex justify-between align-center">
+          <!-- logo chat aja jobs -->
           <nuxt-link to="/">
             <v-toolbar-title>
               <img src="/cajobs-logo.png" alt="ChatAja Jobs" height="100%" />
             </v-toolbar-title>
           </nuxt-link>
+          <!-- end logo chat aja jobs -->
+
           <v-spacer></v-spacer>
+
           <v-app-bar-nav-icon
             v-if="
               $vuetify.breakpoint.smAndDown &&
@@ -24,33 +28,60 @@
               height="100%"
             />
           </v-app-bar-nav-icon>
+
+          <!-- nav menu -->
           <div
             v-if="
               $vuetify.breakpoint.mdAndUp &&
               $route.name !== 'email-verification'
             "
           >
-            <v-btn
-              text
-              color="primary"
-              class="mx-2"
-              large
-              @click.stop="signUpClick()"
-              >Daftar</v-btn
+            <nav
+              v-if="
+                $route.name !== 'jobs-id' && $route.name !== 'jobs-company-code'
+              "
             >
-            <v-btn
-              text
-              color="primary"
-              class="mx-2"
-              large
-              @click.stop="signInClick()"
-              >Masuk</v-btn
-            >
-            <v-btn color="error" class="ml-2" large>
-              <v-icon left> mdi-office-building-outline </v-icon>
-              Perusahaan
-            </v-btn>
+              <v-btn
+                text
+                color="primary"
+                class="mx-2"
+                large
+                @click.stop="signUpClick()"
+                >Daftar</v-btn
+              >
+              <v-btn
+                text
+                color="primary"
+                class="mx-2"
+                large
+                @click.stop="signInClick()"
+                >Masuk</v-btn
+              >
+              <v-btn
+                :color="inJobSeekerTrue ? 'error' : 'primary'"
+                :outlined="!inJobSeekerTrue"
+                class="ml-2"
+                large
+                :to="inJobSeekerTrue ? '/employer' : '/'"
+              >
+                <v-icon left>
+                  {{
+                    inJobSeekerTrue
+                      ? 'mdi-office-building-outline'
+                      : 'mdi-account'
+                  }}
+                </v-icon>
+                {{ inJobSeekerTrue ? 'Perusahaan' : 'Job Seeker' }}
+              </v-btn>
+            </nav>
+
+            <nav v-else>
+              <v-btn color="error" large @click.stop="signInClick()">
+                Masuk
+              </v-btn>
+            </nav>
           </div>
+          <!-- end nav menu -->
         </div>
       </v-container>
     </v-app-bar>
@@ -68,28 +99,53 @@
     >
       <v-list nav>
         <v-list-item-group v-model="group">
-          <v-btn
-            block
-            text
-            color="primary"
-            class="my-3"
-            large
-            @click.stop="signUpClick()"
-            >Daftar</v-btn
+          <nav
+            v-if="
+              $route.name !== 'jobs-id' && $route.name !== 'jobs-company-code'
+            "
           >
-          <v-btn
-            block
-            text
-            color="primary"
-            class="my-3"
-            large
-            @click.stop="signInClick()"
-            >Masuk</v-btn
-          >
-          <v-btn block color="error" class="my-3" large>
-            <v-icon left> mdi-office-building-outline </v-icon>
-            Perusahaan
-          </v-btn>
+            <v-btn
+              block
+              text
+              color="primary"
+              class="my-3"
+              large
+              @click.stop="signUpClick()"
+              >Daftar</v-btn
+            >
+            <v-btn
+              block
+              text
+              color="primary"
+              class="my-3"
+              large
+              @click.stop="signInClick()"
+              >Masuk</v-btn
+            >
+            <v-btn
+              block
+              :color="inJobSeekerTrue ? 'error' : 'primary'"
+              :outlined="!inJobSeekerTrue"
+              class="my-3"
+              large
+              :to="inJobSeekerTrue ? '/employer' : '/'"
+            >
+              <v-icon left>
+                {{
+                  inJobSeekerTrue
+                    ? 'mdi-office-building-outline'
+                    : 'mdi-account'
+                }}
+              </v-icon>
+              {{ inJobSeekerTrue ? 'Perusahaan' : 'Job Seeker' }}
+            </v-btn>
+          </nav>
+
+          <nav v-else>
+            <v-btn block color="error" large @click.stop="signInClick()">
+              Masuk
+            </v-btn>
+          </nav>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -317,6 +373,13 @@ export default {
     tab: '',
     isProcessing: false,
   }),
+  computed: {
+    inJobSeekerTrue() {
+      return (
+        this.$route.name.includes('jobs') || this.$route.name.includes('index')
+      )
+    },
+  },
   watch: {
     group() {
       this.drawer = false
