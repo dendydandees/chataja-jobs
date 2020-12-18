@@ -4,7 +4,17 @@
     <Error v-else-if="$fetchState.error" @refresh="$fetch" />
     <section v-else>
       <v-container>
-        <v-row dense>
+        <!-- back button -->
+        <v-row no-gutters>
+          <v-col class="py-4">
+            <v-btn text color="primary" @click="$router.go(-1)">
+              <v-icon left>mdi-arrow-left</v-icon>
+              Kembali
+            </v-btn>
+          </v-col>
+        </v-row>
+        <!-- end back button -->
+        <v-row>
           <v-col cols="12">
             <v-card elevation="1" rounded="lg">
               <v-card-text class="pa-4 pa-md-8">

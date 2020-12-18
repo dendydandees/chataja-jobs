@@ -284,11 +284,13 @@
                   >
                   <p class="text-center body-1">
                     Dengan mendaftar, saya setuju dengan
-                    <a href="" target="_blank" class="text-decoration-none"
+                    <a href="https://chataja.co.id/syarat" target="_blank"
                       >Syarat & Ketentuan</a
                     >
                     dan
-                    <a href="" target="_blank" class="text-decoration-none"
+                    <a
+                      href="https://chataja.co.id/kebijakan-privasi"
+                      target="_blank"
                       >Kebijakan Privasi</a
                     >
                     ChatAja.
@@ -314,22 +316,17 @@
           <v-col cols="12" sm="6" class="text-left">
             <a
               href="#"
-              class="primary--text text-decoration-none"
+              class="text-decoration-none"
               @click.stop="backToSignIn()"
             >
-              <v-icon left class="primary--text"> mdi-arrow-left </v-icon>
+              <v-icon left color="primary"> mdi-arrow-left </v-icon>
               Kembali ke Masuk
             </a>
           </v-col>
           <v-col cols="12" sm="6" class="text-sm-right">
             <p class="ma-0">
               Baru di ChatAja Jobs ?
-              <a
-                href="#"
-                class="text-decoration-none"
-                @click.stop="backToRegister()"
-                >Register</a
-              >
+              <a href="#" @click.stop="backToRegister()">Register</a>
             </p>
           </v-col>
         </v-row>

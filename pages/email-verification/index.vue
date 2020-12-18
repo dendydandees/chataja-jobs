@@ -14,9 +14,9 @@
               name: 'index',
               params: { signInModals: true, tab: 'sign-in' },
             }"
-            class="primary--text text-decoration-none"
+            class="text-decoration-none"
           >
-            <v-icon left class="primary--text"> mdi-arrow-left </v-icon>
+            <v-icon left color="primary"> mdi-arrow-left </v-icon>
             Kembali ke Masuk
           </nuxt-link>
           <div class="text-center mt-13">

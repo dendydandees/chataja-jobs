@@ -5,6 +5,16 @@
     <Error v-else-if="$fetchState.error" @refresh="$fetch" />
     <section v-else>
       <v-container>
+        <!-- back button -->
+        <v-row no-gutters>
+          <v-col class="py-4">
+            <v-btn text color="primary" @click="$router.go(-1)">
+              <v-icon left>mdi-arrow-left</v-icon>
+              Kembali
+            </v-btn>
+          </v-col>
+        </v-row>
+        <!-- end back button -->
         <v-row dense>
           <!-- details job -->
           <v-col cols="12" md="9">
