@@ -9,12 +9,14 @@
       :hide-delimiter-background="$vuetify.breakpoint.smAndDown"
       class="elevation-1 rounded-lg"
     >
-      <v-carousel-item v-for="(item, i) in items" :key="i">
+      <v-carousel-item v-for="(item, i) in items" :key="i" class="white">
         <v-img
           :src="item.src"
           :lazy-src="item.src"
           contain
-          width="100%"
+          height="100%"
+          aspect-ratio="1.7"
+          position="center"
         ></v-img>
       </v-carousel-item>
     </v-carousel>
