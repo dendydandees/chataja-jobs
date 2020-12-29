@@ -124,19 +124,23 @@
               <v-col>
                 <h2>Pekerjaan Tersedia</h2>
               </v-col>
+              <v-col cols="auto" class="text-right">
+                <v-btn icon @click="prev">
+                  <v-icon>mdi-chevron-left-circle-outline</v-icon>
+                </v-btn>
+                <v-btn icon @click="next">
+                  <v-icon>mdi-chevron-right-circle-outline</v-icon>
+                </v-btn>
+              </v-col>
             </v-row>
-            <v-slide-group
-              multiple
-              show-arrows="desktop"
-              next-icon="mdi-chevron-right-circle-outline"
-              prev-icon="mdi-chevron-left-circle-outline"
-            >
+            <v-slide-group v-model="model" center-active mandatory>
               <v-slide-item
                 v-for="job in jobList"
                 :key="job.id"
                 v-slot="{ active, toggle }"
               >
                 <v-card
+                  :color="active ? 'grey lighten-4' : ''"
                   elevation="1"
                   rounded="lg"
                   class="pa-4 mr-4"
@@ -155,12 +159,25 @@
                       <v-tooltip top color="primary" close-delay="250">
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
+                            :color="
+                              localStorageJobs.some(
+                                (item) => item.id === job.id
+                              )
+                                ? 'primary'
+                                : ''
+                            "
                             icon
                             v-bind="attrs"
                             v-on="on"
                             @click="savedToLocalStorage(job)"
                           >
-                            <v-icon>mdi-bookmark-outline</v-icon>
+                            <v-icon>{{
+                              localStorageJobs.some(
+                                (item) => item.id === job.id
+                              )
+                                ? 'mdi-bookmark'
+                                : 'mdi-bookmark-outline'
+                            }}</v-icon>
                           </v-btn>
                         </template>
                         <span>Simpan Pekerjaan</span>
@@ -233,7 +250,7 @@ export default {
     await this.getCompanyDetail(this.code)
   },
   data: () => ({
-    savedItem: [],
+    model: 0,
   }),
   computed: {
     code() {
@@ -245,18 +262,39 @@ export default {
     jobList() {
       return this.$store.state.jobs.companyDetails.jobs
     },
+    localStorageJobs() {
+      if (localStorage.length > 0) {
+        const data = localStorage.getItem('savedJobs')
+        return JSON.parse(data)
+      } else {
+        return []
+      }
+    },
   },
   methods: {
     ...mapActions({
       getCompanyDetail: 'jobs/getCompanyDetail',
     }),
     savedToLocalStorage(job) {
-      if (!this.savedItem.includes(job)) {
-        this.savedItem.push(job)
-        return localStorage.setItem('savedJobs', JSON.stringify(this.savedItem))
+      if (!this.localStorageJobs.includes(job)) {
+        this.localStorageJobs.push(job)
+        return localStorage.setItem(
+          'savedJobs',
+          JSON.stringify(this.localStorageJobs)
+        )
       } else {
         return undefined
       }
+    },
+    prev() {
+      this.model === 0
+        ? (this.model = this.jobList.length - 1)
+        : (this.model -= 1)
+    },
+    next() {
+      this.model === this.jobList.length - 1
+        ? (this.model = 0)
+        : (this.model += 1)
     },
   },
 }
