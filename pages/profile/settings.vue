@@ -1,8 +1,8 @@
 <template>
   <section>
     <!-- headline -->
-    <v-row class="headline-background">
-      <v-col>
+    <v-row no-gutters class="headline-background">
+      <v-col class="py-3">
         <v-container>
           <h2 class="font-weight-bold headline">Pengaturan</h2>
         </v-container>

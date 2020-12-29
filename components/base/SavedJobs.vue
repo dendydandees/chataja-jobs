@@ -1,6 +1,6 @@
 <template>
   <section>
-    <section v-if="savedJobs.length > 0">
+    <section v-if="Array.isArray(savedJobs) && savedJobs.length > 0">
       <v-sheet
         v-for="(job, index) in savedJobs"
         :key="index"
