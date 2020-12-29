@@ -25,12 +25,23 @@
               <v-tooltip top color="primary" close-delay="250">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
+                    :color="
+                      localStorageJobs.some((item) => item.id === job.id)
+                        ? 'primary'
+                        : ''
+                    "
                     icon
                     v-bind="attrs"
                     v-on="on"
                     @click="savedToLocalStorage(job)"
                   >
-                    <v-icon> mdi-bookmark-outline </v-icon>
+                    <v-icon>
+                      {{
+                        localStorageJobs.some((item) => item.id === job.id)
+                          ? 'mdi-bookmark'
+                          : 'mdi-bookmark-outline'
+                      }}
+                    </v-icon>
                   </v-btn>
                 </template>
                 <span>Simpan Pekerjaan</span>
@@ -118,20 +129,24 @@ export default {
       },
     },
   },
-  data: () => ({
-    savedItem: [],
-  }),
   computed: {
     localStorageJobs() {
-      const data = localStorage.getItem('savedJobs')
-      return JSON.parse(data)
+      if (localStorage.length > 0) {
+        const data = localStorage.getItem('savedJobs')
+        return JSON.parse(data)
+      } else {
+        return []
+      }
     },
   },
   methods: {
     savedToLocalStorage(job) {
-      if (!this.savedItem.includes(job)) {
-        this.savedItem.push(job)
-        return localStorage.setItem('savedJobs', JSON.stringify(this.savedItem))
+      if (!this.localStorageJobs.includes(job)) {
+        this.localStorageJobs.push(job)
+        return localStorage.setItem(
+          'savedJobs',
+          JSON.stringify(this.localStorageJobs)
+        )
       } else {
         return undefined
       }
