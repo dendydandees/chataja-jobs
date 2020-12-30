@@ -1,7 +1,11 @@
 <template>
   <nav>
-    <MenuProfile v-if="hasAccount || $route.name.includes('profile')" />
-    <MenuEmployer v-else-if="hasAccount || $route.name.includes('dashboard')" />
+    <MenuProfile v-if="$route.name.includes('profile')" />
+    <MenuEmployer
+      v-else-if="
+        $route.name.includes('employer') && $route.path !== '/employer'
+      "
+    />
     <MenuSign v-else />
   </nav>
 </template>
@@ -17,9 +21,6 @@ export default {
     MenuProfile,
     MenuEmployer,
   },
-  data: () => ({
-    hasAccount: false,
-  }),
 }
 </script>
 

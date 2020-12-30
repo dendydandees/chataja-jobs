@@ -41,45 +41,39 @@
                 </v-col>
                 <v-col cols="5" class="text-center">
                   <v-btn
-                    to="/employer/dashboard"
+                    v-for="(button, index) in btnOnCenter"
+                    :key="index"
+                    :to="button.routes"
+                    nuxt
                     text
                     color="white"
                     large
                     exact
+                    class="text-decoration-none"
                   >
-                    Job Vacancy
-                  </v-btn>
-                  <v-btn
-                    to="/employer/applicants"
-                    text
-                    color="white"
-                    large
-                    exact
-                  >
-                    Applicants
+                    {{ button.text }}
                   </v-btn>
                 </v-col>
 
                 <!-- username, notifications, settings -->
                 <v-col cols="4">
                   <v-row no-gutters align="center" justify="space-between">
-                    <v-col class="white--text">
+                    <v-col class="white--text line-clamp">
                       <span class="subtitle-1"> Selamat Datang, </span>
-                      <span
-                        class="font-weight-bold text-truncate d-inline-block"
-                        style="width: 100%"
+                      <span class="font-weight-bold"> Perusahaan</span>
+                    </v-col>
+                    <v-col cols="auto">
+                      <v-btn
+                        v-for="(button, index) in btnOnRight"
+                        :key="index"
+                        icon
+                        color="white"
+                        :to="button.routes"
+                        nuxt
+                        exact
+                        class="text-decoration-none ml-2"
                       >
-                        Perusahaan
-                      </span>
-                    </v-col>
-                    <v-col cols="auto">
-                      <v-btn icon color="white">
-                        <v-icon>mdi-bell</v-icon>
-                      </v-btn>
-                    </v-col>
-                    <v-col cols="auto">
-                      <v-btn icon color="white">
-                        <v-icon>mdi-cog</v-icon>
+                        <v-icon>{{ button.icon }}</v-icon>
                       </v-btn>
                     </v-col>
                   </v-row>
@@ -131,20 +125,26 @@
 
             <!-- username, notifications, settings -->
             <v-row class="my-4">
-              <v-col>
-                <span class="subtitle-1 white--text">
+              <v-col class="white--text">
+                <span class="subtitle-1">
                   Selamat Datang
-                  <span class="font-weight-bold">Perusahaan</span>
+                  <span class="font-weight-bold"
+                    >Perusahaan tokopediasd cabang jember</span
+                  >
                 </span>
               </v-col>
               <v-col cols="auto">
-                <v-btn icon color="white">
-                  <v-icon>mdi-bell</v-icon>
-                </v-btn>
-              </v-col>
-              <v-col cols="auto">
-                <v-btn icon color="white">
-                  <v-icon>mdi-cog</v-icon>
+                <v-btn
+                  v-for="(button, index) in btnOnRight"
+                  :key="index"
+                  icon
+                  color="white"
+                  :to="button.routes"
+                  nuxt
+                  exact
+                  class="text-decoration-none ml-2"
+                >
+                  <v-icon>{{ button.icon }}</v-icon>
                 </v-btn>
               </v-col>
             </v-row>
@@ -160,26 +160,18 @@
             <!-- end search field -->
 
             <v-btn
-              to="/employer/dashboard"
+              v-for="(button, index) in btnOnCenter"
+              :key="index"
+              :to="button.routes"
               text
               color="white"
               block
               large
               exact
-              class="my-2"
+              nuxt
+              class="my-2 text-decoration-none"
             >
-              Job Vacancy
-            </v-btn>
-            <v-btn
-              to="/employer/applicants"
-              text
-              color="white"
-              block
-              large
-              exact
-              class="my-2"
-            >
-              Applicants
+              {{ button.text }}
             </v-btn>
           </nav>
         </v-list-item-group>
@@ -195,6 +187,14 @@ export default {
     drawer: false,
     group: null,
     isProcessing: false,
+    btnOnCenter: [
+      { routes: '/employer/dashboard', text: 'Job Vacancy' },
+      { routes: '/employer/applicants', text: 'Applicants' },
+    ],
+    btnOnRight: [
+      { routes: '/employer/notifications', icon: 'mdi-bell' },
+      { routes: '/employer/settings', icon: 'mdi-cog' },
+    ],
   }),
   watch: {
     group() {
