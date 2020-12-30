@@ -158,7 +158,7 @@
       max-width="700"
     >
       <v-card class="pa-6 pa-md-10">
-        <v-tabs v-model="tab">
+        <v-tabs v-model="tab" :slider-size="4">
           <v-tab href="#sign-in">Masuk</v-tab>
           <v-tab href="#sign-up">Daftar</v-tab>
         </v-tabs>

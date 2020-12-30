@@ -6,7 +6,7 @@
 
     <v-main>
       <!-- content -->
-      <nuxt />
+      <nuxt keep-alive />
       <!-- end content -->
     </v-main>
 

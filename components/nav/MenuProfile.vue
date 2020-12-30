@@ -15,6 +15,7 @@
             offset-y
             transition="slide-y-transition"
             rounded="lg"
+            left
           >
             <template v-slot:activator="{ on, attrs }">
               <img

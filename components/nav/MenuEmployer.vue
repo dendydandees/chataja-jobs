@@ -63,15 +63,13 @@
                 <!-- username, notifications, settings -->
                 <v-col cols="4">
                   <v-row no-gutters align="center" justify="space-between">
-                    <v-col cols="6">
-                      <span class="subtitle-1 white--text">
-                        Selamat Datang
-                        <span
-                          class="font-weight-bold text-truncate d-inline-block"
-                          style="width: 100%"
-                        >
-                          Perusahaan
-                        </span>
+                    <v-col class="white--text">
+                      <span class="subtitle-1"> Selamat Datang, </span>
+                      <span
+                        class="font-weight-bold text-truncate d-inline-block"
+                        style="width: 100%"
+                      >
+                        Perusahaan
                       </span>
                     </v-col>
                     <v-col cols="auto">
