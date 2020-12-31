@@ -3,6 +3,7 @@ export default {
     baseURL: 'https://www.kalibrr.id/api',
   },
   ssr: true,
+  target: 'static',
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: 'ChatAja Jobs - Cari kerja lebih mudah dengan ChatAja Jobs',
@@ -31,7 +32,7 @@ export default {
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: [],
+  css: ['@/assets/style.css'],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [],
