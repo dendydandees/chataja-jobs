@@ -2,7 +2,7 @@ export default {
   publicRuntimeConfig: {
     baseURL: 'https://www.kalibrr.id/api',
   },
-  ssr: false,
+  ssr: true,
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: 'ChatAja Jobs - Cari kerja lebih mudah dengan ChatAja Jobs',
@@ -28,7 +28,6 @@ export default {
   loading: {
     color: '#EB5757',
     height: '4px',
-    rtl: true,
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
@@ -55,6 +54,7 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     'dropzone-nuxt',
+    'v-sanitize/nuxt',
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)

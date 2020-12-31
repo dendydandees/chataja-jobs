@@ -81,10 +81,14 @@ export default {
     await this.getLatestJobs()
     await this.getFunctionJobs()
   },
+  // call fetch only on client-side
+  fetchOnServer: false,
   computed: {
+    // get latest jobs from job store
     latestJobs() {
       return this.$store.state.jobs.latestJobs
     },
+    // get function jobs name from job store
     functionJobs() {
       return this.$store.state.jobs.functionJobs
     },
@@ -93,14 +97,17 @@ export default {
     this.setDefaultSearch()
   },
   methods: {
+    // get mutations from job store
     ...mapMutations({
       setDefaultSearch: 'jobs/SET_DEFAULT_SEARCH',
       setSearchText: 'jobs/SET_SEARCH_TEXT',
     }),
+    // get actions from job store
     ...mapActions({
       getLatestJobs: 'jobs/getLatestJobs',
       getFunctionJobs: 'jobs/getFunctionJobs',
     }),
+    // set search jobs
     toJobBoard(jobFunction) {
       this.setSearchText(jobFunction)
       this.$router.push('/jobs/job_board')

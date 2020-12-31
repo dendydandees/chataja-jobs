@@ -86,12 +86,15 @@ export default {
   async fetch() {
     await this.searchJobsAction(this.$store.state.jobs.search)
   },
+  // call fetch only on client-side
+  fetchOnServer: false,
   data: () => ({
     page: 1,
     offsetData: 0,
     items: [12, 16, 24],
   }),
   computed: {
+    // get limit for pagination jobs from job store
     limit: {
       get() {
         return this.$store.state.jobs.search.limit
@@ -100,6 +103,7 @@ export default {
         this.setLimit(value)
       },
     },
+    // get offset for pagination jobs from job store
     offset: {
       get() {
         return this.$store.state.jobs.search.offset
@@ -108,6 +112,7 @@ export default {
         this.setOffset(value)
       },
     },
+    // get getters from job store
     ...mapGetters({
       count: 'jobs/listJobsCount',
       jobs: 'jobs/listSearchJobs',
@@ -116,19 +121,23 @@ export default {
     }),
   },
   methods: {
+    // get mutaions from job store
     ...mapMutations({
       setLimit: 'jobs/SET_SEARCH_LIMIT',
       setOffset: 'jobs/SET_SEARCH_OFFSET',
     }),
+    // get actions from job store
     ...mapActions({
       searchJobsAction: 'jobs/searchJobsAction',
     }),
+    // set items per page
     async updateItemsPerPage(number) {
       this.page = 1
       this.setOffset(0)
       this.setLimit(number)
       await this.searchJobsAction(this.$store.state.jobs.search)
     },
+    // set show pagination
     showPagination() {
       if (this.count < 12 || this.count === 0 || !this.jobs) {
         return false
@@ -136,6 +145,7 @@ export default {
         return true
       }
     },
+    // set next or prev page
     async offsetPage() {
       if (this.page === 1) {
         this.offsetData = 0

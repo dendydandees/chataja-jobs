@@ -78,7 +78,10 @@
                 <v-row no-gutters class="mb-4">
                   <v-col cols="12">
                     <h6 class="subtitle-2 mb-2 font-weight-bold">Deskripsi</h6>
-                    <div class="body-2" v-html="company.description"></div>
+                    <div
+                      v-sanitize.basic="company.description"
+                      class="body-2"
+                    ></div>
                   </v-col>
                 </v-row>
                 <v-row no-gutters class="mb-4">
@@ -191,6 +194,7 @@
                     width="75"
                     height="75"
                     contain
+                    class="rounded img-border"
                   >
                   </v-img>
                   <v-img
@@ -199,6 +203,7 @@
                     lazy-src="/placeholder-profile.svg"
                     width="75"
                     height="75"
+                    class="rounded img-border"
                   >
                   </v-img>
                   <v-card-text class="px-0" style="height: 180px">
@@ -248,20 +253,25 @@ import { mapActions } from 'vuex'
 export default {
   async fetch() {
     await this.getCompanyDetail(this.code)
+    // get company from job store
+    this.company = this.$store.state.jobs.companyDetails.jobs[0]
   },
+  // call fetch only on client-side
+  fetchOnServer: false,
   data: () => ({
     model: 0,
+    company: [],
   }),
   computed: {
+    // get code from params
     code() {
       return this.$route.params.code
     },
-    company() {
-      return this.$store.state.jobs.companyDetails.jobs[0]
-    },
+    // get job list company from job store
     jobList() {
       return this.$store.state.jobs.companyDetails.jobs
     },
+    // get saved jobs from local storage
     localStorageJobs() {
       if (localStorage.length > 0) {
         const data = localStorage.getItem('savedJobs')
@@ -272,9 +282,11 @@ export default {
     },
   },
   methods: {
+    // get actions from job store
     ...mapActions({
       getCompanyDetail: 'jobs/getCompanyDetail',
     }),
+    // set saved jobs and save data to local storage
     savedToLocalStorage(job) {
       if (!this.localStorageJobs.includes(job)) {
         this.localStorageJobs.push(job)
@@ -286,16 +298,24 @@ export default {
         return undefined
       }
     },
+    // prev function for list jobs
     prev() {
       this.model === 0
         ? (this.model = this.jobList.length - 1)
         : (this.model -= 1)
     },
+    // next function for list jobs
     next() {
       this.model === this.jobList.length - 1
         ? (this.model = 0)
         : (this.model += 1)
     },
+  },
+  // set title of page
+  head() {
+    return {
+      title: `${this.company.company_name} | ChatAja Jobs`,
+    }
   },
 }
 </script>
@@ -303,5 +323,8 @@ export default {
 <style scoped>
 .blue-custom-bg {
   background-color: #f2f6fd;
+}
+li {
+  margin-bottom: 8px !important;
 }
 </style>

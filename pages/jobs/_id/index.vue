@@ -48,8 +48,27 @@
                   <v-col cols="2" class="text-right">
                     <v-tooltip top color="primary" close-delay="250">
                       <template v-slot:activator="{ on, attrs }">
-                        <v-btn icon v-bind="attrs" large v-on="on">
-                          <v-icon>mdi-bookmark-outline</v-icon>
+                        <v-btn
+                          :color="
+                            localStorageJobs.some(
+                              (item) => item.id === details.id
+                            )
+                              ? 'primary'
+                              : ''
+                          "
+                          icon
+                          v-bind="attrs"
+                          large
+                          v-on="on"
+                          @click="savedToLocalStorage(details)"
+                        >
+                          <v-icon>{{
+                            localStorageJobs.some(
+                              (item) => item.id === details.id
+                            )
+                              ? 'mdi-bookmark'
+                              : 'mdi-bookmark-outline'
+                          }}</v-icon>
                         </v-btn>
                       </template>
                       <span>Simpan Pekerjaan</span>
@@ -85,7 +104,10 @@
                     <h6 class="subtitle-1 mb-2 font-weight-bold">
                       Deksripsi Pekerjaan
                     </h6>
-                    <div class="body-2" v-html="details.description"></div>
+                    <div
+                      v-sanitize.basic="details.description"
+                      class="body-2"
+                    ></div>
                   </v-col>
                 </v-row>
                 <v-row no-gutters class="mb-8">
@@ -93,7 +115,10 @@
                     <h6 class="subtitle-1 mb-2 font-weight-bold">
                       Persyaratan Pekerjaan
                     </h6>
-                    <div class="body-2" v-html="details.qualifications"></div>
+                    <div
+                      v-sanitize.basic="details.qualifications"
+                      class="body-2"
+                    ></div>
                   </v-col>
                 </v-row>
                 <v-row no-gutters class="mb-4">
@@ -145,7 +170,7 @@
             <v-card elevation="1" rounded="lg">
               <v-card-text class="text-center py-4 py-md-10">
                 <v-img
-                  v-if="details.company_info.logo !== undefined"
+                  v-if="details.company_info.logo !== null"
                   :src="details.company_info.logo"
                   :lazy-src="details.company_info.logo"
                   width="75"
@@ -201,19 +226,25 @@ export default {
   },
   async fetch() {
     await this.getDetailJob(this.id)
+    // get details job from job store
     this.details = this.$store.state.jobs.detailJob
     await this.getLatestJobs()
   },
+  // call fetch only on client-side
+  fetchOnServer: false,
   data: () => ({
     details: [],
   }),
   computed: {
+    // get id from params
     id() {
       return this.$route.params.id
     },
+    // get latest jobs from job store
     latestJobs() {
       return this.$store.state.jobs.latestJobs
     },
+    // get education level
     educationTypes() {
       const level = this.details.education_level
       if (level === 100) {
@@ -234,14 +265,46 @@ export default {
         return '-'
       }
     },
+    // get saved jobs from local storage
+    localStorageJobs() {
+      if (localStorage.length > 0) {
+        const data = localStorage.getItem('savedJobs')
+        return JSON.parse(data)
+      } else {
+        return []
+      }
+    },
   },
   methods: {
+    // get actions from job store
     ...mapActions({
       getDetailJob: 'jobs/getDetailJob',
       getLatestJobs: 'jobs/getLatestJobs',
     }),
+    // set saved jobs and save data to local storage
+    savedToLocalStorage(job) {
+      if (!this.localStorageJobs.includes(job)) {
+        this.localStorageJobs.push(job)
+        return localStorage.setItem(
+          'savedJobs',
+          JSON.stringify(this.localStorageJobs)
+        )
+      } else {
+        return undefined
+      }
+    },
+  },
+  // set title of page
+  head() {
+    return {
+      title: `${this.details.name} - ${this.details.company_name} | ChatAja Jobs`,
+    }
   },
 }
 </script>
 
-<style></style>
+<style scoped>
+li {
+  margin-bottom: 8px !important;
+}
+</style>
