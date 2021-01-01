@@ -95,7 +95,9 @@ export const actions = {
   // function for get latest jobs
   async getLatestJobs({ commit, dispatch }) {
     try {
-      const result = await fetch(`/api/job_board/search?limit=4`)
+      const result = await fetch(
+        `https://cors-anywhere.herokuapp.com/https://www.kalibrr.id/api/job_board/search?limit=4`
+      )
         .then((res) => res.json())
         .then((data) => {
           return data.jobs.sort((first, second) => {
@@ -119,7 +121,9 @@ export const actions = {
   // function for get type function of jobs
   async getFunctionJobs({ commit, dispatch }) {
     try {
-      const result = await fetch(`/api/job_board/search`)
+      const result = await fetch(
+        `https://cors-anywhere.herokuapp.com/https://www.kalibrr.id/api/job_board/search`
+      )
         .then((res) => res.json())
         .then((data) => {
           const jobs = data.jobs.map((job) => {
@@ -135,13 +139,15 @@ export const actions = {
         commit('SET_FUNCTION_JOBS', [])
       }
     } catch (error) {
-      error({ statusCode: 404, message: 'Jobs not found' })
+      console.log(error)
     }
   },
   // function for get details of jobs
   async getDetailJob({ commit, dispatch }, id) {
     try {
-      const result = await fetch(`/api/jobs/${id}`)
+      const result = await fetch(
+        `https://cors-anywhere.herokuapp.com/https://www.kalibrr.id/api/jobs/${id}`
+      )
         .then((res) => res.json())
         .then((data) => {
           return data
@@ -168,7 +174,9 @@ export const actions = {
         education_level: data.educationTypes,
       })
 
-      await fetch(`/api/job_board/search${params}`)
+      await fetch(
+        `https://cors-anywhere.herokuapp.com/https://www.kalibrr.id/api/job_board/search${params}`
+      )
         .then((res) => res.json())
         .then((data) => {
           const count = data.count
@@ -195,7 +203,9 @@ export const actions = {
   // function for get a detail company
   async getCompanyDetail({ commit }, code) {
     try {
-      const result = await fetch(`/api/companies/${code}/jobs`)
+      const result = await fetch(
+        `https://cors-anywhere.herokuapp.com/https://www.kalibrr.id/api/companies/${code}/jobs`
+      )
         .then((res) => res.json())
         .then((data) => {
           return data
