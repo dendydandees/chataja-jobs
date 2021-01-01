@@ -200,55 +200,7 @@
               <!-- sign in modal content -->
               <v-scroll-x-transition mode="in-out" hide-on-leave>
                 <v-tab-item v-if="tab === 'sign-in'" id="sign-in">
-                  <v-card flat>
-                    <h2 class="text-h3 font-weight-bold my-8">Masuk</h2>
-                    <v-form>
-                      <v-row no-gutters>
-                        <v-col cols="12">
-                          <label for="email" class="font-weight-bold"
-                            >Email</label
-                          >
-                          <v-text-field
-                            id="email"
-                            single-line
-                            outlined
-                            class="mt-2"
-                            type="email"
-                          ></v-text-field>
-                        </v-col>
-                      </v-row>
-                      <v-row no-gutters>
-                        <v-col cols="12">
-                          <label for="password" class="font-weight-bold"
-                            >Password</label
-                          >
-                          <v-text-field
-                            id="password"
-                            single-line
-                            outlined
-                            class="mt-2"
-                            type="password"
-                          ></v-text-field>
-                        </v-col>
-                      </v-row>
-                      <v-btn
-                        block
-                        x-large
-                        color="primary"
-                        class="my-4"
-                        type="input"
-                        >Masuk</v-btn
-                      >
-                      <v-btn
-                        block
-                        x-large
-                        color="primary"
-                        text
-                        @click.stop="forgotPasswordClick()"
-                        >Lupa Password</v-btn
-                      >
-                    </v-form>
-                  </v-card>
+                  <SigninForm @forgotPasswordClick="forgotPasswordClick()" />
                 </v-tab-item>
               </v-scroll-x-transition>
               <!-- end sign in modal content -->
@@ -256,90 +208,7 @@
               <!-- sign up modal content -->
               <v-scroll-x-transition mode="in-out" hide-on-leave>
                 <v-tab-item v-if="tab === 'sign-up'" id="sign-up">
-                  <v-card flat>
-                    <h2 class="text-h3 font-weight-bold my-8">Daftar</h2>
-                    <v-form ref="form" @submit.prevent="signUpHandler">
-                      <v-row no-gutters>
-                        <v-col cols="12">
-                          <label for="fullname" class="font-weight-bold"
-                            >Nama Lengkap</label
-                          >
-                          <v-text-field
-                            id="fullname"
-                            single-line
-                            outlined
-                            class="mt-2"
-                            type="text"
-                          ></v-text-field>
-                        </v-col>
-                      </v-row>
-                      <v-row no-gutters>
-                        <v-col cols="12">
-                          <label for="telp_number" class="font-weight-bold"
-                            >Nomor ChatAja</label
-                          >
-                          <v-text-field
-                            id="telp_number"
-                            single-line
-                            outlined
-                            class="mt-2"
-                            type="tel"
-                          ></v-text-field>
-                        </v-col>
-                      </v-row>
-                      <v-row no-gutters>
-                        <v-col cols="12">
-                          <label for="email" class="font-weight-bold"
-                            >Email</label
-                          >
-                          <v-text-field
-                            id="email"
-                            single-line
-                            outlined
-                            class="mt-2"
-                            type="email"
-                          ></v-text-field>
-                        </v-col>
-                      </v-row>
-                      <v-row no-gutters>
-                        <v-col cols="12">
-                          <label for="password" class="font-weight-bold"
-                            >Password</label
-                          >
-                          <v-text-field
-                            id="password"
-                            single-line
-                            outlined
-                            class="mt-2"
-                            type="password"
-                          ></v-text-field>
-                        </v-col>
-                      </v-row>
-                      <v-btn
-                        block
-                        x-large
-                        color="primary"
-                        :class="[isProcessing ? 'is-loading' : '', 'mt-4 mb-6']"
-                        type="input"
-                        :loading="isProcessing"
-                        :disabled="isProcessing"
-                        >Daftar</v-btn
-                      >
-                      <p class="text-center body-1">
-                        Dengan mendaftar, saya setuju dengan
-                        <a href="https://chataja.co.id/syarat" target="_blank"
-                          >Syarat & Ketentuan</a
-                        >
-                        dan
-                        <a
-                          href="https://chataja.co.id/kebijakan-privasi"
-                          target="_blank"
-                          >Kebijakan Privasi</a
-                        >
-                        ChatAja.
-                      </p>
-                    </v-form>
-                  </v-card>
+                  <SignupForm />
                 </v-tab-item>
               </v-scroll-x-transition>
               <!-- end sign up modal content -->
@@ -357,79 +226,33 @@
       :max-width="$vuetify.breakpoint.smAndUp ? '700' : 'none'"
       :fullscreen="!$vuetify.breakpoint.smAndUp"
     >
-      <v-card class="pa-sm-10">
-        <v-row v-if="!$vuetify.breakpoint.smAndUp" no-gutters>
-          <v-col class="px-4 py-2 text-right">
-            <v-btn icon @click="forgotPasswordDialog = !forgotPasswordDialog">
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
-          </v-col>
-        </v-row>
-
-        <v-row no-gutters align="center" class="pa-4 pt-0 pa-sm-0">
-          <v-col cols="12" sm="6" class="text-left mb-3 mb-sm-0">
-            <a
-              href="#"
-              class="text-decoration-none"
-              @click.stop="backToSignIn()"
-            >
-              <v-icon left color="primary"> mdi-arrow-left </v-icon>
-              Kembali ke Masuk
-            </a>
-          </v-col>
-          <v-col cols="12" sm="6" class="text-sm-right">
-            <p class="ma-0">
-              Baru di ChatAja Jobs ?
-              <a href="#" @click.stop="backToRegister()">Register</a>
-            </p>
-          </v-col>
-          <v-col cols="12">
-            <h2 class="text-h3 font-weight-bold mt-8 mb-5">Reset Password</h2>
-            <p class="mb-8 body-1">
-              Masukkan alamat email yang Anda gunakan saat bergabung dan kami
-              akan mengirimkan instruksi untuk mengatur ulang kata sandi Anda.
-            </p>
-            <v-form>
-              <v-row no-gutters>
-                <v-col cols="12">
-                  <label for="email_verification" class="font-weight-bold"
-                    >Email</label
-                  >
-                  <v-text-field
-                    id="email_verification"
-                    single-line
-                    outlined
-                    class="mt-2"
-                    type="email"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-btn
-                block
-                x-large
-                color="primary"
-                class="mt-4 mb-6"
-                type="input"
-                >Kirim Instruksi</v-btn
-              >
-            </v-form>
-          </v-col>
-        </v-row>
-      </v-card>
+      <ForgotPassword
+        @closeDialog="forgotPasswordDialog = !forgotPasswordDialog"
+        @backToSignUp="backToSignUp()"
+        @backToSignIn="backToSignIn()"
+      />
     </v-dialog>
     <!-- end forgot password modal -->
   </section>
 </template>
 
 <script>
+import SignupForm from '@/components/nav/SignupForm'
+import SigninForm from '@/components/nav/SigninForm'
+import ForgotPassword from '@/components/nav/ForgotPassword'
+
 export default {
+  components: {
+    SignupForm,
+    SigninForm,
+    ForgotPassword,
+  },
   data: () => ({
     drawer: false,
     group: null,
     signDialog: false,
     forgotPasswordDialog: false,
     tab: '',
-    isProcessing: false,
   }),
   computed: {
     inJobSeekerTrue() {
@@ -453,48 +276,41 @@ export default {
     }
   },
   methods: {
+    // open sign up modal
     signUpClick() {
       this.tab = 'sign-up'
       setTimeout(() => {
         this.signDialog = !this.signDialog
       }, 250)
     },
+    // open sign in modal
     signInClick() {
       this.tab = 'sign-in'
       setTimeout(() => {
         this.signDialog = !this.signDialog
       }, 250)
     },
+    // open forgot password modal
     forgotPasswordClick() {
       this.tab = ''
       this.signDialog = !this.signDialog
       this.forgotPasswordDialog = !this.forgotPasswordDialog
     },
-    backToRegister() {
+    // back to sign up modal
+    backToSignUp() {
       this.tab = 'sign-up'
       setTimeout(() => {
         this.forgotPasswordDialog = !this.forgotPasswordDialog
         this.signDialog = !this.signDialog
       }, 250)
     },
+    // back to sign in modal
     backToSignIn() {
       this.tab = 'sign-in'
       setTimeout(() => {
         this.forgotPasswordDialog = !this.forgotPasswordDialog
         this.signDialog = !this.signDialog
       }, 250)
-    },
-    async signUpHandler() {
-      try {
-        this.isProcessing = true
-        await this.$router.push('/email-verification')
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.log(error)
-      } finally {
-        this.isProcessing = false
-        this.tab = ''
-      }
     },
   },
 }
