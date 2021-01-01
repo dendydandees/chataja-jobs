@@ -96,6 +96,8 @@
       app
       right
       clipped
+      width="100%"
+      temporary
     >
       <v-list nav>
         <v-list-item-group v-model="group">
@@ -104,6 +106,27 @@
               $route.name !== 'jobs-id' && $route.name !== 'jobs-company-code'
             "
           >
+            <v-row no-gutters align="center">
+              <v-col cols="6">
+                <!-- logo chat aja jobs -->
+                <nuxt-link to="/">
+                  <v-toolbar-title>
+                    <img
+                      src="/cajobs-logo.png"
+                      alt="ChatAja Jobs"
+                      height="100%"
+                    />
+                  </v-toolbar-title>
+                </nuxt-link>
+                <!-- end logo chat aja jobs -->
+              </v-col>
+              <v-col cols="6" class="text-right">
+                <v-btn icon large @click="drawer = !drawer">
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
+
             <v-btn
               block
               text
@@ -155,152 +178,174 @@
     <v-dialog
       v-if="$route.name !== 'email-verification'"
       v-model="signDialog"
-      max-width="700"
+      :max-width="$vuetify.breakpoint.smAndUp ? '700' : 'none'"
+      :fullscreen="!$vuetify.breakpoint.smAndUp"
     >
-      <v-card class="pa-6 pa-md-10">
-        <v-tabs v-model="tab" :slider-size="4">
-          <v-tab href="#sign-in">Masuk</v-tab>
-          <v-tab href="#sign-up">Daftar</v-tab>
-        </v-tabs>
-        <v-tabs-items v-model="tab">
-          <!-- sign in modal content -->
-          <v-scroll-x-transition>
-            <v-tab-item id="sign-in">
-              <v-card flat>
-                <h2 class="text-h3 font-weight-bold my-8">Masuk</h2>
-                <v-form>
-                  <v-row no-gutters>
-                    <v-col cols="12">
-                      <label for="email" class="font-weight-bold">Email</label>
-                      <v-text-field
-                        id="email"
-                        single-line
-                        outlined
-                        class="mt-2"
-                        type="email"
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                  <v-row no-gutters>
-                    <v-col cols="12">
-                      <label for="password" class="font-weight-bold"
-                        >Password</label
-                      >
-                      <v-text-field
-                        id="password"
-                        single-line
-                        outlined
-                        class="mt-2"
-                        type="password"
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                  <v-btn block x-large color="primary" class="my-4" type="input"
-                    >Masuk</v-btn
-                  >
-                  <v-btn
-                    block
-                    x-large
-                    color="primary"
-                    text
-                    @click.stop="forgotPasswordClick()"
-                    >Lupa Password</v-btn
-                  >
-                </v-form>
-              </v-card>
-            </v-tab-item>
-          </v-scroll-x-transition>
-          <!-- end sign in modal content -->
+      <v-card class="pa-sm-10">
+        <v-row v-if="!$vuetify.breakpoint.smAndUp" no-gutters>
+          <v-col class="px-4 py-2 text-right">
+            <v-btn icon @click="signDialog = !signDialog">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </v-col>
+        </v-row>
 
-          <!-- sign up modal content -->
-          <v-scroll-x-transition>
-            <v-tab-item id="sign-up">
-              <v-card flat>
-                <h2 class="text-h3 font-weight-bold my-8">Daftar</h2>
-                <v-form ref="form" @submit.prevent="signUpHandler">
-                  <v-row no-gutters>
-                    <v-col cols="12">
-                      <label for="fullname" class="font-weight-bold"
-                        >Nama Lengkap</label
+        <v-row no-gutters>
+          <v-col class="pa-4 pt-0 pa-sm-0">
+            <v-tabs v-model="tab" :slider-size="4">
+              <v-tab href="#sign-in">Masuk</v-tab>
+              <v-tab href="#sign-up">Daftar</v-tab>
+            </v-tabs>
+            <v-tabs-items v-model="tab">
+              <!-- sign in modal content -->
+              <v-scroll-x-transition mode="in-out" hide-on-leave>
+                <v-tab-item v-if="tab === 'sign-in'" id="sign-in">
+                  <v-card flat>
+                    <h2 class="text-h3 font-weight-bold my-8">Masuk</h2>
+                    <v-form>
+                      <v-row no-gutters>
+                        <v-col cols="12">
+                          <label for="email" class="font-weight-bold"
+                            >Email</label
+                          >
+                          <v-text-field
+                            id="email"
+                            single-line
+                            outlined
+                            class="mt-2"
+                            type="email"
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+                      <v-row no-gutters>
+                        <v-col cols="12">
+                          <label for="password" class="font-weight-bold"
+                            >Password</label
+                          >
+                          <v-text-field
+                            id="password"
+                            single-line
+                            outlined
+                            class="mt-2"
+                            type="password"
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+                      <v-btn
+                        block
+                        x-large
+                        color="primary"
+                        class="my-4"
+                        type="input"
+                        >Masuk</v-btn
                       >
-                      <v-text-field
-                        id="fullname"
-                        single-line
-                        outlined
-                        class="mt-2"
-                        type="text"
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                  <v-row no-gutters>
-                    <v-col cols="12">
-                      <label for="telp_number" class="font-weight-bold"
-                        >Nomor ChatAja</label
+                      <v-btn
+                        block
+                        x-large
+                        color="primary"
+                        text
+                        @click.stop="forgotPasswordClick()"
+                        >Lupa Password</v-btn
                       >
-                      <v-text-field
-                        id="telp_number"
-                        single-line
-                        outlined
-                        class="mt-2"
-                        type="tel"
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                  <v-row no-gutters>
-                    <v-col cols="12">
-                      <label for="email" class="font-weight-bold">Email</label>
-                      <v-text-field
-                        id="email"
-                        single-line
-                        outlined
-                        class="mt-2"
-                        type="email"
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                  <v-row no-gutters>
-                    <v-col cols="12">
-                      <label for="password" class="font-weight-bold"
-                        >Password</label
+                    </v-form>
+                  </v-card>
+                </v-tab-item>
+              </v-scroll-x-transition>
+              <!-- end sign in modal content -->
+
+              <!-- sign up modal content -->
+              <v-scroll-x-transition mode="in-out" hide-on-leave>
+                <v-tab-item v-if="tab === 'sign-up'" id="sign-up">
+                  <v-card flat>
+                    <h2 class="text-h3 font-weight-bold my-8">Daftar</h2>
+                    <v-form ref="form" @submit.prevent="signUpHandler">
+                      <v-row no-gutters>
+                        <v-col cols="12">
+                          <label for="fullname" class="font-weight-bold"
+                            >Nama Lengkap</label
+                          >
+                          <v-text-field
+                            id="fullname"
+                            single-line
+                            outlined
+                            class="mt-2"
+                            type="text"
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+                      <v-row no-gutters>
+                        <v-col cols="12">
+                          <label for="telp_number" class="font-weight-bold"
+                            >Nomor ChatAja</label
+                          >
+                          <v-text-field
+                            id="telp_number"
+                            single-line
+                            outlined
+                            class="mt-2"
+                            type="tel"
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+                      <v-row no-gutters>
+                        <v-col cols="12">
+                          <label for="email" class="font-weight-bold"
+                            >Email</label
+                          >
+                          <v-text-field
+                            id="email"
+                            single-line
+                            outlined
+                            class="mt-2"
+                            type="email"
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+                      <v-row no-gutters>
+                        <v-col cols="12">
+                          <label for="password" class="font-weight-bold"
+                            >Password</label
+                          >
+                          <v-text-field
+                            id="password"
+                            single-line
+                            outlined
+                            class="mt-2"
+                            type="password"
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+                      <v-btn
+                        block
+                        x-large
+                        color="primary"
+                        :class="[isProcessing ? 'is-loading' : '', 'mt-4 mb-6']"
+                        type="input"
+                        :loading="isProcessing"
+                        :disabled="isProcessing"
+                        >Daftar</v-btn
                       >
-                      <v-text-field
-                        id="password"
-                        single-line
-                        outlined
-                        class="mt-2"
-                        type="password"
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                  <v-btn
-                    block
-                    x-large
-                    color="primary"
-                    :class="[isProcessing ? 'is-loading' : '', 'mt-4 mb-6']"
-                    type="input"
-                    :loading="isProcessing"
-                    :disabled="isProcessing"
-                    >Daftar</v-btn
-                  >
-                  <p class="text-center body-1">
-                    Dengan mendaftar, saya setuju dengan
-                    <a href="https://chataja.co.id/syarat" target="_blank"
-                      >Syarat & Ketentuan</a
-                    >
-                    dan
-                    <a
-                      href="https://chataja.co.id/kebijakan-privasi"
-                      target="_blank"
-                      >Kebijakan Privasi</a
-                    >
-                    ChatAja.
-                  </p>
-                </v-form>
-              </v-card>
-            </v-tab-item>
-          </v-scroll-x-transition>
-          <!-- end sign up modal content -->
-        </v-tabs-items>
+                      <p class="text-center body-1">
+                        Dengan mendaftar, saya setuju dengan
+                        <a href="https://chataja.co.id/syarat" target="_blank"
+                          >Syarat & Ketentuan</a
+                        >
+                        dan
+                        <a
+                          href="https://chataja.co.id/kebijakan-privasi"
+                          target="_blank"
+                          >Kebijakan Privasi</a
+                        >
+                        ChatAja.
+                      </p>
+                    </v-form>
+                  </v-card>
+                </v-tab-item>
+              </v-scroll-x-transition>
+              <!-- end sign up modal content -->
+            </v-tabs-items>
+          </v-col>
+        </v-row>
       </v-card>
     </v-dialog>
     <!-- end sign modal -->
@@ -309,11 +354,20 @@
     <v-dialog
       v-if="$route.name !== 'email-verification'"
       v-model="forgotPasswordDialog"
-      max-width="700"
+      :max-width="$vuetify.breakpoint.smAndUp ? '700' : 'none'"
+      :fullscreen="!$vuetify.breakpoint.smAndUp"
     >
-      <v-card class="pa-6 pa-md-10">
-        <v-row align="center">
-          <v-col cols="12" sm="6" class="text-left">
+      <v-card class="pa-sm-10">
+        <v-row v-if="!$vuetify.breakpoint.smAndUp" no-gutters>
+          <v-col class="px-4 py-2 text-right">
+            <v-btn icon @click="forgotPasswordDialog = !forgotPasswordDialog">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </v-col>
+        </v-row>
+
+        <v-row no-gutters align="center" class="pa-4 pt-0 pa-sm-0">
+          <v-col cols="12" sm="6" class="text-left mb-3 mb-sm-0">
             <a
               href="#"
               class="text-decoration-none"
@@ -329,31 +383,38 @@
               <a href="#" @click.stop="backToRegister()">Register</a>
             </p>
           </v-col>
-        </v-row>
-        <h2 class="text-h3 font-weight-bold mt-8 mb-5">Reset Password</h2>
-        <p class="mb-8 body-1">
-          Masukkan alamat email yang Anda gunakan saat bergabung dan kami akan
-          mengirimkan instruksi untuk mengatur ulang kata sandi Anda.
-        </p>
-        <v-form>
-          <v-row no-gutters>
-            <v-col cols="12">
-              <label for="email_verification" class="font-weight-bold"
-                >Email</label
+          <v-col cols="12">
+            <h2 class="text-h3 font-weight-bold mt-8 mb-5">Reset Password</h2>
+            <p class="mb-8 body-1">
+              Masukkan alamat email yang Anda gunakan saat bergabung dan kami
+              akan mengirimkan instruksi untuk mengatur ulang kata sandi Anda.
+            </p>
+            <v-form>
+              <v-row no-gutters>
+                <v-col cols="12">
+                  <label for="email_verification" class="font-weight-bold"
+                    >Email</label
+                  >
+                  <v-text-field
+                    id="email_verification"
+                    single-line
+                    outlined
+                    class="mt-2"
+                    type="email"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-btn
+                block
+                x-large
+                color="primary"
+                class="mt-4 mb-6"
+                type="input"
+                >Kirim Instruksi</v-btn
               >
-              <v-text-field
-                id="email_verification"
-                single-line
-                outlined
-                class="mt-2"
-                type="email"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-          <v-btn block x-large color="primary" class="mt-4 mb-6" type="input"
-            >Kirim Instruksi</v-btn
-          >
-        </v-form>
+            </v-form>
+          </v-col>
+        </v-row>
       </v-card>
     </v-dialog>
     <!-- end forgot password modal -->

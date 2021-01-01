@@ -442,7 +442,7 @@
 
               <v-row no-gutters>
                 <!-- field degree -->
-                <v-col class="pr-2">
+                <v-col cols="12" sm="6" class="pr-sm-2">
                   <label for="educationDegree" class="font-weight-bold"
                     >Tingkatan Pendidikan</label
                   >
@@ -459,7 +459,7 @@
                 <!-- end field degree -->
 
                 <!-- field of study -->
-                <v-col class="pl-2">
+                <v-col cols="12" sm="6" class="pl-sm-2">
                   <label for="educationStudy" class="font-weight-bold"
                     >Bidang Studi</label
                   >
@@ -478,7 +478,7 @@
 
               <v-row no-gutters>
                 <!-- field education start -->
-                <v-col class="pr-2">
+                <v-col cols="12" sm="6" class="pr-sm-2">
                   <label for="educationStart" class="font-weight-bold"
                     >Tahun Mulai</label
                   >
@@ -536,7 +536,7 @@
                 <!-- end field education start -->
 
                 <!-- field education end -->
-                <v-col class="pl-2">
+                <v-col cols="12" sm="6" class="pl-sm-2">
                   <label for="educationEnd" class="font-weight-bold"
                     >Tahun Berakhir (atau perkiraan)</label
                   >
@@ -740,7 +740,7 @@
 
               <v-row no-gutters :class="[editWork ? '' : 'my-4']">
                 <!-- field work start -->
-                <v-col class="pr-2">
+                <v-col cols="12" sm="6" class="pr-sm-2">
                   <label for="workStart" class="font-weight-bold"
                     >Tahun Mulai</label
                   >
@@ -795,7 +795,7 @@
                 <!-- end field work start -->
 
                 <!-- field work end -->
-                <v-col class="pl-2">
+                <v-col cols="12" sm="6" class="pl-sm-2">
                   <label for="workEnd" class="font-weight-bold"
                     >Tahun Berakhir</label
                   >
