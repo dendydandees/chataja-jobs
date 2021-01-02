@@ -13,6 +13,7 @@
             type="text"
             background-color="white"
             hide-details="true"
+            autocomplete="off"
           >
             <template v-slot:prepend-inner>
               <v-icon :style="$vuetify.breakpoint.smAndUp ? 'bottom: -4px' : ''"

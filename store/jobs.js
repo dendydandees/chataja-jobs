@@ -139,7 +139,7 @@ export const actions = {
         commit('SET_FUNCTION_JOBS', [])
       }
     } catch (error) {
-      console.log(error)
+      error({ statusCode: 404, message: 'Jobs not found' })
     }
   },
   // function for get details of jobs
@@ -203,8 +203,15 @@ export const actions = {
   // function for get a detail company
   async getCompanyDetail({ commit }, code) {
     try {
+      const params = encodeQueryString({
+        active: 'true',
+        record_view: 'true',
+        visibility: 'public',
+        with_jobs: 'true',
+      })
+
       const result = await fetch(
-        `https://cors-anywhere.herokuapp.com/https://www.kalibrr.id/api/companies/${code}/jobs`
+        `https://cors-anywhere.herokuapp.com/https://www.kalibrr.id/api/companies/${code}${params}`
       )
         .then((res) => res.json())
         .then((data) => {

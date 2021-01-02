@@ -21,9 +21,9 @@
                 <v-row>
                   <v-col cols="12" sm="auto">
                     <v-img
-                      v-if="company.company_info.logo !== null"
-                      :src="company.company_info.logo"
-                      :lazy-src="company.company_info.logo"
+                      v-if="company.logo !== null"
+                      :src="company.logo"
+                      :lazy-src="company.logo"
                       width="100"
                       height="100"
                       contain
@@ -42,7 +42,7 @@
                   </v-col>
                   <v-col class="text-center text-sm-left">
                     <h2 class="headline font-weight-bold mb-2">
-                      {{ company.company_name }}
+                      {{ company.name }}
                     </h2>
                     <p class="subtitle-1 ma-0">
                       {{
@@ -58,8 +58,9 @@
                   >
                     <v-btn
                       color="primary"
+                      class="text-decoration-none"
                       outlined
-                      :href="`${company.company_info.url}`"
+                      :href="`${company.url}`"
                       target="blank"
                     >
                       <v-icon left> mdi-web </v-icon>
@@ -105,12 +106,8 @@
                 <v-row no-gutters class="mb-4">
                   <v-col cols="12">
                     <h6 class="subtitle-2 mb-2 font-weight-bold">Website</h6>
-                    <a
-                      class="body-2"
-                      :href="`${company.company_info.url}`"
-                      target="blank"
-                    >
-                      {{ company.company_info.url }}
+                    <a class="body-2" :href="`${company.url}`" target="blank">
+                      {{ company.url }}
                     </a>
                   </v-col>
                 </v-row>
@@ -254,7 +251,7 @@ export default {
   async fetch() {
     await this.getCompanyDetail(this.code)
     // get company from job store
-    this.company = this.$store.state.jobs.companyDetails.jobs[0]
+    this.company = this.$store.state.jobs.companyDetails
   },
   // call fetch only on client-side
   fetchOnServer: false,
@@ -269,7 +266,7 @@ export default {
     },
     // get job list company from job store
     jobList() {
-      return this.$store.state.jobs.companyDetails.jobs
+      return this.$store.state.jobs.companyDetails.jobs_info.jobs
     },
     // get saved jobs from local storage
     localStorageJobs() {
@@ -314,7 +311,7 @@ export default {
   // set title of page
   head() {
     return {
-      title: `${this.company.company_name} | ChatAja Jobs`,
+      title: `${this.company?.name} | ChatAja Jobs`,
     }
   },
 }
