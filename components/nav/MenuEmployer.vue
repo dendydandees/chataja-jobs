@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <div>
     <!-- navigation bar -->
     <v-app-bar app hide-on-scroll height="80" color="#2c4d63">
       <v-container>
@@ -178,7 +178,7 @@
       </v-list>
     </v-navigation-drawer>
     <!-- end side bar -->
-  </nav>
+  </div>
 </template>
 
 <script>

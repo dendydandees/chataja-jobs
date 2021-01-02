@@ -1,7 +1,10 @@
 <template>
   <v-app>
     <!-- navigation bar -->
-    <Navbar />
+    <client-only>
+      <NavbarAuth v-if="this.$store.state.auth.loggedIn" />
+      <Navbar v-else />
+    </client-only>
     <!-- end navigation bar -->
 
     <v-main>
@@ -18,11 +21,13 @@
 
 <script>
 import Navbar from '@/components/nav/Navbar'
+import NavbarAuth from '@/components/nav/NavbarAuth'
 import Footer from '@/components/Footer'
 
 export default {
   components: {
     Navbar,
+    NavbarAuth,
     Footer,
   },
   mounted() {

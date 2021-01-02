@@ -54,22 +54,39 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
     'dropzone-nuxt',
     'v-sanitize/nuxt',
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
-    proxy: true,
+    proxy: false,
   },
 
-  proxy: {
-    '/api': {
-      target: 'https://www.kalibrr.id/api',
-      pathRewrite: {
-        '^/api': '/',
+  // proxy: {
+  //   '/api': {
+  //     target: 'https://www.kalibrr.id/api',
+  //     pathRewrite: {
+  //       '^/api': '/',
+  //     },
+  //     changeorigin: true,
+  //   },
+  // },
+
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url:
+              'https://cors-anywhere.herokuapp.com/http://chataja-jobs-be.chataja.co.id/api/v1/auth/login',
+            method: 'post',
+          },
+          logout: false,
+          user: false,
+        },
       },
-      changeorigin: true,
     },
   },
 

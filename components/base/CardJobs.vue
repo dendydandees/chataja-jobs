@@ -22,30 +22,7 @@
               </h4>
             </v-col>
             <v-col cols="2" class="text-right">
-              <v-tooltip top color="primary" close-delay="250">
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    :color="
-                      localStorageJobs.some((item) => item.id === job.id)
-                        ? 'primary'
-                        : ''
-                    "
-                    icon
-                    v-bind="attrs"
-                    v-on="on"
-                    @click="savedToLocalStorage(job)"
-                  >
-                    <v-icon>
-                      {{
-                        localStorageJobs.some((item) => item.id === job.id)
-                          ? 'mdi-bookmark'
-                          : 'mdi-bookmark-outline'
-                      }}
-                    </v-icon>
-                  </v-btn>
-                </template>
-                <span>Simpan Pekerjaan</span>
-              </v-tooltip>
+              <SaveButton :job="job" />
             </v-col>
           </v-row>
           <nuxt-link
@@ -113,7 +90,12 @@
 </template>
 
 <script>
+import SaveButton from '@/components/base/SaveButton'
+
 export default {
+  components: {
+    SaveButton,
+  },
   props: {
     latestJobs: {
       type: Array,
@@ -127,29 +109,6 @@ export default {
       default: () => {
         return false
       },
-    },
-  },
-  computed: {
-    localStorageJobs() {
-      if (localStorage.length > 0) {
-        const data = localStorage.getItem('savedJobs')
-        return JSON.parse(data)
-      } else {
-        return []
-      }
-    },
-  },
-  methods: {
-    savedToLocalStorage(job) {
-      if (!this.localStorageJobs.includes(job)) {
-        this.localStorageJobs.push(job)
-        return localStorage.setItem(
-          'savedJobs',
-          JSON.stringify(this.localStorageJobs)
-        )
-      } else {
-        return undefined
-      }
     },
   },
 }

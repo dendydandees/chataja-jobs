@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <div>
     <!-- navigation bar -->
     <v-app-bar app hide-on-scroll height="80" color="white">
       <v-container>
@@ -233,7 +233,7 @@
       />
     </v-dialog>
     <!-- end forgot password modal -->
-  </section>
+  </div>
 </template>
 
 <script>
