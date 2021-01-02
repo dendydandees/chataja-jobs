@@ -13,6 +13,7 @@
             type="text"
             background-color="white"
             hide-details="true"
+            autocomplete="off"
           >
             <template v-slot:prepend-inner>
               <v-icon :style="$vuetify.breakpoint.smAndUp ? 'bottom: -4px' : ''"
@@ -90,10 +91,11 @@
         </v-col>
         <v-btn
           v-if="$vuetify.breakpoint.xs"
+          large
           block
-          class="mt-6"
+          class="mt-6 mb-3"
           color="primary rounded-lg"
-          type="input"
+          type="submit"
           >Cari</v-btn
         >
       </v-row>
