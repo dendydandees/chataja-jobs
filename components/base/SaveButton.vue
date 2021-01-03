@@ -2,14 +2,24 @@
   <v-tooltip top color="primary" close-delay="250">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
-        :color="saved ? 'primary' : ''"
+        :color="
+          Array.isArray(localStorageJobs) &&
+          localStorageJobs.some((item) => item.id === job.id)
+            ? 'primary'
+            : ''
+        "
         icon
         v-bind="attrs"
         v-on="on"
         @click="savedToLocalStorage(job)"
       >
         <v-icon>
-          {{ saved ? 'mdi-bookmark' : 'mdi-bookmark-outline' }}
+          {{
+            Array.isArray(localStorageJobs) &&
+            localStorageJobs.some((item) => item.id === job.id)
+              ? 'mdi-bookmark'
+              : 'mdi-bookmark-outline'
+          }}
         </v-icon>
       </v-btn>
     </template>
@@ -29,14 +39,8 @@ export default {
     },
   },
   computed: {
-    saved() {
-      return (
-        Array.isArray(this.localStorageJobs) &&
-        this.localStorageJobs.some((item) => item.id === this.job.id)
-      )
-    },
     localStorageJobs() {
-      if (localStorage.length > 0) {
+      if ('savedJobs' in localStorage) {
         const data = localStorage.getItem('savedJobs')
         return JSON.parse(data)
       } else {
@@ -47,7 +51,7 @@ export default {
   methods: {
     savedToLocalStorage(job) {
       if ('savedJobs' in localStorage) {
-        if (!this.localStorageJobs.includes(job)) {
+        if (!this.localStorageJobs.some((item) => item.id === job.id)) {
           this.localStorageJobs.push(job)
           return localStorage.setItem(
             'savedJobs',

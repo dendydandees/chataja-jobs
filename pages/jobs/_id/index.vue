@@ -46,33 +46,7 @@
                     </h1>
                   </v-col>
                   <v-col cols="2" class="text-right">
-                    <v-tooltip top color="primary" close-delay="250">
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-btn
-                          :color="
-                            localStorageJobs.some(
-                              (item) => item.id === details.id
-                            )
-                              ? 'primary'
-                              : ''
-                          "
-                          icon
-                          v-bind="attrs"
-                          large
-                          v-on="on"
-                          @click="savedToLocalStorage(details)"
-                        >
-                          <v-icon>{{
-                            localStorageJobs.some(
-                              (item) => item.id === details.id
-                            )
-                              ? 'mdi-bookmark'
-                              : 'mdi-bookmark-outline'
-                          }}</v-icon>
-                        </v-btn>
-                      </template>
-                      <span>Simpan Pekerjaan</span>
-                    </v-tooltip>
+                    <SaveButton :job="details" />
                   </v-col>
                 </v-row>
                 <v-row no-gutters>
@@ -88,12 +62,14 @@
                   </v-col>
                   <v-col cols="12" sm="4" class="mb-4 mb-sm-0">
                     <h6 class="mb-2 subtitle-1">Kisaran Gaji</h6>
-                    <span class="font-weight-bold green--text"
-                      >{{
+                    <span class="font-weight-bold green--text">
+                      {{
                         details.salary_shown === false ||
                         details.salary_currency === null
                           ? '-'
-                          : `${details.salary_currency} ${details.base_salary} - ${details.maximum_salary}`
+                          : `${details.salary_currency || ''} ${
+                              details.base_salary || ''
+                            } - ${details.maximum_salary || ''}`
                       }}
                     </span>
                   </v-col>
@@ -217,11 +193,13 @@
 <script>
 import { mapActions } from 'vuex'
 import CardJobs from '@/components/base/CardJobs'
+import SaveButton from '@/components/base/SaveButton'
 import LoadingBar from '@/components/base/LoadingBar'
 
 export default {
   components: {
     CardJobs,
+    SaveButton,
     LoadingBar,
   },
   async fetch() {
@@ -265,15 +243,6 @@ export default {
         return '-'
       }
     },
-    // get saved jobs from local storage
-    localStorageJobs() {
-      if (localStorage.length > 0) {
-        const data = localStorage.getItem('savedJobs')
-        return JSON.parse(data)
-      } else {
-        return []
-      }
-    },
   },
   methods: {
     // get actions from job store
@@ -281,18 +250,6 @@ export default {
       getDetailJob: 'jobs/getDetailJob',
       getLatestJobs: 'jobs/getLatestJobs',
     }),
-    // set saved jobs and save data to local storage
-    savedToLocalStorage(job) {
-      if (!this.localStorageJobs.includes(job)) {
-        this.localStorageJobs.push(job)
-        return localStorage.setItem(
-          'savedJobs',
-          JSON.stringify(this.localStorageJobs)
-        )
-      } else {
-        return undefined
-      }
-    },
   },
   // set title of page
   head() {
