@@ -146,6 +146,7 @@
 
 <script>
 export default {
+  middleware: 'auth',
   data: () => ({
     account: {
       number: '62881976251147',

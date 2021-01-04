@@ -62,6 +62,7 @@ import EditCV from '@/components/base/EditCV'
 import EditProfileForm from '@/components/base/EditProfileForm'
 
 export default {
+  middleware: 'auth',
   components: {
     SavedJobs,
     EditCV,

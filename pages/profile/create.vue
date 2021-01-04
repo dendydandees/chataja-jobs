@@ -827,6 +827,7 @@
 
 <script>
 export default {
+  middleware: 'auth',
   data: () => ({
     stepper: 1,
     imageUrl: '/placeholder-profile.svg',
