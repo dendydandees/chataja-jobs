@@ -75,6 +75,12 @@ export default {
   // },
 
   auth: {
+    redirect: {
+      login: '/',
+      logout: '/',
+      callback: '/',
+      home: '/',
+    },
     strategies: {
       local: {
         endpoints: {

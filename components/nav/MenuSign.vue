@@ -200,7 +200,10 @@
               <!-- sign in modal content -->
               <v-scroll-x-transition mode="in-out" hide-on-leave>
                 <v-tab-item v-if="tab === 'sign-in'" id="sign-in">
-                  <SigninForm @forgotPasswordClick="forgotPasswordClick()" />
+                  <SigninForm
+                    :error="error"
+                    @forgotPasswordClick="forgotPasswordClick()"
+                  />
                 </v-tab-item>
               </v-scroll-x-transition>
               <!-- end sign in modal content -->
@@ -216,6 +219,21 @@
           </v-col>
         </v-row>
       </v-card>
+      <v-snackbar
+        v-model="error.isError"
+        :multi-line="true"
+        color="red darken-2"
+        :timeout="7000"
+        :right="$vuetify.breakpoint.smAndUp"
+      >
+        Periksa kembali Email dan Password Anda
+
+        <template v-slot:action="{ attrs }">
+          <v-btn color="white" text v-bind="attrs" @click="snackbar = false">
+            Tutup
+          </v-btn>
+        </template>
+      </v-snackbar>
     </v-dialog>
     <!-- end sign modal -->
 
@@ -253,6 +271,11 @@ export default {
     signDialog: false,
     forgotPasswordDialog: false,
     tab: '',
+    // error state
+    error: {
+      isError: false,
+      text: '',
+    },
   }),
   computed: {
     inJobSeekerTrue() {

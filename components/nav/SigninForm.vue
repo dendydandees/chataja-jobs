@@ -8,6 +8,7 @@
           <v-text-field
             id="email"
             v-model="signInData.email"
+            :rules="emailRules"
             single-line
             outlined
             class="mt-2"
@@ -21,6 +22,7 @@
           <v-text-field
             id="password"
             v-model="signInData.password"
+            :rules="passwordRules"
             single-line
             outlined
             class="mt-2"
@@ -54,6 +56,12 @@
 
 <script>
 export default {
+  props: {
+    error: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       // loading
@@ -62,26 +70,50 @@ export default {
       togglePassword: false,
       // state for sign in
       signInData: {
-        email: 'dendy1@yopmail.com',
-        password: 'satu234',
+        email: '',
+        password: '',
       },
-      error: '',
+      emailRules: [
+        (v) => !!v || 'Mohon masukkan email Anda',
+        (v) => /.+@.+\..+/.test(v) || 'Mohon masukkan email Anda dengan benar',
+      ],
+      passwordRules: [
+        (v) => !!v || 'Mohon masukkan Password Anda',
+        // (v) =>
+        //   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,200}$/.test(v) ||
+        //   'Masukkan Password dengan minimal 8 huruf menggunakan kombinasi huruf kapital dan angka',
+      ],
     }
   },
   methods: {
+    // reset state sign in data
+    resetData() {
+      this.signInData.email = ''
+      this.signInData.password = ''
+    },
+    // set sign in form using nuxt auth local strategy
     async signInHandler() {
       try {
         this.isProcessing = true
-        const response = await this.$auth.loginWith('local', {
-          data: this.signInData,
-        })
-        if (response) {
-          this.$auth.$storage.setUniversal('user', response.data)
-          this.$auth.setUser(response.data)
+        const validate = this.$refs.form.validate()
+
+        if (validate) {
+          const response = await this.$auth.loginWith('local', {
+            data: this.signInData,
+          })
+
+          if (response) {
+            const data = Object.assign(response.data, { role: 'job-seeker' })
+            this.$auth.$storage.setUniversal('user', data)
+            this.$auth.setUser(data)
+            this.$nuxt.refresh()
+          }
         }
-        this.isProcessing = false
       } catch (error) {
-        this.error = error
+        this.error.isError = true
+        this.error.text = error.message
+      } finally {
+        this.resetData()
         this.isProcessing = false
       }
     },
