@@ -81,8 +81,8 @@ export default {
     BannerProfile,
   },
   async fetch() {
-    // await this.getLatestJobs()
-    // await this.getFunctionJobs()
+    await this.getLatestJobs()
+    await this.getFunctionJobs()
     await this.getProfile(this.$auth.strategy.token.get())
   },
   // call fetch only on client-side
