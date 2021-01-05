@@ -30,6 +30,9 @@ export default {
     NavbarAuth,
     Footer,
   },
+  created() {
+    this.$auth.setUser(this.$auth.$storage.getUniversal('user'))
+  },
   mounted() {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()

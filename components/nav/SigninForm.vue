@@ -55,6 +55,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   props: {
     error: {
@@ -86,6 +88,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions({ getProfile: 'profile/getProfile' }),
     // reset state sign in data
     resetData() {
       this.signInData.email = ''
@@ -106,7 +109,12 @@ export default {
             const data = Object.assign(response.data, { role: 'job-seeker' })
             this.$auth.$storage.setUniversal('user', data)
             this.$auth.setUser(data)
-            this.$nuxt.refresh()
+            await this.getProfile(this.$auth.strategy.token.get())
+
+            if (this.$store.state.profile.hasProfile === true) {
+              await this.$router.push('/profile/create')
+            }
+            await this.$nuxt.refresh()
           }
         }
       } catch (error) {

@@ -122,7 +122,7 @@ export const actions = {
   async getFunctionJobs({ commit, dispatch }) {
     try {
       const result = await fetch(
-        `https://cors-anywhere.herokuapp.com/https://www.kalibrr.id/api/job_board/search`
+        `https://cors-anywhere.herokuapp.com/https://www.kalibrr.id/api/job_board/search?limit=10`
       )
         .then((res) => res.json())
         .then((data) => {
