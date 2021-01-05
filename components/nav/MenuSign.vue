@@ -17,7 +17,8 @@
           <v-app-bar-nav-icon
             v-if="
               $vuetify.breakpoint.smAndDown &&
-              $route.name !== 'email-verification'
+              $route.name !== 'email-verification' &&
+              !$route.name.includes('reset-password')
             "
             class="float-right"
             @click.stop="drawer = !drawer"
@@ -33,7 +34,8 @@
           <div
             v-if="
               $vuetify.breakpoint.mdAndUp &&
-              $route.name !== 'email-verification'
+              $route.name !== 'email-verification' &&
+              !$route.name.includes('reset-password')
             "
           >
             <nav
@@ -90,7 +92,9 @@
     <!-- side bar -->
     <v-navigation-drawer
       v-if="
-        $vuetify.breakpoint.smAndDown && $route.name !== 'email-verification'
+        $vuetify.breakpoint.smAndDown &&
+        $route.name !== 'email-verification' &&
+        !$route.name.includes('reset-password')
       "
       v-model="drawer"
       app
@@ -176,7 +180,10 @@
 
     <!-- sign modal -->
     <v-dialog
-      v-if="$route.name !== 'email-verification'"
+      v-if="
+        $route.name !== 'email-verification' &&
+        !$route.name.includes('reset-password')
+      "
       v-model="signDialog"
       :max-width="$vuetify.breakpoint.smAndUp ? '700' : 'none'"
       :fullscreen="!$vuetify.breakpoint.smAndUp"
@@ -239,7 +246,10 @@
 
     <!-- forgot password modal -->
     <v-dialog
-      v-if="$route.name !== 'email-verification'"
+      v-if="
+        $route.name !== 'email-verification' &&
+        !$route.name.includes('reset-password')
+      "
       v-model="forgotPasswordDialog"
       :max-width="$vuetify.breakpoint.smAndUp ? '700' : 'none'"
       :fullscreen="!$vuetify.breakpoint.smAndUp"
@@ -279,9 +289,7 @@ export default {
   }),
   computed: {
     inJobSeekerTrue() {
-      return (
-        this.$route.name.includes('jobs') || this.$route.name.includes('index')
-      )
+      return !this.$route.name.includes('employer')
     },
   },
   watch: {
@@ -291,12 +299,14 @@ export default {
     signDialog() {
       this.drawer = false
     },
-  },
-  mounted() {
-    if (this.$route.params.signInModals && this.$route.params.tab) {
-      this.signDialog = this.$route.params.signInModals
-      this.tab = this.$route.params.tab
-    }
+    $route(to, from) {
+      if (to !== from) {
+        if (this.$route.params.signInModals && this.$route.params.tab) {
+          this.signDialog = this.$route.params.signInModals
+          this.tab = this.$route.params.tab
+        }
+      }
+    },
   },
   methods: {
     // open sign up modal

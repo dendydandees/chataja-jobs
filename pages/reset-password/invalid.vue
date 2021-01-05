@@ -21,17 +21,18 @@
           </nuxt-link>
           <div class="text-center mt-13">
             <v-img
-              lazy-src="/email-verif-icon.png"
-              src="/email-verif-icon.png"
+              lazy-src="/error.png"
+              src="/error.png"
               max-height="160"
               contain
             ></v-img>
-            <h2 class="text-h3 font-weight-bold my-10">Verifikasi Email</h2>
-            <p class="body-1">
-              Selamat datang di ChatAja Jobs, Silakan buka tautan verifikasi di
-              kotak masuk email Anda untuk mengaktifkan akun Anda.
+            <h2 class="text-h3 font-weight-bold my-10">
+              Tautan Telah Kadaluwarsa
+            </h2>
+            <p>
+              Tautan yang Anda ikuti telah kedaluwarsa. Harap setel ulang kata
+              sandi Anda lagi.
             </p>
-            <v-btn x-large color="primary" class="mt-10">Kirim Kembali</v-btn>
           </div>
         </v-sheet>
       </v-col>
@@ -40,7 +41,7 @@
 </template>
 
 <script>
-export default {
-  middleware: 'auth',
-}
+export default {}
 </script>
+
+<style></style>
