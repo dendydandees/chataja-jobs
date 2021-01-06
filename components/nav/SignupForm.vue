@@ -31,6 +31,7 @@
             class="mt-2"
             type="tel"
             required
+            prefix="+"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -111,18 +112,26 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
+  props: {
+    error: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       // loading
       isProcessing: false,
       // state for sign up
       createAccount: {
-        fullname: '',
-        telpNumber: '',
-        email: '',
-        password: '',
-        confPass: '',
+        fullname: 'Dendy Kita',
+        telpNumber: '6289172637',
+        email: 'dendy2@yopmail.com',
+        password: 'Satu2345',
+        confPass: 'Satu2345',
       },
       // toggle password
       togglePassword: false,
@@ -144,10 +153,12 @@ export default {
           )
         },
       ],
+      // email rules
       emailRules: [
         (v) => !!v || 'Mohon masukkan email Anda',
         (v) => /.+@.+\..+/.test(v) || 'Mohon masukkan email Anda dengan benar',
       ],
+      // telp number rules
       telpNumberRules: [
         (v) =>
           /^\d+$/.test(v) || 'Mohon masukkan Nomor Telepon Anda dengan benar',
@@ -158,12 +169,14 @@ export default {
           (value || '').length >= 6 ||
           'Nomor Telepon terdiri dari minimum 6 digit',
       ],
+      // password rules
       passwordRules: [
         (v) => !!v || 'Mohon masukkan Password Anda',
         (v) =>
           /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,200}$/.test(v) ||
           'Masukkan Password dengan minimal 8 huruf menggunakan kombinasi huruf kapital dan angka',
       ],
+      // confirmations password rules
       confPassRules: [
         (v) => !!v || 'Mohon masukkan ulang Password anda',
         (v) => {
@@ -176,13 +189,34 @@ export default {
     }
   },
   methods: {
+    ...mapActions({ SignUpJobSeeker: 'accountSeeker/SignUpJobSeeker' }),
+    // reset sign up data
+    resetData() {
+      this.createAccount.fullname = ''
+      this.createAccount.telpNumber = ''
+      this.createAccount.email = ''
+      this.createAccount.password = ''
+      this.createAccount.confPass = ''
+    },
+    // set sign up from account seeker store
     async signUpHandler() {
       try {
         this.isProcessing = true
-        await this.$router.push('/email-verification')
+        const validate = this.$refs.form.validate()
+        if (validate) {
+          const response = await this.SignUpJobSeeker(this.createAccount)
+          if (!response.ok) {
+            throw response
+          } else {
+            console.log(response.json())
+          }
+          console.log(response.json())
+        }
       } catch (error) {
-        // eslint-disable-next-line no-console
-        console.log(error)
+        error.json().then((data) => {
+          this.error.isError = true
+          this.error.text = data.error.message
+        })
       } finally {
         this.isProcessing = false
       }

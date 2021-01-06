@@ -115,7 +115,7 @@ export const actions = {
         commit('SET_LATEST_JOBS', [])
       }
     } catch (error) {
-      error({ statusCode: 404, message: 'Jobs not found' })
+      return error
     }
   },
   // function for get type function of jobs
@@ -139,7 +139,7 @@ export const actions = {
         commit('SET_FUNCTION_JOBS', [])
       }
     } catch (error) {
-      error({ statusCode: 404, message: 'Jobs not found' })
+      return error
     }
   },
   // function for get details of jobs
@@ -159,7 +159,7 @@ export const actions = {
         commit('SET_DETAIL_JOB', [])
       }
     } catch (error) {
-      error({ statusCode: 404, message: 'Jobs not found' })
+      return error
     }
   },
   // function for get a search jobs
@@ -197,7 +197,7 @@ export const actions = {
           return data
         })
     } catch (error) {
-      error({ statusCode: 404, message: 'Jobs not found' })
+      return error
     }
   },
   // function for get a detail company
@@ -224,7 +224,7 @@ export const actions = {
         commit('SET_COMPANY_DETAILS', [])
       }
     } catch (error) {
-      error({ statusCode: 404, message: 'Jobs not found' })
+      return error
     }
   },
 }

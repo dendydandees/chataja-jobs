@@ -218,7 +218,7 @@
               <!-- sign up modal content -->
               <v-scroll-x-transition mode="in-out" hide-on-leave>
                 <v-tab-item v-if="tab === 'sign-up'" id="sign-up">
-                  <SignupForm />
+                  <SignupForm :error="error" />
                 </v-tab-item>
               </v-scroll-x-transition>
               <!-- end sign up modal content -->
@@ -233,7 +233,7 @@
         :timeout="7000"
         :right="$vuetify.breakpoint.smAndUp"
       >
-        Periksa kembali Email dan Password Anda
+        {{ error.text || 'Periksa kembali Email dan Password Anda' }}
 
         <template v-slot:action="{ attrs }">
           <v-btn color="white" text v-bind="attrs" @click="snackbar = false">

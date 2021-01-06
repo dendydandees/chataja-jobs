@@ -83,7 +83,9 @@ export default {
   async fetch() {
     await this.getLatestJobs()
     await this.getFunctionJobs()
-    await this.getProfile(this.$auth.strategy.token.get())
+    if (this.$store.state.auth.loggedIn) {
+      await this.getProfile(this.$auth.strategy.token.get())
+    }
   },
   // call fetch only on client-side
   fetchOnServer: false,
@@ -96,10 +98,10 @@ export default {
     functionJobs() {
       return this.$store.state.jobs.functionJobs
     },
-    // get profile check state from profile store
+    // get profile check state from account seeker store
     hasProfile: {
       get() {
-        return this.$store.state.profile.hasProfile
+        return this.$store.state.accountSeeker.hasProfile
       },
       set(value) {
         this.checkProfile(value)
@@ -111,17 +113,17 @@ export default {
     this.setDefaultSearch()
   },
   methods: {
-    // get mutations from job store
+    // get mutations from job and account seeker store
     ...mapMutations({
       setDefaultSearch: 'jobs/SET_DEFAULT_SEARCH',
       setSearchText: 'jobs/SET_SEARCH_TEXT',
-      checkProfile: 'profile/SET_CHECK_PROFILE',
+      checkProfile: 'accountSeeker/SET_CHECK_PROFILE',
     }),
-    // get actions from job store
+    // get actions from job and account seeker store
     ...mapActions({
       getLatestJobs: 'jobs/getLatestJobs',
       getFunctionJobs: 'jobs/getFunctionJobs',
-      getProfile: 'profile/getProfile',
+      getProfile: 'accountSeeker/getProfile',
     }),
     // set search jobs
     toJobBoard(jobFunction) {

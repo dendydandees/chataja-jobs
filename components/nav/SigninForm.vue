@@ -88,7 +88,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions({ getProfile: 'profile/getProfile' }),
+    ...mapActions({ getProfile: 'accountSeeker/getProfile' }),
     // reset state sign in data
     resetData() {
       this.signInData.email = ''
@@ -111,7 +111,7 @@ export default {
             this.$auth.setUser(data)
             await this.getProfile(this.$auth.strategy.token.get())
 
-            if (this.$store.state.profile.hasProfile === true) {
+            if (this.$store.state.accountSeeker.hasProfile === true) {
               await this.$router.push('/profile/create')
             }
             await this.$nuxt.refresh()
